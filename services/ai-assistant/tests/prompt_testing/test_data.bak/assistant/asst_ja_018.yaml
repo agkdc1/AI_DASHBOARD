@@ -1,0 +1,13 @@
+id: asst_ja_018
+name: 'JA assistant #18'
+language: ja-JP
+question: Outlineで新しいドキュメントを作成するにはどうしますか？
+expected:
+  language: ja
+  must_contain_any:
+  - Outline
+  - ドキュメント
+  - 作成
+  must_not_contain:
+  - 実行しました
+  min_length: 50

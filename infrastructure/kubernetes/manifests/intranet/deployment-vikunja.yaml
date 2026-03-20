@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intranet-vikunja
+  namespace: intranet
+  labels:
+    app.kubernetes.io/name: intranet-vikunja
+    app.kubernetes.io/component: app
+    app.kubernetes.io/part-of: shinbee-intranet
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: intranet-vikunja
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: intranet-vikunja
+        app.kubernetes.io/component: app
+        app.kubernetes.io/part-of: shinbee-intranet
+    spec:
+      priorityClassName: shinbee-high
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: vikunja
+          image: vikunja/vikunja:latest
+          ports:
+            - containerPort: 3456
+              name: http
+          env:
+            - name: TZ
+              value: Asia/Tokyo
+            - name: VIKUNJA_DATABASE_TYPE
+              value: postgres
+            - name: VIKUNJA_DATABASE_HOST
+              value: intranet-db.intranet.svc.cluster.local
+            - name: VIKUNJA_DATABASE_PORT
+              value: "5432"
+            - name: VIKUNJA_DATABASE_DATABASE
+              value: vikunja
+            - name: VIKUNJA_DATABASE_USER
+              value: vikunja
+            - name: VIKUNJA_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: intranet-db-secret
+                  key: vikunja-password
+            - name: VIKUNJA_SERVICE_PUBLICURL
+              value: https://tasks.your-domain.com
+            - name: VIKUNJA_SERVICE_FRONTENDURL
+              value: https://tasks.your-domain.com
+            - name: VIKUNJA_SERVICE_TIMEZONE
+              value: Asia/Tokyo
+            - name: VIKUNJA_SERVICE_ENABLEREGISTRATION
+              value: "false"
+            - name: VIKUNJA_AUTH_LOCAL_ENABLED
+              value: "false"
+            - name: VIKUNJA_AUTH_OPENID_ENABLED
+              value: "true"
+            - name: VIKUNJA_AUTH_OPENID_PROVIDERS_0_NAME
+              value: Authentik
+            - name: VIKUNJA_AUTH_OPENID_PROVIDERS_0_AUTHURL
+              value: https://auth.your-domain.com/application/o/vikunja/
+            - name: VIKUNJA_AUTH_OPENID_PROVIDERS_0_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: vikunja-oauth-secret
+                  key: client-id
+            - name: VIKUNJA_AUTH_OPENID_PROVIDERS_0_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: vikunja-oauth-secret
+                  key: client-secret
+          resources:
+            requests:
+              memory: 70Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 500m
+          volumeMounts:
+            - name: vikunja-files
+              mountPath: /app/vikunja/files
+          startupProbe:
+            httpGet:
+              path: /api/v1/info
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /api/v1/info
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/v1/info
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 5
+      volumes:
+        - name: vikunja-files
+          emptyDir: {}

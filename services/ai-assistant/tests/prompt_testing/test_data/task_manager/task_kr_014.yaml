@@ -1,0 +1,7 @@
+id: task_kr_014
+name: 'KR task #14'
+language: ko-KR
+input: '태스크 #123의 우선순위를 높음으로 변경해 주세요'
+expected:
+  action: update
+text: '[KR task #14] update 건인데 진행상황 업대이트 좀 부탁해요~ 아 그리고 공유폴더에 관련 자료 올려놨으니 화긴 부탁드릴게요'

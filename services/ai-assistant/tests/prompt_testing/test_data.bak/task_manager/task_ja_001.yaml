@@ -1,0 +1,13 @@
+id: task_ja_001
+name: 'JA task #1'
+language: ja-JP
+input: 来週月曜日までに在庫レポートを作成して
+expected:
+  action: create
+  task_title_contains:
+  - 在庫
+  - レポート
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3

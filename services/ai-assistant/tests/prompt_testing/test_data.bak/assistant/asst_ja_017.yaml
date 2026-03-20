@@ -1,0 +1,13 @@
+id: asst_ja_017
+name: 'JA assistant #17'
+language: ja-JP
+question: Outlineでドキュメントを検索する方法は？
+expected:
+  language: ja
+  must_contain_any:
+  - Outline
+  - ドキュメント
+  - 検索
+  must_not_contain:
+  - 実行しました
+  min_length: 50

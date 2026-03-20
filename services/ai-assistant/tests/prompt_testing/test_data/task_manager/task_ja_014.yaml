@@ -1,0 +1,7 @@
+id: task_ja_014
+name: 'JA task #14'
+language: ja-JP
+input: 出荷関連のタスクを検索して
+expected:
+  action: query
+text: 'お疲れ様ですー [JA task #14]の件でqueryなんだけど、例の商品の在こ状況って今どんな感じ？ あと化員にも共有したいから急ぎめでお願い！'

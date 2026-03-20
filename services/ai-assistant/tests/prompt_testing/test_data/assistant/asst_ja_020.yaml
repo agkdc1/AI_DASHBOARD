@@ -1,0 +1,14 @@
+id: asst_ja_020
+name: 'JA assistant #20'
+language: ja-JP
+question: 楽天の受注処理フローを教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - 楽天
+  - 受注
+  - 処理
+  must_not_contain:
+  - 実行しました
+  min_length: 60
+text: おつかれー。楽天の受注処理の件で質問なんだけど、新しい注文を処理する手受、あれってどうやるんだっけ？マニュアルとかあったら教えて！

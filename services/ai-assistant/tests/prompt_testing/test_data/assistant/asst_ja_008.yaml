@@ -1,0 +1,14 @@
+id: asst_ja_008
+name: 'JA assistant #8'
+language: ja-JP
+question: InvenTreeでBOM（部品表）を作成する方法を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - BOM
+  - 部品表
+  - 構成
+  must_not_contain:
+  - 実行しました
+  min_length: 60
+text: おつですー。ちょっと聞きたいんだけど、BOMの構成変更の件で、新しい部品表を作る手受ってどうやるんだっけ？

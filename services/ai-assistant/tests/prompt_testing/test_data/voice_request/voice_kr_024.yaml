@@ -1,0 +1,20 @@
+id: voice_kr_024
+name: 'KR voice orders #24'
+language: ko-KR
+text: 아, 저기, 수고 많으십니다. 어... 좀 전에 그 아마존 주문 건 있잖아요. 음... [잡음] 그거 방금 결제 확인됐다고 하니까, 아,
+  아니, 주문 확정됐다고 하니까요. 이제 바로 저기, 출하 쪽으로 넘겨서, 뭐, 준비 시작해 주시면 될 것 같습니다. [일시정지] 아, 네, 에...
+  부탁합니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 아마존
+  - 출하
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

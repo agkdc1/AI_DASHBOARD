@@ -1,0 +1,436 @@
+# =============================================================================
+# SHINBEE Unified Configuration
+# Copy this file to config.yaml and fill in your values.
+# Single source of truth for all non-secret infrastructure variables.
+# Secrets are in GCP Secret Manager (project your-gcp-project-id).
+# =============================================================================
+
+global:
+  timezone: "Asia/Tokyo"
+  repo_root: "/home/pi/SHINBEE"
+  user: "pi"
+
+# -----------------------------------------------------------------------------
+# GCP
+# -----------------------------------------------------------------------------
+gcp:
+  project_id: "your-gcp-project-id"
+  project_number: 000000000000
+  region: "asia-northeast1"
+  kms:
+    key_ring: "your-key-ring"
+    crypto_key: "your-crypto-key"
+  wif:
+    pool_id: "your-pool-id"
+    provider_id: "your-provider-id"
+  backup_bucket: "your-project-backup"
+  terraform:
+    state_bucket: "your-project-tfstate"
+    state_prefix: "terraform/state"
+
+# -----------------------------------------------------------------------------
+# AWS
+# -----------------------------------------------------------------------------
+aws:
+  region: "ap-northeast-1"
+  account_id: "000000000000"
+  route53_zone_id: "YOUR_ZONE_ID"
+  roles_anywhere:
+    trust_anchor_arn: "arn:aws:rolesanywhere:ap-northeast-1:000000000000:trust-anchor/your-trust-anchor-uuid"
+    profile_arn: "arn:aws:rolesanywhere:ap-northeast-1:000000000000:profile/your-profile-uuid"
+    role_arn: "arn:aws:iam::000000000000:role/your-pi-route53-role"
+
+# -----------------------------------------------------------------------------
+# PKI
+# -----------------------------------------------------------------------------
+pki:
+  ca:
+    key_bits: 4096
+    validity_days: 3650
+    cn: "Shinbee Internal CA"
+    o: "Shinbee"
+    st: "Tokyo"
+    c: "JP"
+  client:
+    key_bits: 2048
+    validity_days: 390
+    cn: "shinbee-pi"
+    o: "Shinbee"
+    st: "Tokyo"
+    c: "JP"
+
+# -----------------------------------------------------------------------------
+# Fax System (services/fax)
+# -----------------------------------------------------------------------------
+fax:
+  ntt:
+    sip_server: "203.0.113.1"
+    gateway_ip: "203.0.113.61"
+    interface: "eth1"
+    sip_domain: "ntt-east.ne.jp"
+    voice_did: "0312345678"
+    fax_did: "0312345679"
+  sip:
+    transport: "0.0.0.0-udp"
+    allow: "INVITE,ACK,BYE,CANCEL,PRACK,UPDATE,MESSAGE"
+    supported: "path,100rel,timer"
+  retry:
+    interval_mins: 3
+    max_retries: 5
+  hylafax:
+    country_code: 81
+    area_code: "03"
+    spool_dir: "/var/spool/hylafax"
+    recvq_dir: "/var/spool/hylafax/recvq"
+    archive_dir: "/var/spool/hylafax/archive"
+  iaxmodem:
+    port: 4570
+    peername: "800"
+    cidnumber: "0312345679"
+    codec: "ulaw"
+  db:
+    name: "asterisk"
+    user: "freepbxuser"
+    container: "raspbx-db"
+    image: "mariadb:10.11"
+  ami:
+    port: 5038
+    username: "faxapi"
+  faxapi:
+    port: 8010
+    host: "0.0.0.0"
+    container: "raspbx-faxapi"
+  docker:
+    core_container: "raspbx-core"
+    mail2fax_container: "raspbx-mail2fax"
+    network_subnet: "172.20.0.0/24"
+    dns: ["8.8.8.8", "8.8.4.4"]
+  mail2fax:
+    domain: "fax.your-domain.com"
+    certbot_email: "admin@your-domain.com"
+  fax_pipeline:
+    gcp_bucket: "your-fax-incoming-bucket"
+    spool_dir: "/var/spool/hylafax/recvq"
+    archive_dir: "/var/spool/hylafax/archive"
+  terraform:
+    drive_folder_id_original: "YOUR_DRIVE_FOLDER_ID"
+    drive_folder_id_work: "YOUR_DRIVE_FOLDER_ID"
+    notification_email_sender: "admin@your-domain.com"
+    notification_email_receiver: "fax@your-domain.com"
+    apps_script_url: "https://script.google.com/YOUR_APPS_SCRIPT_URL"
+
+# -----------------------------------------------------------------------------
+# InvenTree (services/inventory)
+# -----------------------------------------------------------------------------
+inventree:
+  domain: "api.your-domain.com"
+  portal_domain: "portal.your-domain.com"
+  site_url: "https://api.your-domain.com"
+  admin_email: "admin@your-domain.com"
+  certbot_email: "admin@your-domain.com"
+  tag: "stable"
+  debug: false
+  db:
+    engine: "mysql"
+    name: "inventree"
+    user: "inventree"
+  background_workers: 4
+  ports:
+    http: 80
+    https: 443
+  plugins:
+    enabled: true
+    dir: "/home/inventree/plugins"
+    social_backends: "google"
+  oauth:
+    hosted_domain: "your-domain.com"
+  ecommerce:
+    marketplace: "JP"
+    platforms: ["amazon", "rakuten", "yahoo", "qoo10"]
+
+# -----------------------------------------------------------------------------
+# Rakuten RMS API Key Renewal
+# -----------------------------------------------------------------------------
+rakuten:
+  rms_url: "https://glogin.rms.rakuten.co.jp/"
+  api_key_page: "https://navi-manual.rms.rakuten.co.jp/auth-api"
+  max_retries: 50
+  retry_delay_secs: 30
+
+  recon:
+    interval_min_days: 3
+    interval_max_days: 14
+
+  renewal:
+    interval_days: 80
+    deadline_days: 88
+
+  gemini:
+    model: "gemini-3.0-pro"
+    captcha_model: "gemini-3.0-pro"
+    flash_model: "gemini-3.0-flash"
+
+  browser:
+    headless: true
+    window_size: [1920, 1080]
+    user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+
+  sentinel:
+    firestore_project: "your-gcp-project-id"
+    poll_interval_secs: 5
+    poll_timeout_secs: 300
+
+  fallback:
+    admin_email: "admin@your-domain.com"
+    sentinel_address: "renew@sentinel.your-domain.com"
+
+  logging:
+    dir: "services/rakuten-renewal/logs"
+    local_retention_sessions: 5
+    local_screenshot_retention: 2
+    gcs_prefix: "rakuten-logs"
+    max_files: 200
+
+# -----------------------------------------------------------------------------
+# Backup
+# -----------------------------------------------------------------------------
+backup:
+  staging_dir: "/tmp"
+  prefix: "shinbee-backup"
+  retention_count: 30
+
+  # Secret Manager path for encryption password
+  secret_name: "backup-encryption-password"
+
+  # Database dumps (executed via docker exec)
+  # InvenTree MySQL is backed up by K8s CronJob (infrastructure/kubernetes/manifests/backup/)
+  databases:
+    - name: "fax-mariadb"
+      container: "raspbx-db"
+      engine: "mariadb"
+      dump_cmd: "mariadb-dump -u root -p\"${MYSQL_ROOT_PASSWORD}\" --all-databases --single-transaction"
+      password_env: "MYSQL_ROOT_PASSWORD"
+
+  # Directories to include (relative to repo_root)
+  directories:
+    - path: "services/fax/data/asterisk-etc"
+      label: "asterisk-config"
+    - path: "services/fax/data/asterisk-spool"
+      label: "asterisk-spool"
+    - path: "services/fax/data/hylafax-spool"
+      label: "hylafax-spool"
+    - path: "services/fax/data/asterisk-lib"
+      label: "asterisk-lib"
+    - path: "services/fax/data/freepbx-web"
+      label: "freepbx-web"
+    - path: "services/fax/data/pbx.db"
+      label: "pbx-sqlite"
+    - path: "apps/dashboard/lib"
+      label: "flutter-app-source"
+    - path: "services/ai-assistant"
+      label: "ai-assistant-source"
+
+# -----------------------------------------------------------------------------
+# Browser Daemon (services/selenium-daemon)
+# -----------------------------------------------------------------------------
+daemon:
+  port: 8020
+  host: "127.0.0.1"
+
+  memory:
+    limit_mb: 2500
+    warning_mb: 2000
+    per_session_max_mb: 800
+    check_interval_secs: 30
+
+  browser:
+    headless: false  # Xvfb required; headless Chrome blocked by Akamai (Sagawa)
+    window_size: [1920, 1080]
+    user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+
+  gemini:
+    model: "gemini-3.0-flash"
+    captcha_model: "gemini-3.0-pro"
+    repair_model: "gemini-3.0-flash"
+
+  sessions:
+    rakuten:
+      enabled: false
+      mode: "persistent"
+      keepalive_min_secs: 300
+      keepalive_max_secs: 600
+      login_url: "https://glogin.rms.rakuten.co.jp/"
+      home_url: "https://mainmenu.rms.rakuten.co.jp/"
+      api_key_url: "https://navi-manual.rms.rakuten.co.jp/auth-api"
+      login_max_retries: 2
+    yamato:
+      enabled: true
+      mode: "persistent"
+      keepalive_min_secs: 300
+      keepalive_max_secs: 600
+      login_url: "https://bmypage.kuronekoyamato.co.jp/"
+      login_max_retries: 2
+    sagawa:
+      enabled: true
+      mode: "on_demand"
+      cookie_refresh_interval_secs: 10800
+      login_url: "https://www.e-service.sagawa-exp.co.jp/"
+      login_max_retries: 2
+
+  cookie_store:
+    dir: "services/selenium-daemon/cookies"
+
+  download:
+    pdf_dir: "services/selenium-daemon/pdfs"
+
+  renewal:
+    interval_days: 80
+    deadline_days: 88
+    max_retries: 50
+    retry_delay_secs: 30
+
+  recon:
+    enabled: true
+    interval_min_days: 3
+    interval_max_days: 14
+
+  sentinel:
+    firestore_project: "your-gcp-project-id"
+    poll_interval_secs: 5
+    poll_timeout_secs: 300
+
+  fallback:
+    admin_email: "admin@your-domain.com"
+    sentinel_address: "renew@sentinel.your-domain.com"
+
+  human_fallback:
+    alert_method: "email"
+    pending_timeout_secs: 86400
+
+  logging:
+    dir: "services/selenium-daemon/logs"
+    gcs_prefix: "daemon-logs"
+    local_retention_sessions: 10
+    local_screenshot_retention: 3
+    max_files: 500
+
+# -----------------------------------------------------------------------------
+# Intranet Dashboard (Vikunja + Outline)
+# -----------------------------------------------------------------------------
+intranet:
+  namespace: "intranet"
+
+  vikunja:
+    domain: "tasks.your-domain.com"
+    image: "vikunja/vikunja:latest"
+    port: 3456
+
+  outline:
+    domain: "wiki.your-domain.com"
+    image: "outlinewiki/outline:latest"
+    port: 3000
+
+  postgres:
+    image: "postgres:16-alpine"
+    port: 5432
+    vikunja_db: "vikunja"
+    vikunja_user: "vikunja"
+    outline_db: "outline"
+    outline_user: "outline"
+
+  redis:
+    image: "redis:7-alpine"
+    port: 6379
+
+  minio:
+    image: "minio/minio:latest"
+    port: 9000
+    bucket: "outline-data"
+
+# -----------------------------------------------------------------------------
+# Flutter Dashboard
+# -----------------------------------------------------------------------------
+flutter:
+  domain: "app.your-domain.com"
+  namespace: "shinbee"
+  artifacts_bucket: "your-flutter-artifacts-bucket"
+  build_targets: ["web", "apk"]
+  company_name:
+    ja: "シンビジャパン"
+    ko: "신비재팬"
+    en: "Shinbee Japan"
+  locales: ["ja", "ko", "en"]
+  default_locale: "ja"
+
+# -----------------------------------------------------------------------------
+# AI Assistant
+# -----------------------------------------------------------------------------
+ai_assistant:
+  port: 8030
+  namespace: "shinbee"
+  gemini:
+    flash_model: "gemini-3.0-flash"
+    pro_model: "gemini-3.0-pro"
+  gcs:
+    pii_raw_bucket: "your-pii-raw-bucket"
+    pii_raw_retention_days: 7
+    ai_logs_bucket: "your-ai-logs-bucket"
+    ai_logs_retention_days: 90
+    sop_bucket: "your-ai-sops-bucket"
+  evolution:
+    schedule: "0 9 * * 6"  # Saturday 09:00 JST
+    superuser_email: "admin@your-domain.com"
+  vikunja_url: "https://tasks.your-domain.com"
+
+# -----------------------------------------------------------------------------
+# Phone Provisioning (Grandstream GXP-1760W)
+# -----------------------------------------------------------------------------
+phone:
+  # Wi-Fi (all phones connect via WiFi)
+  wifi:
+    ssid: "YourWiFiSSID"
+    psk: "your-wifi-password"
+    band: "5GHz"
+
+  # PBX / SIP
+  pbx_host: "10.0.0.254"
+  sip_server: "10.0.0.254"
+  sip_transport: "UDP"
+  sip_port: 5060
+  sip_password_prefix: "XXXX"  # Password pattern: XXXX<ext>
+
+  # LDAP phonebook (Samba AD)
+  ldap:
+    server: "10.0.0.250"
+    port: 389
+    base_dn: "CN=Users,DC=your-domain,DC=local"
+    bind_dn: "CN=Administrator,CN=Users,DC=your-domain,DC=local"
+    name_attr: "cn"
+    number_attr: "telephoneNumber"
+
+  # Provisioning server (k3s-control-0 via WireGuard)
+  provision:
+    url: "http://10.0.9.2:9080"
+    server: "10.0.9.2"
+    port: 9080
+
+  # NTP & timezone
+  ntp_server: "ntp.nict.jp"
+  timezone: "Asia/Tokyo"
+  timezone_offset: "9"
+
+  # Admin password for phone web UI
+  admin_password: "change-me"
+
+  # Hot-desk defaults
+  hotdesk:
+    enabled: true
+    default_password: "0000"
+    logout_on_idle_min: 0  # 0 = no auto-logout
+
+  # Data paths
+  output_dir: "services/phone-provisioning/output"
+  csv_fixed: "services/phone-provisioning/phone_number_fixed.csv"
+  csv_free_phones: "services/phone-provisioning/phone_free.csv"
+  csv_free_users: "services/phone-provisioning/phone_number_free.csv"
+  pjsip_auth_conf: "services/fax/data/asterisk-etc/pjsip.auth.conf"

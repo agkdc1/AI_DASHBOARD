@@ -1,0 +1,18 @@
+id: voice_ja_058
+name: 'JA voice it #58'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。ちょっとお願いしたいことがあるんですけど、あのー、昨夜の定期バックアップ、どうも失敗してるみたいなんですよね。なので、お手数ですが、急ぎで状況の確認をお願いできますか？原因が分かれば、今日の午前中までには報告してもらえると助かります。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - バックアップ
+  - 確認
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

@@ -1,0 +1,20 @@
+id: voice_kr_011
+name: 'KR voice shipping #11'
+language: ko-KR
+text: 아, [REDACTED_NAME]님. 어, 저기, 지금 뭐 하나만 급하게 부탁드릴게요. [기침] 음... 그 에스오-이공이사-일이삼사 건
+  있잖아요. 그거 고객 클레임이 들어와서, 아, 이거를 내일까지... 아니, 아니, 오늘 중으로 꼭 좀 발송 처리를 해야... 해야 하거든요. [일시정지]
+  그러니까 주소는 [REDACTED_ADDRESS] 맞고요, 아, 전화번호는... 아니, 이건 필요 없겠다. 암튼 최대한 빨리 부탁드릴게요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-1234
+  - 발송
+  due_date_present: true
+  priority_range:
+  - 4
+  - 4

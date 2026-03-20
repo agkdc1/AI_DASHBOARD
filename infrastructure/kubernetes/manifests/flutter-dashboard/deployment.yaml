@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flutter-dashboard
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: flutter-dashboard
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: flutter-dashboard
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: flutter-dashboard
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      initContainers:
+        - name: fetch-build
+          image: google/cloud-sdk:slim
+          command: ["sh", "-c"]
+          args:
+            - |
+              gcloud auth activate-service-account --key-file=/etc/gcs/key.json
+              echo "Fetching latest web build from GCS..."
+              gsutil cp gs://your-project-flutter-artifacts/flutter-builds/latest/web.tar.gz /tmp/web.tar.gz
+              tar -xzf /tmp/web.tar.gz -C /webroot
+              echo "Web build extracted to /webroot"
+              ls -la /webroot/
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: gcs-key
+              mountPath: /etc/gcs
+              readOnly: true
+            - name: webroot
+              mountPath: /webroot
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "10m"
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+          volumeMounts:
+            - name: webroot
+              mountPath: /usr/share/nginx/html
+              readOnly: true
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
+      volumes:
+        - name: gcs-key
+          secret:
+            secretName: backup-gcs-secret
+        - name: webroot
+          emptyDir: {}
+        - name: nginx-config
+          configMap:
+            name: flutter-dashboard-nginx

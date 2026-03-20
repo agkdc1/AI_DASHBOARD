@@ -1,0 +1,7 @@
+id: task_kr_018
+name: 'KR task #18'
+language: ko-KR
+input: '태스크 #333을 삭제해 주세요'
+expected:
+  action: delete
+text: '안녕하세요 KR task #18 태스크 이제 필요없어져서요 삭재 부탁해요~'

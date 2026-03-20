@@ -1,0 +1,42 @@
+id: call_ja_048
+name: 'JA call #48'
+language: ja-JP
+text: 'もしもし、現場担当の[REDACTED_NAME]です。
+
+
+  お疲れ様です、管理部の[REDACTED_NAME]です。今、少しお時間よろしいでしょうか？
+
+
+  あ、[REDACTED_NAME]さん、お疲れ様です。はい、大丈夫ですよ。
+
+
+  ありがとうございます。先日お話ししていたフォークリフトの定期点検の件でして、来月の3日の水曜日で業者さんの手配ができました。ご都合いかがですか？
+
+
+  3日ですね。はい、承知しました。その日で問題ありません。
+
+
+  よかったです。つきましては、お手数ですが事前に簡単な点検をお願いできますでしょうか。チェックリストを後ほどメールでお送りします。
+
+
+  はい、承知しました。確認しておきます。
+
+
+  ありがとうございます。では、よろしくお願いします。失礼します。
+
+
+  はい、失礼します。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - フォークリフト
+  - 点検
+  priority_range:
+  - 1
+  - 3
+  has_decisions: true

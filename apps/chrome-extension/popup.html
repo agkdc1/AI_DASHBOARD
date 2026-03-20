@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Shinbee AI</h1>
+      <span class="subtitle">ナビゲーター</span>
+    </div>
+
+    <div id="chat-messages" class="messages"></div>
+
+    <div class="input-area">
+      <textarea
+        id="message-input"
+        placeholder="質問を入力... (例: 在庫を追加したい)"
+        rows="2"
+      ></textarea>
+      <div class="buttons">
+        <button id="voice-btn" class="btn btn-icon" title="音声入力">
+          🎤
+        </button>
+        <button id="send-btn" class="btn btn-primary" title="送信">
+          送信
+        </button>
+        <button id="clear-btn" class="btn btn-ghost" title="ハイライト消去">
+          消去
+        </button>
+      </div>
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

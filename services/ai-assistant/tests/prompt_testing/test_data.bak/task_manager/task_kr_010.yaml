@@ -1,0 +1,6 @@
+id: task_kr_010
+name: 'KR task #10'
+language: ko-KR
+input: 출하 관련 태스크를 검색해 주세요
+expected:
+  action: query

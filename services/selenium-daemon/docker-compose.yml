@@ -1,0 +1,32 @@
+services:
+  daemon:
+    build: .
+    container_name: shinbee-browser-daemon
+    restart: unless-stopped
+    volumes:
+      - ../config.yaml:/app/config.yaml:ro
+      # WIF credentials for GCP Secret Manager + GCS + Firestore
+      - ../Vault/pki/wif-credential-config.json:/app/Vault/pki/wif-credential-config.json:ro
+      - ../Vault/pki/client.crt:/app/Vault/pki/client.crt:ro
+      - ../Vault/pki/client.key:/app/Vault/pki/client.key:ro
+      - ../Vault/pki/ca.crt:/app/Vault/pki/ca.crt:ro
+      - /home/pi/.config/gcloud/certificate_config.json:/home/pi/.config/gcloud/certificate_config.json:ro
+      # Persistent data
+      - ./logs:/app/logs
+      - ./screenshots:/app/screenshots
+      - ./pdfs:/app/pdfs
+      - ./cookies:/app/cookies
+      - ./state.json:/app/state.json
+      # Prompts (meta-optimizer writes)
+      - ./daemon/prompts:/app/daemon/prompts
+      # Selectors (XPath repair writes)
+      - ./daemon/selectors:/app/daemon/selectors
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/Vault/pki/wif-credential-config.json
+      - GOOGLE_API_CERTIFICATE_CONFIG=/home/pi/.config/gcloud/certificate_config.json
+    network_mode: host
+    shm_size: 512m
+    deploy:
+      resources:
+        limits:
+          memory: 2560m

@@ -1,0 +1,7 @@
+id: task_ja_013
+name: 'JA task #13'
+language: ja-JP
+input: 今週の未完了タスクを見せて
+expected:
+  action: query
+text: 'おつかれさまですー JA task #13の件なんですけど 今の上京ってどんな感じか教えてもらえますか？ ちょっと内容を化員したくて。もし分かればで大丈夫ですー！'

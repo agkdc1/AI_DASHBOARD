@@ -1,0 +1,13 @@
+id: task_ja_023
+name: 'JA task #23'
+language: ja-JP
+input: タスク#789を完了にして
+expected:
+  action: update
+text: 'おつですー
+
+  [JA task #23] update お願い！
+
+  B社の件なんだけどステータスを進めといてください
+
+  あ、あと添付資料も最新版に差し替え頼む！化員よろしく！'

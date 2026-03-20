@@ -1,0 +1,6 @@
+id: task_ja_025
+name: 'JA task #25'
+language: ja-JP
+input: タスク#202にラベル「急ぎ」を追加して
+expected:
+  action: update

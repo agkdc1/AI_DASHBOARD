@@ -1,0 +1,14 @@
+id: asst_ja_004
+name: 'JA assistant #4'
+language: ja-JP
+question: InvenTreeで発注書を作成する方法は？
+expected:
+  language: ja
+  must_contain_any:
+  - 発注
+  - 注文
+  - サプライヤー
+  must_not_contain:
+  - 実行しました
+  min_length: 60
+text: おつかれー。ちょっと聞きたいんだけど、新しいサプライヤーへの発注の件、注文の詳しい手受ってどうやるんだっけ？あと関連部品の在庫も知りたい。

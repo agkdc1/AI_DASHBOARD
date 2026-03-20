@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-assistant
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: ai-assistant
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ai-assistant
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ai-assistant
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: ai-assistant
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/ai-assistant:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8030
+          env:
+            - name: AI_GCP_PROJECT
+              value: "your-gcp-project-id"
+            - name: AI_GCP_LOCATION
+              value: "asia-northeast1"
+            - name: AI_VIKUNJA_URL
+              value: "http://intranet-vikunja.intranet.svc.cluster.local:3456"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/gcs/key.json"
+            - name: AI_LDAP_SERVER
+              value: "ldap://samba-ad-internal.shinbee.svc.cluster.local:389"
+            - name: AI_LDAP_BASE_DN
+              value: "DC=ad,DC=your-domain,DC=com"
+            - name: AI_LDAP_BIND_DN
+              value: "CN=Administrator,CN=Users,DC=ad,DC=your-domain,DC=com"
+            - name: AI_LDAP_BIND_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: samba-ad-secret
+                  key: admin-password
+            - name: AI_FAXAPI_URL
+              value: "http://faxapi.fax-system.svc.cluster.local:8010"
+            - name: AI_FAXAPI_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: fax-api-key-secret
+                  key: api-key
+            - name: AI_DRIVE_FOLDER_UNDER_REVIEW
+              value: "1HpeAiJCuZJxxWC5BmW2BsuR5tW0oVm4x"
+            - name: AI_DRIVE_FOLDER_REVIEWED
+              value: "1puU-GfWxeYcIgDbu9BrXyliej0Ir30lP"
+            - name: AI_GSPS_SA_KEY_PATH
+              value: "/etc/gsps/key.json"
+            - name: AI_GSPS_ADMIN_EMAIL
+              value: "admin@your-domain.com"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8030
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8030
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "2"
+          volumeMounts:
+            - name: gcs-key
+              mountPath: /etc/gcs
+              readOnly: true
+            - name: gsps-key
+              mountPath: /etc/gsps
+              readOnly: true
+            - name: iam-data
+              mountPath: /app/data
+      volumes:
+        - name: gcs-key
+          secret:
+            secretName: ai-assistant-gcs-secret
+        - name: gsps-key
+          secret:
+            secretName: gsps-sa-key
+        - name: iam-data
+          persistentVolumeClaim:
+            claimName: ai-assistant-data

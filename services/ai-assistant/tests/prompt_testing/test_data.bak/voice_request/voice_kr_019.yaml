@@ -1,0 +1,19 @@
+id: voice_kr_019
+name: 'KR voice inventory #19'
+language: ko-KR
+text: 아, 저기, 바쁘신데 죄송한데요. 부탁드릴 게 하나 있어서요. 음... 저희 재고 관리하는 InvenTree 있잖아요. 거기에 새로운 부품
+  카테고리를 하나 추가해야 하거든요. '전자부품-커넥터'라는 이름으로요. 시간 괜찮으실 때 추가 좀 부탁드릴게요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 카테고리
+  - InvenTree
+  due_date_present: false
+  priority_range:
+  - 1
+  - 3

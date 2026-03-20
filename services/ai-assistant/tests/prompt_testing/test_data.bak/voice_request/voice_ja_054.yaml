@@ -1,0 +1,18 @@
+id: voice_ja_054
+name: 'JA voice general #54'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、ちょっといいかな。えーと、来月の出張の件なんだけど、スケジュールの調整をお願いしたくて。訪問先は[REDACTED_ADDRESS]の取引先です。先方とアポを取りたいので、来週月曜の朝までには、いくつか候補日をまとめてもらえますか？よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 出張
+  - スケジュール
+  due_date_present: true
+  priority_range:
+  - 1
+  - 3

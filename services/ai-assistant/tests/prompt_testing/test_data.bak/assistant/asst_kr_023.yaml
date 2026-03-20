@@ -1,0 +1,13 @@
+id: asst_kr_023
+name: 'KR assistant #23'
+language: ko-KR
+question: 공유 폴더에 접근하는 방법은?
+expected:
+  language: ko
+  must_contain_any:
+  - 공유
+  - 폴더
+  - 접근
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

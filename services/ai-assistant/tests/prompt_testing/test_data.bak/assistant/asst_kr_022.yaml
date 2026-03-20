@@ -1,0 +1,12 @@
+id: asst_kr_022
+name: 'KR assistant #22'
+language: ko-KR
+question: 비밀번호 재설정 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 비밀번호
+  - 재설정
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

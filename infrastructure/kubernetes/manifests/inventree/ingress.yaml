@@ -1,0 +1,97 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: inventree-ingress
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: inventree-ingress
+    app.kubernetes.io/part-of: shinbee
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/hsts: "true"
+    nginx.ingress.kubernetes.io/hsts-max-age: "31536000"
+    nginx.ingress.kubernetes.io/hsts-include-subdomains: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://app.your-domain.com,https://test-app.your-domain.com"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Content-Type, Authorization, X-CSRFToken, X-Session-Token"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # Authentik forward auth (domain-level)
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.your-domain.com/outpost.goauthentik.io/auth/nginx"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.your-domain.com/outpost.goauthentik.io/start?rd=$scheme://$host$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid"
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_set_header X-Forwarded-Host $http_host;
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - api.your-domain.com
+        - portal.your-domain.com
+      secretName: inventree-tls
+  rules:
+    - host: api.your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: inventree-proxy
+                port:
+                  name: http
+    - host: portal.your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: inventree-proxy
+                port:
+                  name: http
+---
+# Test InvenTree — NO forward auth (uses basic auth for demos)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: inventree-test-ingress
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: inventree-test-ingress
+    app.kubernetes.io/part-of: shinbee
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - test-api.your-domain.com
+        - test-portal.your-domain.com
+      secretName: inventree-test-tls
+  rules:
+    - host: test-api.your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: inventree-proxy
+                port:
+                  name: http
+    - host: test-portal.your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: inventree-proxy
+                port:
+                  name: http

@@ -1,0 +1,13 @@
+id: task_ja_015
+name: 'JA task #15'
+language: ja-JP
+input: 優先度が高いタスクを教えて
+expected:
+  action: query
+text: 'おつかれさまですー
+
+  JA task #15の件でちょっと各人したいんだけど今の進捗上京ってどんな感じ？
+
+  担当者が誰かもあわせて教えてもらえると助かります！
+
+  急ぎじゃないんで時間あるときにおねいしますー'

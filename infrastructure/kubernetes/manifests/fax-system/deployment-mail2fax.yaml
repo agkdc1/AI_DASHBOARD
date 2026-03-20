@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail2fax
+  namespace: fax-system
+  labels:
+    app.kubernetes.io/name: mail2fax
+    app.kubernetes.io/part-of: shinbee-fax
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mail2fax
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mail2fax
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: mail2fax
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/mail2fax:latest
+          env:
+            - name: SKIP_CERTBOT
+              value: "1"
+            - name: DOMAIN
+              value: "fax.your-domain.com"
+            - name: FAX_ENDPOINT
+              value: "http://faxapi.fax-system.svc.cluster.local:8010/send_fax"
+            - name: CERT_DIR
+              value: "/etc/letsencrypt/live/fax.your-domain.com"
+            - name: TZ
+              value: "Asia/Tokyo"
+            - name: FAX_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mail2fax-secret
+                  key: fax-api-key
+            - name: SMTP_AUTH_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mail2fax-secret
+                  key: smtp-auth-user
+            - name: SMTP_AUTH_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mail2fax-secret
+                  key: smtp-auth-pass
+            - name: RELAY_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mail2fax-secret
+                  key: relay-host
+            - name: RELAY_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: mail2fax-secret
+                  key: relay-port
+            - name: RELAY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mail2fax-secret
+                  key: relay-user
+            - name: RELAY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mail2fax-secret
+                  key: relay-pass
+          ports:
+            - name: smtp
+              containerPort: 587
+              protocol: TCP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: tls-cert
+              mountPath: /etc/letsencrypt/live/fax.your-domain.com
+              readOnly: true
+            - name: mail2fax-queue
+              mountPath: /var/spool/postfix
+      volumes:
+        - name: tls-cert
+          secret:
+            secretName: mail2fax-tls
+            items:
+              - key: tls.crt
+                path: fullchain.pem
+              - key: tls.key
+                path: privkey.pem
+        - name: mail2fax-queue
+          persistentVolumeClaim:
+            claimName: mail2fax-queue

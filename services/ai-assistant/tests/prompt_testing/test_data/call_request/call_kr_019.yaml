@@ -1,0 +1,43 @@
+id: call_kr_019
+name: 'KR call #19'
+language: ko-KR
+text: 'A: 여보세요?
+
+  B: 네, CS팀 [REDACTED_NAME]입니다.
+
+  A: 아, [REDACTED_NAME] 대리님, 안녕하세요. 저기 영업팀 [REDACTED_NAME]인데요.
+
+  B: 아, 네, [REDACTED_NAME] 님. 수고 많으십니다. 어, 무슨 일이시죠?
+
+  A: 아, 다름이 아니라, 그, 얼마 전에 들어온 **반품** 건 때문에 연락드렸습니다. [잡음] 음... 관리번호가 알엠에이-공공일... 아니,
+  **RMA-001** 상품 말입니다.
+
+  B: 아, 네네, RMA-001이요. 아, 잠시만요. 잘 안 들려서... 다시 한번만요?
+
+  A: 아, 네. 그러니까 이게 방금 실물을 봤는데, 어... 제품 외장에 좀... 그, 손상이 있더라고요.
+
+  B: 아, 손상이요? 그렇군요. [일시정지] 음... 그럼 어떻게 할까요?
+
+  A: 그래서 말인데요, 고객에게는 그냥 바로 환불 처리하는 걸로... 아니, 그렇게 진행해도 괜찮을지 여쭤보려고요.
+
+  B: 아, 네, 알겠습니다. 그렇게 처리해 주세요.
+
+  A: 네, 알겠습니다. 그럼 바로 환불 진행하겠습니다. 감사합니다.
+
+  B: 네, 수고하세요.
+
+  A: 네, 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - RMA-001
+  - 반품
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

@@ -1,0 +1,19 @@
+id: voice_ja_026
+name: 'JA voice inventory #26'
+language: ja-JP
+text: あ、あのー、お疲れ様です。えーと、ちょっとお願いしたいことがあるんですけど、[雑音] そのー、例のエスケーユー…あ、違う、エスケーユーY200なんだけど、あのー、一部のロットで不良が見つかった、いや、不良の報告があったっていう方が正しいかな。それで、[一時停止]
+  えー、大変申し訳ないんだけど、そのー…該当する製品の出荷を、まぁ、いったん全部止めてもらえないでしょうか。詳細はまた後で送ります。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-Y200
+  - 不良
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

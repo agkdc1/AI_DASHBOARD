@@ -1,0 +1,19 @@
+id: voice_ja_044
+name: 'JA voice orders #44'
+language: ja-JP
+text: あ、すみません、えーと、ちょっとお願いしたいんですけど。あのー、管理画面からでいいんで、そのー、Yahooの注文の…えー、あ、違うな、処理状況か。[咳]
+  処理状況を確認してもらえます？なんか、まぁ、発送が遅延してるやつがないか、えーっと、チェックしてほしくて。もし該当するのが、そうだな、2、3件…いや、1件でもあったら、今日の午後イチ、あ、ごめん、午前中までには教えてもらえると助かります。お願いします。[雑音]
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - Yahoo
+  - 注文
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

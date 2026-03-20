@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+data:
+  allow-snippet-annotations: "true"
+  annotations-risk-level: "Critical"
+  compute-full-forwarded-for: "true"
+  use-forwarded-headers: "true"

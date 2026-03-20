@@ -1,0 +1,19 @@
+id: voice_kr_004
+name: 'KR voice shipping #4'
+language: ko-KR
+text: 아, 저기요. 그 SO-2024-5678 건, 방금 출하 준비 완료됐는데요. 죄송하지만 운송장 출력 좀 부탁드릴 수 있을까요? 오늘 오후까지는
+  꼭 좀 필요해서요. 잘 부탁드립니다
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-5678
+  - 운송장
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

@@ -1,0 +1,6 @@
+id: task_kr_011
+name: 'KR task #11'
+language: ko-KR
+input: 우선순위 높은 태스크를 알려 주세요
+expected:
+  action: query

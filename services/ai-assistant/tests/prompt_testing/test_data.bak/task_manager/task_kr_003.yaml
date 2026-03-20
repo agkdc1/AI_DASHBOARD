@@ -1,0 +1,13 @@
+id: task_kr_003
+name: 'KR task #3'
+language: ko-KR
+input: 라쿠텐 주문 처리 개선 태스크를 등록해 주세요. 우선순위 높음.
+expected:
+  action: create
+  task_title_contains:
+  - 라쿠텐
+  - 주문
+  - 개선
+  priority_range:
+  - 3
+  - 3

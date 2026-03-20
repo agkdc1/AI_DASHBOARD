@@ -1,0 +1,18 @@
+id: voice_ja_019
+name: 'JA voice inventory #19'
+language: ja-JP
+text: お疲れ様です。あのー、ちょっとお願いしたいことがあるんですけど、部品の件でして。えーと、型番がP-A1234の在庫をさっき確認したら、もうほとんど無くなっちゃってたんですよ。なので、追加で発注をお願いできますでしょうか。来週の頭には必要になるので、できれば今週中に手配していただけると大変助かります。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - P-A1234
+  - 在庫
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

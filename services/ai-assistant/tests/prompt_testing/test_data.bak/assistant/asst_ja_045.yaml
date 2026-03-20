@@ -1,0 +1,13 @@
+id: asst_ja_045
+name: 'JA assistant #45'
+language: ja-JP
+question: InvenTreeでBOM（部品表）を作成する方法を教えてください。初心者向けに簡単に説明してください。
+expected:
+  language: ja
+  must_contain_any:
+  - BOM
+  - 部品表
+  - 構成
+  must_not_contain:
+  - 実行しました
+  min_length: 60

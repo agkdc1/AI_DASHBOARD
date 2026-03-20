@@ -1,0 +1,18 @@
+id: voice_ja_029
+name: 'JA voice inventory #29'
+language: ja-JP
+text: あ、お疲れ様です。えーと、すみません、ちょっとお願いがあるんですけど。あの、在庫管理で使ってるInvenTreeの件でして、新しく部品のカテゴリーを追加しておいてもらえますか？「電子部品-コネクタ」っていうやつです。お手すきの時で構わないので、よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - カテゴリー
+  - InvenTree
+  due_date_present: false
+  priority_range:
+  - 1
+  - 3

@@ -1,0 +1,34 @@
+id: call_ja_024
+name: 'JA call #24'
+language: ja-JP
+text: 'はい、[REDACTED_NAME]です。
+
+  お疲れ様です、[REDACTED_NAME]です。今よろしいでしょうか？
+
+  お疲れ様です。はい、大丈夫ですよ。
+
+  ありがとうございます。先日ご依頼したRMA-003の返品の件ですが、現物を確認しました。お客様の申告通り、初期不良と見て間違いなさそうです。
+
+  そうですか、承知しました。では、代替品を送付する方向で進めてよろしいでしょうか？
+
+  はい、それでお願いします。お客様への連絡はこちらで済ませておきますので、発送手続きをお願いできますか。
+
+  承知いたしました。では、すぐに手配します。
+
+  助かります。では、よろしくお願いします。失礼します。
+
+  はい、失礼します。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - RMA-003
+  - 返品
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

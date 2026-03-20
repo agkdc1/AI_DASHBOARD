@@ -1,0 +1,18 @@
+id: voice_ja_025
+name: 'JA voice inventory #25'
+language: ja-JP
+text: あ、お疲れ様です。[REDACTED_NAME]です。えーと、ちょっと急ぎでお願いしたいことがありまして。あの、製品のSKU-X100なんですけど、一部に不良が見つかったという報告が上がってきたんですよ。それで、大変申し訳ないんですが、今後の出荷を一旦すべてストップしていただいてもよろしいでしょうか。はい、詳細はまた追って連絡します。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-X100
+  - 不良
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

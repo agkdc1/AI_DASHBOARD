@@ -1,0 +1,7 @@
+id: task_kr_010
+name: 'KR task #10'
+language: ko-KR
+input: 출하 관련 태스크를 검색해 주세요
+expected:
+  action: query
+text: 'KR task #10 이거 [담당자]한테 query 좀 해줄 수 있어? 진행상황 어떠케 됐는지 확인 좀 부탁해ㅋㅋ 아 그리고 마감 내일'

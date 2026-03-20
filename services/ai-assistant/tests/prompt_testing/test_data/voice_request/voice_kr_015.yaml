@@ -1,0 +1,20 @@
+id: voice_kr_015
+name: 'KR voice inventory #15'
+language: ko-KR
+text: 어, [REDACTED_NAME]씨, 안녕하세요. 저기, 지금 잠깐 괜찮으세요? [잡음] 아, 다름이 아니라, 그… 창고 재고 실사 건으로
+  연락드렸는데요. 음… 지난번에 말씀드린 그… 아니, 그게 아니라 B 창고였죠? 아, 죄송해요. 그 B 창고 재고를요, 다음 주 월요일, 아, 잠깐,
+  화요일까지 마무리해주실 수 있을까요? 뭐, 리스트에 있는 에스케이가 한 30개, 아니 50개 정도 될 텐데… [일시정지] 어… 자세한 내용은 제가
+  지금 바로 메일로 다시 보내드릴게요. 그럼 부탁드립니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 재고 실사
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

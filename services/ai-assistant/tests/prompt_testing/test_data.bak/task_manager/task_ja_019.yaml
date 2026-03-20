@@ -1,0 +1,6 @@
+id: task_ja_019
+name: 'JA task #19'
+language: ja-JP
+input: '[REDACTED_NAME]さんに割り当てられたタスクを見せて'
+expected:
+  action: query

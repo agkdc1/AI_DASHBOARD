@@ -1,0 +1,36 @@
+id: call_kr_011
+name: 'KR call #11'
+language: ko-KR
+text: '여보세요, [REDACTED_NAME] 씨?
+
+  네, [REDACTED_NAME] 팀장님. 수고 많으십니다.
+
+  아, 네. 수고 많아요. 다름이 아니라, 최근에 **라쿠텐** **주문** 처리 관련해서 잠깐 이야기할 게 있어서요. 지금 괜찮아요?
+
+  네, 괜찮습니다. 말씀하세요.
+
+  최근 들어 클레임이 좀 늘고 있는 것 같아서, 우리 쪽 처리 흐름을 한번 재검토해야 할 것 같아요.
+
+  아, 네. 저도 그 부분은 개선이 필요하다고 생각하고 있었습니다. 그럼 다음 주에 관련해서 미팅 한번 잡을까요?
+
+  좋아요. 그럼 다음 주 월요일 오후 2시 어때요? 회의실은 제가 예약할게요.
+
+  네, 좋습니다. 그럼 월요일에 뵙겠습니다.
+
+  네, 그럼 수고해요.
+
+  네, 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - 라쿠텐
+  - 주문
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

@@ -1,0 +1,16 @@
+id: asst_ja_029
+name: 'JA assistant #29'
+language: ja-JP
+question: メールの署名を変更する方法は？
+expected:
+  language: ja
+  must_contain_any:
+  - メール
+  - 署名
+  - 変更
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'お疲れ様です。
+
+  すみません、メールの署名を変更したいんですけど、その手受ってどこからでしたっけ？'

@@ -1,0 +1,13 @@
+id: asst_kr_029
+name: 'KR assistant #29'
+language: ko-KR
+question: InvenTree에서 새로운 부품을 등록하는 절차를 알려주세요.. 초보자도 알기 쉽게 설명해 주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 등록
+  - 부품
+  - 카테고리
+  must_not_contain:
+  - 실행했습니다
+  min_length: 80

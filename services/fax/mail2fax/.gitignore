@@ -1,0 +1,7 @@
+.aws/
+config.yaml
+config.yaml~
+*.pem
+certs/
+letsencrypt/
+logs/

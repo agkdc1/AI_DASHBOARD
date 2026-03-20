@@ -1,0 +1,16 @@
+id: asst_ja_022
+name: 'JA assistant #22'
+language: ja-JP
+question: 楽天の注文で住所不備のエラーが出たときの対処法は？
+expected:
+  language: ja
+  must_contain_any:
+  - 楽天
+  - 住所
+  - エラー
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれー！
+
+  ちょっと聞きたいんだけど、楽天の注文で住所エラーが出てる件、手動で修正する手受ってどうやるんだっけ？'

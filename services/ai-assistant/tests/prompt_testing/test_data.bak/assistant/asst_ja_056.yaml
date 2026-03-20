@@ -1,0 +1,13 @@
+id: asst_ja_056
+name: 'JA assistant #56'
+language: ja-JP
+question: Vikunjaでプロジェクトの進捗を確認する方法は。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - Vikunja
+  - プロジェクト
+  - 進捗
+  must_not_contain:
+  - 実行しました
+  min_length: 50

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: inventree-test-db
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: inventree-test-db
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: shinbee-test
+spec:
+  serviceName: inventree-test-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: inventree-test-db
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: inventree-test-db
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: shinbee-test
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-test-secret
+                  key: mysql-password
+            - name: MYSQL_DATABASE
+              value: inventree
+            - name: MYSQL_USER
+              value: inventree
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-test-secret
+                  key: mysql-password
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn-single
+        resources:
+          requests:
+            storage: 5Gi

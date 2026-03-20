@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: intranet-initdb
+  namespace: intranet
+  labels:
+    app.kubernetes.io/part-of: shinbee-intranet
+data:
+  init.sh: |
+    #!/bin/bash
+    set -e
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+      CREATE USER vikunja WITH PASSWORD '${VIKUNJA_DB_PASSWORD}';
+      CREATE DATABASE vikunja OWNER vikunja;
+      CREATE USER outline WITH PASSWORD '${OUTLINE_DB_PASSWORD}';
+      CREATE DATABASE outline OWNER outline;
+      CREATE USER authentik WITH PASSWORD '${AUTHENTIK_DB_PASSWORD}';
+      CREATE DATABASE authentik OWNER authentik;
+    EOSQL

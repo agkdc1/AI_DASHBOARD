@@ -1,0 +1,37 @@
+id: call_kr_021
+name: 'KR call #21'
+language: ko-KR
+text: '여보세요, IT팀 [REDACTED_NAME]입니다.
+
+  네, [REDACTED_NAME] 과장님. 수고하십니다. 기획팀 [REDACTED_NAME]입니다.
+
+  아, 네. 다름이 아니라 다음 주 **서버** **유지보수** 건으로 연락드렸습니다.
+
+  네, 말씀하세요.
+
+  다음 주 토요일 새벽에 정기 유지보수 작업이 예정되어 있어서요. 작업 동안 시스템이 약 2시간 정도 중단될 예정이라, 부서원분들께 미리 공지를
+  좀 부탁드리려고 합니다.
+
+  네, 알겠습니다. 바로 공지하도록 하겠습니다.
+
+  감사합니다. 혹시 다른 문의사항은 없으신가요?
+
+  네, 괜찮습니다.
+
+  **그럼** 잘 부탁드립니다. **실례하겠습니다**.
+
+  네, 수고하세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - 유지보수
+  - 서버
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

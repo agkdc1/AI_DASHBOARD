@@ -1,0 +1,20 @@
+id: voice_kr_018
+name: 'KR voice inventory #18'
+language: ko-KR
+text: 아, 저기, 수고 많으십니다. 그… 뭐였더라, 아, 맞다. [잡음] 어… 그 에스케이유-Y200 제품 있잖아요. 거기서 지금 불량이, 어…
+  아니, 불량품이 몇 개 나왔다고 해서요. 음… 그러니까 일단 지금 나가고 있는 거… 아니, 출하 예정인 물량부터 좀 막아야 할 것 같은데… [기침]
+  아, 그거 확인 좀 바로 부탁드릴게요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-Y200
+  - 불량
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

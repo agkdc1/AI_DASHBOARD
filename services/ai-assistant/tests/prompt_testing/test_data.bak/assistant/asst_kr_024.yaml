@@ -1,0 +1,12 @@
+id: asst_kr_024
+name: 'KR assistant #24'
+language: ko-KR
+question: 전화 내선번호 설정 방법은?
+expected:
+  language: ko
+  must_contain_any:
+  - 전화
+  - 내선
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

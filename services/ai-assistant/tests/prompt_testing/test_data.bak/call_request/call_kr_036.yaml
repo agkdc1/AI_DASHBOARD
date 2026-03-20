@@ -1,0 +1,33 @@
+id: call_kr_036
+name: 'KR call #36'
+language: ko-KR
+text: '여보세요, [REDACTED_NAME]입니다.
+
+  아, [REDACTED_NAME] 팀장님. 수고 많으십니다.
+
+  네, 수고하십니다. 긴급하게 연락드렸습니다. 다름이 아니라, **SKU-X100** 제품 관련해서요. 일부 제품에서 **불량품**이 발견되었는데,
+  이미 오늘 오전에 출하된 것 같습니다. 즉시 모든 출하를 중지해 주시고, 배송된 고객사에도 연락을 취해야 할 것 같습니다.
+
+  네? 알겠습니다. 바로 출하 중지하고 배송 목록 확인해서 연락하겠습니다.
+
+  그리고 대체품 수배도 바로 부탁드립니다.
+
+  **네, 알겠습니다.** 재고 확인해서 바로 처리하겠습니다.
+
+  감사합니다. 그럼 잘 부탁드립니다.
+
+  네. 실례하겠습니다.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - SKU-X100
+  - 불량품
+  priority_range:
+  - 4
+  - 4
+  has_decisions: true

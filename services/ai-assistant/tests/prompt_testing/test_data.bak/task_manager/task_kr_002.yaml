@@ -1,0 +1,13 @@
+id: task_kr_002
+name: 'KR task #2'
+language: ko-KR
+input: 오늘 중으로 SO-2024-5678 출하 작업을 완료하는 태스크를 만들어 주세요
+expected:
+  action: create
+  task_title_contains:
+  - SO-2024-5678
+  - 출하
+  has_due_date: true
+  priority_range:
+  - 3
+  - 4

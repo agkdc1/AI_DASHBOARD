@@ -1,0 +1,19 @@
+id: voice_ja_055
+name: 'JA voice it #55'
+language: ja-JP
+text: あ、お疲れ様です、えー、[REDACTED_NAME]です。えーと、あのー、すみません、ちょっとお願いしたいことがあるんですけど…。あの、3階の、あ、違う、えーとフロアの真ん中にある大きいプリンターなんですけど、[雑音]
+  なんか最近、そのー、調子が…。紙詰まりが、えーっと、今日だけで3回…いや5回くらいかな？ [一時停止] すごい多くて。それで、あのー、まぁ、一度業者さんにメンテナンスの依頼をお願いできないかなーと思いまして。はい、よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - プリンター
+  - メンテナンス
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

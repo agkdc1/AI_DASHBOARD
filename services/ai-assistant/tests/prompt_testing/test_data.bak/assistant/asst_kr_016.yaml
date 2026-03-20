@@ -1,0 +1,13 @@
+id: asst_kr_016
+name: 'KR assistant #16'
+language: ko-KR
+question: Outline에서 문서를 검색하는 방법은?
+expected:
+  language: ko
+  must_contain_any:
+  - Outline
+  - 문서
+  - 검색
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: inventree-db
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: inventree-db
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: shinbee
+spec:
+  serviceName: inventree-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: inventree-db
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: inventree-db
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: shinbee
+    spec:
+      priorityClassName: shinbee-critical
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: shinbee/workload
+                    operator: In
+                    values:
+                      - inventree
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+              name: mysql
+          env:
+            - name: MYSQL_DATABASE
+              value: inventree
+            - name: MYSQL_USER
+              value: inventree
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-db-secret
+                  key: mysql-password
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-db-secret
+                  key: mysql-root-password
+            - name: TZ
+              value: Asia/Tokyo
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 1024Mi
+              cpu: "1"
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+          livenessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 10
+          startupProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 30
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 10Gi

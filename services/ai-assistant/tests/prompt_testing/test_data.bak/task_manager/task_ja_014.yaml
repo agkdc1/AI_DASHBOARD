@@ -1,0 +1,6 @@
+id: task_ja_014
+name: 'JA task #14'
+language: ja-JP
+input: 出荷関連のタスクを検索して
+expected:
+  action: query

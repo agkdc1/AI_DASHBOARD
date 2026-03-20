@@ -1,0 +1,139 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventree-test-server
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: inventree-test-server
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: shinbee-test
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: inventree-test-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: inventree-test-server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: shinbee-test
+    spec:
+      priorityClassName: shinbee-normal
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: inventree-server
+          image: inventree/inventree:stable
+          command: ["/bin/bash", "/etc/inventree-init/init-shinbee.sh"]
+          args:
+            - "gunicorn"
+            - "-c"
+            - "./gunicorn.conf.py"
+            - "InvenTree.wsgi"
+            - "-b"
+            - "0.0.0.0:8000"
+            - "--workers=2"
+          ports:
+            - containerPort: 8000
+              name: http
+          env:
+            - name: INVENTREE_DB_ENGINE
+              value: mysql
+            - name: INVENTREE_DB_NAME
+              value: inventree
+            - name: INVENTREE_DB_USER
+              value: inventree
+            - name: INVENTREE_DB_HOST
+              value: inventree-test-db
+            - name: INVENTREE_DB_PORT
+              value: "3306"
+            - name: INVENTREE_SITE_URL
+              value: https://test-api.your-domain.com
+            - name: INVENTREE_ALLOWED_HOSTS
+              value: "test-api.your-domain.com,test-portal.your-domain.com"
+            - name: INVENTREE_DEBUG
+              value: "True"
+            - name: INVENTREE_PLUGINS_ENABLED
+              value: "true"
+            - name: INVENTREE_PLUGIN_DIR
+              value: /home/inventree/plugins
+            - name: INVENTREE_EMAIL_BACKEND
+              value: django.core.mail.backends.console.EmailBackend
+            - name: INVENTREE_COOKIE_DOMAIN
+              value: .your-domain.com
+            - name: INVENTREE_LANGUAGE
+              value: ja
+            - name: INVENTREE_TIMEZONE
+              value: Asia/Tokyo
+            - name: INVENTREE_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-test-secret
+                  key: admin-user
+            - name: INVENTREE_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-test-secret
+                  key: admin-password
+            - name: INVENTREE_ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-test-secret
+                  key: admin-email
+            - name: INVENTREE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-test-secret
+                  key: mysql-password
+          resources:
+            requests:
+              memory: 384Mi
+              cpu: 200m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
+          volumeMounts:
+            - name: inventree-data
+              mountPath: /home/inventree/data
+              subPath: test-data
+            - name: inventree-plugins
+              mountPath: /home/inventree/plugins
+              readOnly: true
+            - name: inventree-init
+              mountPath: /etc/inventree-init
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /api/
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: test-api.your-domain.com
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /api/
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: test-api.your-domain.com
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 180
+      volumes:
+        - name: inventree-data
+          persistentVolumeClaim:
+            claimName: inventree-data
+        - name: inventree-plugins
+          persistentVolumeClaim:
+            claimName: inventree-plugins
+        - name: inventree-init
+          configMap:
+            name: inventree-init-config
+            defaultMode: 0755

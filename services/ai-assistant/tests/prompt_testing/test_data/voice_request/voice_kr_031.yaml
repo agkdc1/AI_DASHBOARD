@@ -1,0 +1,20 @@
+id: voice_kr_031
+name: 'KR voice it #31'
+language: ko-KR
+text: 아, 저기, [REDACTED_NAME]님. 음, 어젯밤 정기 **백업** 건인데요. 아니, 오늘 새벽이었나? 어쨌든, [기침] 어, 제가
+  로그를 보니까 뭔가 좀… 아, 실패는 아니고요, 경고 메시지 같은 게 떠 있어서요. 그러니까, 실제 데이터가 정상적으로 생성됐는지 **확인**
+  좀 부탁드릴게요. 뭐, 바쁘시겠지만 오늘 오전 중으로, 한 11시… 아니, 12시 전까지는 꼭 좀 부탁드립니다. [잡음]
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 백업
+  - 확인
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

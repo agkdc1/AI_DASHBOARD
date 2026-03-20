@@ -1,0 +1,153 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: selenium-daemon
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: selenium-daemon
+    app.kubernetes.io/component: browser-automation
+    app.kubernetes.io/part-of: shinbee
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate  # Single instance — browser state conflicts
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: selenium-daemon
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: selenium-daemon
+        app.kubernetes.io/component: browser-automation
+        app.kubernetes.io/part-of: shinbee
+    spec:
+      automountServiceAccountToken: false
+      priorityClassName: shinbee-high
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: shinbee/workload
+                    operator: In
+                    values:
+                      - browser
+      containers:
+        - name: daemon
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/selenium-daemon:latest
+          command: ["/bin/sh", "-c"]
+          args: ["sed -i 's/\\r$//' /app/entrypoint.sh && pip install --no-cache-dir pyOpenSSL>=24.0 && exec /app/entrypoint.sh"]
+          ports:
+            - containerPort: 8020
+              name: http
+          envFrom:
+            - secretRef:
+                name: selenium-daemon-secret
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /app/Vault/pki/wif-credential-config.json
+            - name: GOOGLE_API_CERTIFICATE_CONFIG
+              value: /app/Vault/pki/certificate_config.json
+            - name: DISPLAY
+              value: ":99"
+            - name: YAMATO_LOGIN_ID
+              valueFrom:
+                secretKeyRef:
+                  name: selenium-daemon-secret
+                  key: yamato-login-id
+            - name: YAMATO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: selenium-daemon-secret
+                  key: yamato-password
+            - name: SAGAWA_USER_ID
+              valueFrom:
+                secretKeyRef:
+                  name: selenium-daemon-secret
+                  key: sagawa-user-id
+            - name: SAGAWA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: selenium-daemon-secret
+                  key: sagawa-password
+            # Default shipper (ご依頼主) info for waybill creation
+            - name: SHIPPER_PHONE
+              value: "0312345678"
+            - name: SHIPPER_POSTAL
+              value: "157-0061"
+            - name: SHIPPER_CITY
+              value: "世田谷区"
+            - name: SHIPPER_STREET
+              value: "北烏山9-2-1"
+            - name: SHIPPER_NAME
+              value: "シンビジャパン"
+          resources:
+            requests:
+              memory: 1024Mi
+              cpu: 500m
+            limits:
+              memory: 2560Mi
+              cpu: "2"
+          volumeMounts:
+            - name: dshm
+              mountPath: /dev/shm
+            - name: wif-secrets
+              mountPath: /app/Vault/pki
+              readOnly: true
+            - name: cookies
+              mountPath: /app/cookies
+            - name: pdfs
+              mountPath: /app/pdfs
+            - name: logs
+              mountPath: /app/logs
+            - name: screenshots
+              mountPath: /app/screenshots
+            - name: state
+              mountPath: /app/state
+            - name: config
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 512Mi
+        - name: wif-secrets
+          secret:
+            secretName: selenium-wif-secret
+        - name: cookies
+          persistentVolumeClaim:
+            claimName: selenium-cookies
+        - name: pdfs
+          persistentVolumeClaim:
+            claimName: selenium-pdfs
+        - name: logs
+          persistentVolumeClaim:
+            claimName: selenium-logs
+        - name: screenshots
+          persistentVolumeClaim:
+            claimName: selenium-screenshots
+        - name: state
+          persistentVolumeClaim:
+            claimName: selenium-state
+        - name: config
+          configMap:
+            name: shinbee-config

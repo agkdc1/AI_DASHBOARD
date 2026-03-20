@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: omada-controller
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: omada-controller
+    app.kubernetes.io/component: network
+    app.kubernetes.io/part-of: shinbee
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local  # Required for EAP discovery UDP
+  selector:
+    app.kubernetes.io/name: omada-controller
+  ports:
+    - port: 8043
+      targetPort: https
+      protocol: TCP
+      name: https
+    - port: 8843
+      targetPort: portal-https
+      protocol: TCP
+      name: portal-https
+    - port: 29810
+      targetPort: discovery
+      protocol: UDP
+      name: discovery
+    - port: 29811
+      targetPort: manage-v1
+      protocol: TCP
+      name: manage-v1
+    - port: 29812
+      targetPort: adopt-v1
+      protocol: TCP
+      name: adopt-v1
+    - port: 29813
+      targetPort: upgrade
+      protocol: TCP
+      name: upgrade
+    - port: 29814
+      targetPort: manage-v2
+      protocol: TCP
+      name: manage-v2

@@ -1,0 +1,13 @@
+id: asst_ja_024
+name: 'JA assistant #24'
+language: ja-JP
+question: パスワードのリセット方法を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - パスワード
+  - リセット
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: おつかれー。ちょっと聞きたいんだけど、あのシステムのパスワード忘れちゃってさ。リセットの手受ってどうやるんだっけ？

@@ -1,0 +1,18 @@
+id: voice_ja_060
+name: 'JA voice it #60'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、夜間のサーバーバックアップの件なんだけど、なんか昨日のジョブが失敗してるみたいでアラートが上がってて。申し訳ないんだけど、急ぎで状況の確認をお願いしてもいいかな？できれば今日の午前中までにお願いできると助かります。よろしく！
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - バックアップ
+  - 確認
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

@@ -1,0 +1,108 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ai-sop-sync
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: ai-assistant
+    app.kubernetes.io/component: sop-sync
+spec:
+  # Every Sunday at 03:00 JST
+  schedule: "0 3 * * 0"
+  timeZone: "Asia/Tokyo"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          containers:
+            - name: sop-sync
+              image: google/cloud-sdk:slim
+              command: ["bash", "-c"]
+              args:
+                - |
+                  set -eo pipefail
+
+                  echo "=== Exporting Outline documents to GCS ==="
+                  apt-get update -qq && apt-get install -y -qq postgresql-client > /dev/null 2>&1
+
+                  # Auth with GCS
+                  gcloud auth activate-service-account --key-file=/etc/gcs/key.json
+
+                  BUCKET="gs://your-project-ai-sops"
+                  DB_HOST="intranet-db.intranet.svc.cluster.local"
+                  DB_USER="outline"
+                  DB_NAME="outline"
+                  export PGPASSWORD="${OUTLINE_DB_PASSWORD}"
+
+                  # Export all published documents as markdown
+                  echo "Fetching documents from Outline DB..."
+                  DOCS=$(psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -tA -c "
+                    SELECT d.\"urlId\", d.title, d.text
+                    FROM documents d
+                    WHERE d.\"publishedAt\" IS NOT NULL
+                      AND d.\"deletedAt\" IS NULL
+                      AND d.\"archivedAt\" IS NULL
+                    ORDER BY d.\"updatedAt\" DESC;
+                  " --field-separator='|||')
+
+                  TMPDIR=$(mktemp -d)
+                  COUNT=0
+
+                  while IFS='|||' read -r url_id title text; do
+                    [ -z "$url_id" ] && continue
+                    FILENAME="${url_id}.md"
+                    echo "# ${title}" > "${TMPDIR}/${FILENAME}"
+                    echo "" >> "${TMPDIR}/${FILENAME}"
+                    echo "${text}" >> "${TMPDIR}/${FILENAME}"
+                    COUNT=$((COUNT + 1))
+                  done <<< "$DOCS"
+
+                  if [ "$COUNT" -eq 0 ]; then
+                    echo "No documents found, skipping upload."
+                    exit 0
+                  fi
+
+                  echo "Exported ${COUNT} documents."
+
+                  # Upload to GCS (replace all existing)
+                  echo "Uploading to ${BUCKET}..."
+                  gsutil -m rsync -d "${TMPDIR}/" "${BUCKET}/"
+                  echo "Upload complete."
+
+                  # Trigger AI assistant to reload SOP context
+                  echo "Reloading AI assistant SOP context..."
+                  curl -sf -X POST \
+                    http://ai-assistant.shinbee.svc.cluster.local:8030/assistant/reload-sops \
+                    -H "Content-Type: application/json" \
+                    -o /dev/null -w "HTTP %{http_code}\n" || echo "Warning: reload-sops failed (assistant may be down)"
+
+                  echo "=== Done ==="
+              env:
+                - name: OUTLINE_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: outline-db-password
+                      key: password
+              volumeMounts:
+                - name: gcs-key
+                  mountPath: /etc/gcs
+                  readOnly: true
+              resources:
+                requests:
+                  memory: "128Mi"
+                  cpu: "100m"
+                limits:
+                  memory: "256Mi"
+                  cpu: "500m"
+          volumes:
+            - name: gcs-key
+              secret:
+                secretName: ai-assistant-gcs-secret
+          restartPolicy: OnFailure

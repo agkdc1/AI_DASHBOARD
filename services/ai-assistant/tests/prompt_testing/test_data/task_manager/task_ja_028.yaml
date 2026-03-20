@@ -1,0 +1,11 @@
+id: task_ja_028
+name: 'JA task #28'
+language: ja-JP
+input: タスク#555はもう不要なので削除して
+expected:
+  action: delete
+text: 'お疲れ様ですー
+
+  JA task #28のタスクですがこれ不要になったんで削除お願いできますか
+
+  すみません こちらの確んミスです！'

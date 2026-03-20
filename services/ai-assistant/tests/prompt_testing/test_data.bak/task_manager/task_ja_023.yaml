@@ -1,0 +1,6 @@
+id: task_ja_023
+name: 'JA task #23'
+language: ja-JP
+input: タスク#789を完了にして
+expected:
+  action: update

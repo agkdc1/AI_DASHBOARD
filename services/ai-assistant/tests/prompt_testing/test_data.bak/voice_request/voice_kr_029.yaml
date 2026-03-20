@@ -1,0 +1,19 @@
+id: voice_kr_029
+name: 'KR voice it #29'
+language: ko-KR
+text: 아, 저기... [REDACTED_NAME]입니다. 다름이 아니라, 저희 부서에서 쓰는 프린터가 계속 용지가 걸려서요. 음... 급하게
+  써야 할 서류가 있어서 그런데, 오늘 중으로 정비 기사님 방문 요청 좀 부탁드려도 될까요?
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 프린터
+  - 정비
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

@@ -1,0 +1,6 @@
+id: task_kr_012
+name: 'KR task #12'
+language: ko-KR
+input: 마감일이 지난 태스크가 있나요?
+expected:
+  action: query

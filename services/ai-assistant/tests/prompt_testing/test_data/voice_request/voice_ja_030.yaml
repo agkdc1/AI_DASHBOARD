@@ -1,0 +1,19 @@
+id: voice_ja_030
+name: 'JA voice inventory #30'
+language: ja-JP
+text: あ、お疲れ様です。えーと、あのー、ちょっとお願いしたいんですけど、[雑音] そのー、在庫管理で使ってる、えー、InvenTreeのことなんですけど。新しいカテゴリー、あ、いや、カテゴリーを追加してほしくて。えーっと、「電子部品」の下に、うーん、「電子部品-コネクタ」…あ、違う、「電子部品-コネクタ」っていう名前で、[一時停止]
+  うん、それで作ってもらえますか。まぁ、手が空いた時で大丈夫です。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - カテゴリー
+  - InvenTree
+  due_date_present: false
+  priority_range:
+  - 1
+  - 3

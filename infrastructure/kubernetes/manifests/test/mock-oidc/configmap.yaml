@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mock-oidc-server
+  namespace: shinbee-test
+  labels:
+    app.kubernetes.io/name: mock-oidc
+data:
+  main.py: |
+    """Minimal mock OIDC server mimicking Google OAuth endpoints for testing."""
+    import json
+    import time
+    from fastapi import FastAPI, Request
+    from fastapi.responses import JSONResponse, RedirectResponse
+
+    app = FastAPI(title="Mock OIDC Server")
+
+    ISSUER = "http://mock-oidc.shinbee-test.svc.cluster.local"
+    TEST_USER = {
+        "sub": "test-user-001",
+        "email": "test@your-domain.com",
+        "email_verified": True,
+        "name": "Test User",
+        "given_name": "Test",
+        "family_name": "User",
+        "picture": "",
+    }
+
+    @app.get("/.well-known/openid-configuration")
+    async def discovery():
+        return {
+            "issuer": ISSUER,
+            "authorization_endpoint": f"{ISSUER}/o/oauth2/v2/auth",
+            "token_endpoint": f"{ISSUER}/token",
+            "userinfo_endpoint": f"{ISSUER}/userinfo",
+            "jwks_uri": f"{ISSUER}/.well-known/jwks.json",
+            "response_types_supported": ["code", "token", "id_token"],
+            "subject_types_supported": ["public"],
+            "id_token_signing_alg_values_supported": ["RS256"],
+        }
+
+    @app.get("/.well-known/jwks.json")
+    async def jwks():
+        return {"keys": []}
+
+    @app.get("/o/oauth2/v2/auth")
+    async def authorize(
+        redirect_uri: str = "",
+        state: str = "",
+        **kwargs,
+    ):
+        if redirect_uri:
+            sep = "&" if "?" in redirect_uri else "?"
+            return RedirectResponse(
+                f"{redirect_uri}{sep}code=mock-auth-code&state={state}"
+            )
+        return {"code": "mock-auth-code", "state": state}
+
+    @app.post("/token")
+    async def token():
+        now = int(time.time())
+        return {
+            "access_token": "mock-access-token",
+            "token_type": "Bearer",
+            "expires_in": 3600,
+            "id_token": "mock-id-token",
+            "refresh_token": "mock-refresh-token",
+        }
+
+    @app.get("/userinfo")
+    async def userinfo():
+        return TEST_USER
+
+    if __name__ == "__main__":
+        import uvicorn
+        uvicorn.run(app, host="0.0.0.0", port=8080)

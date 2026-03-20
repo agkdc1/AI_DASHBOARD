@@ -1,0 +1,21 @@
+id: voice_kr_003
+name: 'KR voice shipping #3'
+language: ko-KR
+text: 아, [REDACTED_NAME]님, 저기... 잠깐 괜찮으세요? 음... 다름이 아니라, 그... [잡음] 어... 에스오 이공이사 다시
+  일이삼... 아니, 일이삼사요. 그 건 말인데요. 이제 출하 준비가 다 돼서, 그... 운송장 출력... 아, 출력이랑 부착까지 좀 부탁드리려고요.
+  이게 오늘 꼭 나가야 하는 거라서, [기침] 아, 그러니까... 오늘 오후... 한 세 시? 아니, 두 시까지는 꼭 좀 부탁드릴게요. 그럼 잘
+  부탁드립니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-1234
+  - 운송장
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

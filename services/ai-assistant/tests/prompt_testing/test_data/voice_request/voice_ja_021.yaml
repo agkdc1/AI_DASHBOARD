@@ -1,0 +1,19 @@
+id: voice_ja_021
+name: 'JA voice inventory #21'
+language: ja-JP
+text: あ、えーと、お疲れ様です。あのー、すみません、ちょっとお願いしたいことがありまして。ええと、部品のP-C9012、[咳] あ、ごめん、そのー、在庫を確認したらですね、なんかもう残り10個…いや、5個もなかったかな。それで、あの…来週すぐ必要になるんで、できれば今日の午後イチ、あ、違う、えーと、今日の3時頃までには発注をかけておいてもらえますか？[一時停止]
+  まぁ、もし難しかったらまた教えてください。お願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - P-C9012
+  - 在庫
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

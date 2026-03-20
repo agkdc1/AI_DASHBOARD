@@ -1,0 +1,13 @@
+id: asst_kr_025
+name: 'KR assistant #25'
+language: ko-KR
+question: VPN 연결 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - VPN
+  - 연결
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 아 그 VPN 연걸하는거 어떻게 하는거였지? 방법 좀 다시 알려줄 수 있어?

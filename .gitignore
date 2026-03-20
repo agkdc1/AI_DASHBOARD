@@ -1,0 +1,140 @@
+# =============================================================================
+# SHINBEEHUB .gitignore
+# Multi-service project: Python, Flutter/Dart, Terraform, Kubernetes, Docker
+# =============================================================================
+
+# =============================================================================
+# SECRETS & CREDENTIALS (CRITICAL - never commit these)
+# =============================================================================
+.env
+.env.*
+!.env.example
+
+# PKI / TLS material
+*.key
+*.pem
+*.crt
+*.srl
+
+# Cloud credentials
+credentials
+.aws/credentials
+*-sa.json
+*-credentials.json
+wif-credential-config.json
+certificate_config.json
+
+# Config files with real values (only *.example variants are tracked)
+config.yaml
+!config.yaml.example
+*.tfvars
+!*.tfvars.example
+
+# SMTP
+.smtp-credentials
+
+# Secrets directories (keep any README inside them)
+secrets/
+!secrets/README*
+
+# MikroTik backups (contain passwords)
+system/network/mikrotik-backup-*.rsc
+
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+env/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# =============================================================================
+# Flutter / Dart
+# =============================================================================
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+*.iml
+# pubspec.lock is intentionally tracked for applications
+
+# =============================================================================
+# Terraform
+# =============================================================================
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+
+# =============================================================================
+# Node.js
+# =============================================================================
+node_modules/
+
+# =============================================================================
+# Kubernetes
+# =============================================================================
+infrastructure/kubernetes/cache/
+infrastructure/kubernetes/config/wifi.yaml
+
+# =============================================================================
+# IDE / Editor
+# =============================================================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.md~
+
+# =============================================================================
+# OS
+# =============================================================================
+.DS_Store
+Thumbs.db
+
+# =============================================================================
+# Build artifacts
+# =============================================================================
+*.deb
+*.iso
+*.img
+*.img.xz
+*.zip
+
+# =============================================================================
+# Service-specific runtime data
+# =============================================================================
+
+# Selenium daemon
+services/selenium-daemon/cookies/
+services/selenium-daemon/screenshots/
+services/selenium-daemon/pdfs/
+services/selenium-daemon/state.json
+services/selenium-daemon/logs/
+
+# Fax service
+services/fax/data/
+
+# Phone provisioning
+services/phone-provisioning/output/
+
+# Vault
+Vault/data/
+Vault/logs/
+Vault/agent/
+
+# Logs (anywhere)
+logs/
+
+# =============================================================================
+# Claude Code
+# =============================================================================
+.claude/

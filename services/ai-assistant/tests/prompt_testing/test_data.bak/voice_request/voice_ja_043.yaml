@@ -1,0 +1,18 @@
+id: voice_ja_043
+name: 'JA voice orders #43'
+language: ja-JP
+text: あのー、すみません。ちょっとお願いしたいんですけど、Yahooからの注文で、まだ処理が滞っているものがないか確認してもらえますか？もし発送が遅延している注文があれば、リストアップして、えーと、今日の夕方までには報告してもらえると助かります。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - Yahoo
+  - 注文
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

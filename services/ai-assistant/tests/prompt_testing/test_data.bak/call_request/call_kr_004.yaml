@@ -1,0 +1,34 @@
+id: call_kr_004
+name: 'KR call #4'
+language: ko-KR
+text: '네, 물류팀 [REDACTED_NAME]입니다.
+
+  수고 많으십니다, 과장님. 영업부 [REDACTED_NAME]입니다. 주문 번호 SO-2025-0123 관련해서 문의드릴 게 있어서 전화드렸습니다.
+
+  아, 네, [REDACTED_NAME] 대리님. 말씀하세요.
+
+  혹시 해당 주문 건 오늘 출하 가능할까요? 고객사에서 좀 급하다고 하셔서요.
+
+  잠시만요, 확인해 보겠습니다... 네, SO-2025-0123은 오늘 오후에 출하 예정입니다. 문제없이 가능합니다.
+
+  아, 다행이네요! 알겠습니다. 그럼 오늘 꼭 출하될 수 있도록 잘 부탁드리겠습니다.
+
+  네, 알겠습니다. 그렇게 진행하겠습니다.
+
+  감사합니다. 그럼 수고하세요.
+
+  네, 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - SO-2025-0123
+  - 출하
+  priority_range:
+  - 3
+  - 4
+  has_decisions: true

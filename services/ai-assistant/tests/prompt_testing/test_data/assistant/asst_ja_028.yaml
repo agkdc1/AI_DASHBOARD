@@ -1,0 +1,18 @@
+id: asst_ja_028
+name: 'JA assistant #28'
+language: ja-JP
+question: 請求書の作成手順を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - 請求書
+  - 作成
+  - 手順
+  must_not_contain:
+  - 実行しました
+  min_length: 60
+text: 'おつかれー。
+
+  ちょっと教えてほしいんだけど、請求書を作成する手受ってどうやるんだっけ？
+
+  新しいやり方がまだよくわかってなくて。'

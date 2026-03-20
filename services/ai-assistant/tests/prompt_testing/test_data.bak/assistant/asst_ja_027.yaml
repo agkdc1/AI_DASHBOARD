@@ -1,0 +1,12 @@
+id: asst_ja_027
+name: 'JA assistant #27'
+language: ja-JP
+question: VPNの接続方法を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - VPN
+  - 接続
+  must_not_contain:
+  - 実行しました
+  min_length: 50

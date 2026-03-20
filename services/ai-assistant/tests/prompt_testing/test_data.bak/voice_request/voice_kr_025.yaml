@@ -1,0 +1,19 @@
+id: voice_kr_025
+name: 'KR voice general #25'
+language: ko-KR
+text: 아, [REDACTED_NAME]씨, 저기요. 내일 오전 회의 때 써야 할 자료가 좀 필요한데요. 음... 지난 분기 매출 정리된 자료
+  있죠? 그거 오늘 퇴근 전까지 준비해서 저한테 메일로 보내주실 수 있을까요?
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 자료
+  - 매출
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

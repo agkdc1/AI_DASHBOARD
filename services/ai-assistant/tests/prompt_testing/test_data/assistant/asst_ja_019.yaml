@@ -1,0 +1,20 @@
+id: asst_ja_019
+name: 'JA assistant #19'
+language: ja-JP
+question: SOPマニュアルの更新方法を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - SOP
+  - マニュアル
+  - 更新
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつです！
+
+  ちょっと聞きたいんだけど、あのSOPかマニュアルってどこだっけ？
+
+  この前更新されたって聞いた気がするんだけど、最新版の場所おしえて。
+
+  古い手受だとちょっとわからなくて。'

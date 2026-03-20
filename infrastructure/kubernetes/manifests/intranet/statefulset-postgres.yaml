@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: intranet-db
+  namespace: intranet
+  labels:
+    app.kubernetes.io/name: intranet-db
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: shinbee-intranet
+spec:
+  serviceName: intranet-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: intranet-db
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: intranet-db
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: shinbee-intranet
+    spec:
+      priorityClassName: shinbee-critical
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+              name: postgres
+          env:
+            - name: TZ
+              value: Asia/Tokyo
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: intranet-db-secret
+                  key: vikunja-password
+            - name: VIKUNJA_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: intranet-db-secret
+                  key: vikunja-password
+            - name: OUTLINE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: intranet-db-secret
+                  key: outline-password
+            - name: AUTHENTIK_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secret
+                  key: db-password
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 250m
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
+          startupProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres"]
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 30
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+      volumes:
+        - name: initdb
+          configMap:
+            name: intranet-initdb
+            defaultMode: 0755
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: longhorn-single
+        resources:
+          requests:
+            storage: 5Gi

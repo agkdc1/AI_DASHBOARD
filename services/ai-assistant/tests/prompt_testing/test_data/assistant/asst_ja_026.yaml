@@ -1,0 +1,18 @@
+id: asst_ja_026
+name: 'JA assistant #26'
+language: ja-JP
+question: 電話の内線番号の設定方法は？
+expected:
+  language: ja
+  must_contain_any:
+  - 電話
+  - 内線
+  - 設定
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれさまですー。
+
+  ちょっと教えてほしいんだけど、会社の電話の内線をスマホに転送する設定、あれってどうやるんだっけ？
+
+  やり方の手受がわからなくて…。マニュアルとかありますか？'

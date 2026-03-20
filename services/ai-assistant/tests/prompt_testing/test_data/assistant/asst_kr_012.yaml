@@ -1,0 +1,15 @@
+id: asst_kr_012
+name: 'KR assistant #12'
+language: ko-KR
+question: 착불 전표 작성 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 착불
+  - 전표
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 'KR 어시스턴트 #12, 질문점요ㅋㅋ
+
+  저번에 사무실로 온 착불 택배 건 말인데, 이거 전표 처리하는 절촤가 어떻게 됐더라? 새로 바뀐 시스템으로 하는 거 맞지? 알려주라~'

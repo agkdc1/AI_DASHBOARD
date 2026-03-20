@@ -1,0 +1,19 @@
+id: voice_ja_016
+name: 'JA voice shipping #16'
+language: ja-JP
+text: '[雑音] あ、お疲れ様です。[REDACTED_NAME]さん、ちょっとすみません。えーと、あのー、注文番号のエスオーのにーぜろにーよんの、いちにーさん…あ、ごめん、エスオーのにーぜろにーよんのいちにーさんよん、の件なんですけど。
+  [一時停止] これ、なんか至急で発送をお願いしたくて。送り先は、えー、[REDACTED_NAME]様で、住所は[REDACTED_ADDRESS]ですね。そのー、お客様からお問い合わせが入ってまして…。申し訳ないんですけど、本日中に、あ、いや、厳しければ明日の朝イチの便でお願いします。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-1234
+  - 発送
+  due_date_present: true
+  priority_range:
+  - 4
+  - 4

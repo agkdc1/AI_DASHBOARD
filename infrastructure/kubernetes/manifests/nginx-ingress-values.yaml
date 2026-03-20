@@ -1,0 +1,45 @@
+# nginx-ingress-controller values for Tailscale-only cluster
+#
+# hostPort mode: binds directly to port 80/443 on worker nodes.
+# No LoadBalancer or MetalLB needed — Pi reverse-proxies to
+# worker Tailscale IPs directly.
+#
+# Only scheduled on workers (not the GCP entrypoint node).
+
+controller:
+  # DaemonSet ensures one ingress pod per worker node
+  kind: DaemonSet
+
+  # Bind to host ports — Pi connects to worker:80/443 via Tailscale
+  hostPort:
+    enabled: true
+    ports:
+      http: 80
+      https: 443
+
+  # No Service needed — traffic comes via hostPort
+  service:
+    enabled: false
+
+  # Only run on workers, not the GCP entrypoint/control-plane
+  nodeSelector:
+    kubernetes.io/arch: amd64
+  tolerations: []
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node.kubernetes.io/role
+                operator: NotIn
+                values:
+                  - entrypoint
+
+  # Disable admission webhooks (not needed for this setup)
+  admissionWebhooks:
+    enabled: false
+
+  # Use Tailscale IP as the source for X-Forwarded-For
+  config:
+    use-forwarded-headers: "true"
+    compute-full-forwarded-for: "true"

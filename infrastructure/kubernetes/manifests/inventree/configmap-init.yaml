@@ -1,0 +1,136 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: inventree-init-config
+  namespace: shinbee
+data:
+  init-shinbee.sh: |
+    #!/bin/bash
+    set -e
+
+    # Read MySQL password from K8s secret mount and export as env var
+    if [ -f /etc/inventree-secrets/mysql-password ]; then
+        export INVENTREE_DB_PASSWORD="$(cat /etc/inventree-secrets/mysql-password)"
+    else
+        echo "WARNING: /etc/inventree-secrets/mysql-password not found"
+    fi
+
+    # Always refresh config.yaml from template so credential rotation takes effect
+    cp /etc/inventree-init/config.yaml.template "${INVENTREE_CONFIG_FILE}"
+
+    # Auth: Authentik forward auth + REMOTE_LOGIN (no OIDC token exchange needed)
+    echo "Auth mode: Authentik forward auth (REMOTE_LOGIN via X-Authentik-Username header)"
+
+    # Inject cookie domain into Django settings for cross-subdomain session sharing
+    if [ -n "${INVENTREE_COOKIE_DOMAIN:-}" ]; then
+        SETTINGS_PY="/home/inventree/src/backend/InvenTree/InvenTree/settings.py"
+        if ! grep -q 'SESSION_COOKIE_DOMAIN' "$SETTINGS_PY"; then
+            cat >> "$SETTINGS_PY" << 'PYEOF'
+
+    # Shinbee: share cookies across subdomains (injected by init-shinbee.sh)
+    import os as _os
+    _cd = _os.environ.get('INVENTREE_COOKIE_DOMAIN')
+    if _cd:
+        SESSION_COOKIE_DOMAIN = _cd
+        CSRF_COOKIE_DOMAIN = _cd
+    PYEOF
+        fi
+        echo "Cookie domain set to ${INVENTREE_COOKIE_DOMAIN}"
+    fi
+
+    # (SOCIALACCOUNT_EMAIL_AUTHENTICATION removed — using REMOTE_LOGIN instead of OIDC)
+
+    # ---------- Patch AppMixin KeyError during plugin reload ----------
+    APPMIXIN_PY="/home/inventree/src/backend/InvenTree/plugin/base/integration/AppMixin.py"
+    if [ -f "$APPMIXIN_PY" ] && grep -q 'apps.all_models\[plugin_path\].pop(model)' "$APPMIXIN_PY"; then
+        sed -i 's/apps.all_models\[plugin_path\].pop(model)/apps.all_models[plugin_path].pop(model, None)/' "$APPMIXIN_PY"
+        echo "Patched AppMixin model deregistration (KeyError workaround)"
+    fi
+
+    # (Google allauth patch removed — using Authentik OIDC instead)
+
+    # ---------- Replicate essential init.sh setup ----------
+
+    MANAGE_PY="${INVENTREE_BACKEND_DIR:-/home/inventree/src/backend}/InvenTree/manage.py"
+
+    if command -v git &> /dev/null; then
+        git config --global --add safe.directory /home/inventree 2>/dev/null || true
+    fi
+
+    mkdir -p "${INVENTREE_STATIC_ROOT}" "${INVENTREE_MEDIA_ROOT}" "${INVENTREE_BACKUP_DIR}"
+
+    if [ -f "${INVENTREE_CONFIG_FILE}" ]; then
+        echo "Loading config file : ${INVENTREE_CONFIG_FILE}"
+    fi
+
+    # Activate Python venv if configured
+    if [[ -n "${INVENTREE_PY_ENV}" ]] && [[ -d "${INVENTREE_PY_ENV}" ]]; then
+        echo "Using Python virtual environment: ${INVENTREE_PY_ENV}"
+        source "${INVENTREE_PY_ENV}/bin/activate"
+    fi
+
+    cd "${INVENTREE_HOME}"
+
+    # ---------- Run database migrations + collect static ----------
+    # Only the server should run migrations/static. The worker (invoke worker)
+    # skips these to avoid MySQL lock contention on simultaneous startup.
+    if [ "$1" != "invoke" ]; then
+        echo "Running database migrations..."
+        invoke migrate
+
+        echo "Collecting static files (incremental)..."
+        python "$MANAGE_PY" collectstatic --no-input --verbosity 0
+
+        echo "Collecting plugin static files..."
+        python "$MANAGE_PY" collectplugins 2>/dev/null || true
+
+        # Create SSO-only superuser if INVENTREE_ADMIN_EMAIL is set
+        if [ -n "${INVENTREE_ADMIN_EMAIL:-}" ]; then
+            ADMIN_USERNAME="${INVENTREE_ADMIN_EMAIL%%@*}"
+            python "$MANAGE_PY" shell -c "
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    if not User.objects.filter(email='${INVENTREE_ADMIN_EMAIL}').exists():
+        u = User.objects.create_superuser('${ADMIN_USERNAME}', '${INVENTREE_ADMIN_EMAIL}', None)
+        u.set_unusable_password(); u.save()
+        print(f'Created SSO-only superuser: ${ADMIN_USERNAME}')
+    else:
+        print(f'Superuser already exists: ${INVENTREE_ADMIN_EMAIL}')
+    "
+        fi
+    fi
+
+    # Change to the InvenTree backend directory where gunicorn.conf.py and wsgi.py live
+    cd "${INVENTREE_BACKEND_DIR:-/home/inventree/src/backend}/InvenTree"
+
+    # Start the requested command (gunicorn for server, invoke worker for worker)
+    exec "$@"
+
+  config.yaml.template: |
+    # InvenTree K8s configuration
+    # MySQL via TCP (ClusterIP Service) instead of unix socket
+
+    database:
+      ENGINE: mysql
+      NAME: inventree
+      USER: inventree
+      HOST: inventree-db
+      PORT: '3306'
+      OPTIONS:
+        charset: utf8mb4
+        init_command: "SET sql_mode='STRICT_TRANS_TABLES'"
+
+    plugins_enabled: true
+    plugin_dir: /home/inventree/plugins
+
+    allowed_hosts:
+      - "portal.your-domain.com"
+      - "api.your-domain.com"
+
+    trusted_origins:
+      - "https://portal.your-domain.com"
+      - "https://api.your-domain.com"
+      - "https://app.your-domain.com"
+      - "https://test-app.your-domain.com"
+
+    # Auth: Authentik forward auth + REMOTE_LOGIN (no OIDC needed)

@@ -1,0 +1,13 @@
+id: asst_ja_042
+name: 'JA assistant #42'
+language: ja-JP
+question: InvenTreeのラベル印刷の設定方法は。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - ラベル
+  - 印刷
+  - 設定
+  must_not_contain:
+  - 実行しました
+  min_length: 50

@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: samba-ad-lb
+  namespace: shinbee
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: "10.0.0.250"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app.kubernetes.io/name: samba-ad-dc
+  ports:
+    - name: dns-tcp
+      port: 53
+      targetPort: 53
+      protocol: TCP
+    - name: dns-udp
+      port: 53
+      targetPort: 53
+      protocol: UDP
+    - name: kerberos-tcp
+      port: 88
+      targetPort: 88
+      protocol: TCP
+    - name: kerberos-udp
+      port: 88
+      targetPort: 88
+      protocol: UDP
+    - name: ldap-tcp
+      port: 389
+      targetPort: 389
+      protocol: TCP
+    - name: ldap-udp
+      port: 389
+      targetPort: 389
+      protocol: UDP
+    - name: smb
+      port: 445
+      targetPort: 445
+      protocol: TCP
+    - name: kpasswd-tcp
+      port: 464
+      targetPort: 464
+      protocol: TCP
+    - name: kpasswd-udp
+      port: 464
+      targetPort: 464
+      protocol: UDP
+    - name: ldaps
+      port: 636
+      targetPort: 636
+      protocol: TCP
+    - name: gc
+      port: 3268
+      targetPort: 3268
+      protocol: TCP
+    - name: gc-ssl
+      port: 3269
+      targetPort: 3269
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: samba-ad-internal
+  namespace: shinbee
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: samba-ad-dc
+  ports:
+    - name: ldap
+      port: 389
+      targetPort: 389
+      protocol: TCP
+    - name: ldaps
+      port: 636
+      targetPort: 636
+      protocol: TCP

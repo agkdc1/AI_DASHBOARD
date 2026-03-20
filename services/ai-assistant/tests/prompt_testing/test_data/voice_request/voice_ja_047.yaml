@@ -1,0 +1,20 @@
+id: voice_ja_047
+name: 'JA voice general #47'
+language: ja-JP
+text: あ、お疲れ様です。[REDACTED_NAME]さん、えーと、あのー、ちょっとお願いしたいことがありまして。来週の会議で使う**資料**なんですけど、[咳]
+  あの、先月の**売上**実績を、えー、まとめてもらえないかな。特に、えーっと、主要製品、**なんか、3つ…いや5つくらい**の推移がわかるような…**そのー、なんだっけ**…あ、そうそう、グラフ。グラフもつけてもらえると、まぁ、すごく助かります。[一時停止]
+  急で申し訳ないんだけど、**金曜、あ、違う、木曜の**午前中までにお願いできるかな？よろしく！
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 資料
+  - 売上
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

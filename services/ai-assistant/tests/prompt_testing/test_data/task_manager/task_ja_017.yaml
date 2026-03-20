@@ -1,0 +1,7 @@
+id: task_ja_017
+name: 'JA task #17'
+language: ja-JP
+input: 楽天関連のタスク一覧を表示して
+expected:
+  action: query
+text: 'お疲れ様ですー JA task #17の件なんですけど進捗どんな感じかちょっと化員お願いできますか？'

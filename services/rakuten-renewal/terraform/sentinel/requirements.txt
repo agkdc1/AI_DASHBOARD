@@ -1,0 +1,4 @@
+functions-framework>=3.5
+google-cloud-firestore>=2.16
+google-cloud-aiplatform>=1.48
+sendgrid>=6.11

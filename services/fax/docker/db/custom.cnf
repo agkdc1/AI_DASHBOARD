@@ -1,0 +1,24 @@
+[mysqld]
+# Pi-optimized MariaDB settings
+innodb_buffer_pool_size = 256M
+innodb_log_file_size = 64M
+innodb_flush_log_at_trx_commit = 2
+innodb_flush_method = O_DIRECT
+
+# Connection settings
+max_connections = 50
+skip-name-resolve
+
+# Compatibility — FreePBX needs relaxed SQL mode
+sql_mode = NO_ENGINE_SUBSTITUTION
+
+# Character set
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Logging
+slow_query_log = 0
+general_log = 0
+
+[client]
+default-character-set = utf8mb4

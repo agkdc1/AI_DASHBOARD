@@ -1,0 +1,12 @@
+id: task_kr_005
+name: 'KR task #5'
+language: ko-KR
+input: 창고 A 재고 실사 준비 태스크를 만들어 주세요
+expected:
+  action: create
+  task_title_contains:
+  - 재고 실사
+  - 창고
+  priority_range:
+  - 2
+  - 3

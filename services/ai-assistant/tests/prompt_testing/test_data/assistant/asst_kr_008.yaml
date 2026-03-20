@@ -1,0 +1,14 @@
+id: asst_kr_008
+name: 'KR assistant #8'
+language: ko-KR
+question: InvenTree에서 BOM(부품표)을 만드는 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - BOM
+  - 부품표
+  must_not_contain:
+  - 실행했습니다
+  min_length: 60
+text: 'KR assistant #8, 잠깐! 그 신제품 BOM 등록하는 거 말인데, 부품표 업로드하는 절자 다시 알려줄수있어? 포맷이 좀 특이했던거
+  같은데 가물가물하네;;'

@@ -1,0 +1,18 @@
+id: voice_ja_055
+name: 'JA voice it #55'
+language: ja-JP
+text: あ、お疲れ様です。[REDACTED_NAME]です。えーと、すみません、ちょっとお願いがありまして。あの、3階の複合機なんですけど、最近どうも調子が悪くてですね、やたらと紙詰まりが起こるんですよ。なので、一度プリンターのメンテナンスを業者さんにお願いできませんでしょうか。できれば今週中に対応してもらえると非常に助かります。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - プリンター
+  - メンテナンス
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

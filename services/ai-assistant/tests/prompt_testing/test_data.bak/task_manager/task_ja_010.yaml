@@ -1,0 +1,12 @@
+id: task_ja_010
+name: 'JA task #10'
+language: ja-JP
+input: 品質管理チェックリストの更新タスクを作成して
+expected:
+  action: create
+  task_title_contains:
+  - 品質管理
+  - チェックリスト
+  priority_range:
+  - 2
+  - 3

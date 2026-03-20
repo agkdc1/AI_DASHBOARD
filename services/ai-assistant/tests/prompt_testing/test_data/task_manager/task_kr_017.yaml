@@ -1,0 +1,7 @@
+id: task_kr_017
+name: 'KR task #17'
+language: ko-KR
+input: '태스크 #101의 설명을 ''출하 중지 대응''으로 업데이트해 주세요'
+expected:
+  action: update
+text: 'OO씨 KR task #17 [ ] 이부분 업대이트 좀 해줘요 내용 확인하고 바로 부탁! 아 맞다 기한 내일까지였네'

@@ -1,0 +1,6 @@
+id: task_kr_009
+name: 'KR task #9'
+language: ko-KR
+input: 이번주 미완료 태스크를 보여 주세요
+expected:
+  action: query

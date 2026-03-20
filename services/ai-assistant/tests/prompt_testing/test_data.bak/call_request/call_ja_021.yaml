@@ -1,0 +1,60 @@
+id: call_ja_021
+name: 'JA call #21'
+language: ja-JP
+text: '（発信者：[REDACTED_NAME_A]）
+
+  もしもし、お疲れ様です。[REDACTED_NAME_A]です。
+
+
+  （受信者：[REDACTED_NAME_B]）
+
+  お疲れ様です。[REDACTED_NAME_B]です。
+
+
+  （発信者：[REDACTED_NAME_A]）
+
+  今お時間よろしいでしょうか。先日ご依頼のありました**返品**の件でご連絡いたしました。管理番号**RMA-003**の商品なのですが、現物を確認したところ、外装に目立つ損傷がありまして。
+
+
+  （受信者：[REDACTED_NAME_B]）
+
+  あ、そうですか。承知しました。そうなると、再販は難しいですね。
+
+
+  （発信者：[REDACTED_NAME_A]）
+
+  **はい**、そのように判断しております。つきましては、お客様への返金処理を進めてしまってよろしいでしょうか？
+
+
+  （受信者：[REDACTED_NAME_B]）
+
+  **はい**、問題ありません。**では**、返金処理を進めてください。あと、念のため簡単な報告書も作成しておいてもらえますか。
+
+
+  （発信者：[REDACTED_NAME_A]）
+
+  承知いたしました。では、そのように手配いたします。
+
+
+  （受信者：[REDACTED_NAME_B]）
+
+  よろしくお願いします。**失礼します**。
+
+
+  （発信者：[REDACTED_NAME_A]）
+
+  **失礼します**。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - RMA-003
+  - 返品
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

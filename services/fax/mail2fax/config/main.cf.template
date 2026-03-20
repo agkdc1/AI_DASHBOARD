@@ -1,0 +1,46 @@
+# Postfix main configuration — generated from template
+# Do not edit directly; modify main.cf.template instead.
+
+# General
+myhostname = {{DOMAIN}}
+mydomain = {{DOMAIN}}
+myorigin = $mydomain
+mydestination =
+mynetworks = 127.0.0.0/8 [::1]/128 10.0.0.0/21 172.20.0.0/24
+inet_interfaces = all
+inet_protocols = ipv4
+
+# Virtual domain: intercept all mail to @fax
+virtual_mailbox_domains = fax
+virtual_transport = email_processor:
+
+# SASL authentication
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_local_domain = $myhostname
+
+# Recipient restrictions: accept mail for our virtual domains, reject the rest
+smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+
+# Client restrictions: only allow LAN connections
+smtpd_client_restrictions = permit_mynetworks, reject
+
+# Outbound relay (outbound port 25 blocked by ISP)
+relayhost = [{{RELAY_HOST}}]:{{RELAY_PORT}}
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_security_level = encrypt
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+# TLS — inbound
+smtpd_tls_security_level = may
+smtpd_tls_cert_file = {{CERT_DIR}}/fullchain.pem
+smtpd_tls_key_file = {{CERT_DIR}}/privkey.pem
+smtpd_tls_protocols = >=TLSv1.2
+
+# Message size limit (25 MB)
+message_size_limit = 26214400
+
+# Misc
+maillog_file = /dev/stdout

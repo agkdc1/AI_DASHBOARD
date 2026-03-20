@@ -1,0 +1,49 @@
+# =============================================================================
+# RasPBX Docker Stack — Production Override
+# Usage: sudo docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+#
+# WARNING: This gives raspbx-core full host network access.
+# Only apply after thorough testing in quarantine mode.
+# =============================================================================
+
+services:
+  # Core needs host network for:
+  # - RTP 10000-20000 (10K ports, Docker NAT is terrible for real-time audio)
+  # - NTT SIP source IP auth (Docker NAT breaks circuit-based auth)
+  # - Access to both eth0 and eth1 interfaces
+  core:
+    network_mode: host
+    networks: !reset []
+    ports: !reset []
+    # In host network mode, core talks to db via published port
+    environment:
+      DB_HOST: "127.0.0.1"
+      DB_PORT: "3307"
+    extra_hosts: !reset []
+
+  # DB exposes port to localhost for host-mode core
+  # Port 3307 to avoid conflict with host MariaDB on 3306
+  db:
+    ports:
+      - "127.0.0.1:3307:3306"
+
+  # Faxapi connects to core via localhost in production
+  faxapi:
+    network_mode: host
+    networks: !reset []
+    environment:
+      AMI_HOST: "127.0.0.1"
+    ports: !reset []
+
+  # mail2fax needs external access for receiving email
+  mail2fax:
+    networks:
+      pbx-internal: {}
+    ports:
+      - "587:587"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  pbx-internal:
+    internal: false    # Allow external connectivity in production

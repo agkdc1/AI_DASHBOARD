@@ -1,0 +1,20 @@
+id: voice_kr_016
+name: 'KR voice inventory #16'
+language: ko-KR
+text: 아, 저기, [REDACTED_NAME]씨. 어... 잠깐 시간 괜찮아요? 음... 다름이 아니라, 그 창고 있잖아요. 이번에 정기 재고
+  실사를 좀 해야 해서요. [기침] 어... 품목이 한 20개... 아니, 한 25개 정도 될 거예요. 그거 좀 부탁하고, 그러니까... 기한은
+  다음 주 월요일... 아, 아니, 화요일 오전까지 마무리해서 보고해주세요. [일시정지] 뭐 특별히 어려운 건 없을 텐데, 혹시 문제 있으면 바로
+  말해주고요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 재고 실사
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

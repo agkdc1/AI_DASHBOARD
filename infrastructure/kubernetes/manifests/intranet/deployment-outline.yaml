@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intranet-outline
+  namespace: intranet
+  labels:
+    app.kubernetes.io/name: intranet-outline
+    app.kubernetes.io/component: app
+    app.kubernetes.io/part-of: shinbee-intranet
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: intranet-outline
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: intranet-outline
+        app.kubernetes.io/component: app
+        app.kubernetes.io/part-of: shinbee-intranet
+    spec:
+      priorityClassName: shinbee-high
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: outline
+          image: outlinewiki/outline:latest
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: TZ
+              value: Asia/Tokyo
+            - name: URL
+              value: https://wiki.your-domain.com
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: outline-db-url
+                  key: url
+            - name: REDIS_URL
+              value: redis://intranet-redis.intranet.svc.cluster.local:6379
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: outline-app-secret
+                  key: secret-key
+            - name: UTILS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: outline-app-secret
+                  key: utils-secret
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: outline-oauth-secret
+                  key: client-id
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: outline-oauth-secret
+                  key: client-secret
+            - name: OIDC_AUTH_URI
+              value: https://auth.your-domain.com/application/o/authorize/
+            - name: OIDC_TOKEN_URI
+              value: https://auth.your-domain.com/application/o/token/
+            - name: OIDC_USERINFO_URI
+              value: https://auth.your-domain.com/application/o/userinfo/
+            - name: OIDC_LOGOUT_URI
+              value: https://auth.your-domain.com/application/o/outline/end-session/
+            - name: OIDC_DISPLAY_NAME
+              value: Shinbee SSO
+            - name: OIDC_SCOPES
+              value: "openid profile email"
+            - name: FILE_STORAGE
+              value: s3
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: secret-key
+            - name: AWS_S3_UPLOAD_BUCKET_URL
+              value: http://intranet-minio.intranet.svc.cluster.local:9000
+            - name: AWS_S3_UPLOAD_BUCKET_NAME
+              value: outline-data
+            - name: AWS_S3_FORCE_PATH_STYLE
+              value: "true"
+            - name: AWS_S3_ACL
+              value: private
+            - name: AWS_REGION
+              value: us-east-1
+            - name: FORCE_HTTPS
+              value: "false"
+            - name: ENABLE_UPDATES
+              value: "false"
+            - name: DEFAULT_LANGUAGE
+              value: ja_JP
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 200m
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          startupProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /_health
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 5

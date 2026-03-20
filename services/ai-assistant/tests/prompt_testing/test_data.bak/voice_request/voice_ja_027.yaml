@@ -1,0 +1,18 @@
+id: voice_ja_027
+name: 'JA voice inventory #27'
+language: ja-JP
+text: あ、お疲れ様です。えーと、急ぎで共有したい件がありまして。あの、製品のSKU-Z300なんですけど、ロット番号L20260301の分で、ちょっと不良が見つかったとの連絡がありました。つきましては、大変申し訳ないのですが、該当ロットの出荷をいったん停止してもらえますでしょうか。取り急ぎよろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-Z300
+  - 不良
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

@@ -1,0 +1,20 @@
+id: voice_kr_005
+name: 'KR voice shipping #5'
+language: ko-KR
+text: 아, 저기, 음... KR 보이스 쉬핑 건으로 어... 물건 하나 발송해야 하는데요. [잡음] 받는 사람은 [REDACTED_NAME]
+  님이구요. 아, 물건이 하나... 아니, 두 개였나? 아, 아니요. 하나 맞습니다. 그리고 그... 택배사는 사가와로... 아, 그러니까 야마토
+  말고 사가와로 부탁드릴게요. 그래서... 저기... 주소가요... [일시정지] 주소는 [REDACTED_ADDRESS], 전화번호는 [REDACTED_PHONE]입니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 발송
+  - 사가와
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

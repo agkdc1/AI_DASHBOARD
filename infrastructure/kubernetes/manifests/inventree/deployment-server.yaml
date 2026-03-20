@@ -1,0 +1,157 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventree-server
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: inventree-server
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: shinbee
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: inventree-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: inventree-server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: shinbee
+    spec:
+      priorityClassName: shinbee-critical
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: shinbee/workload
+                    operator: In
+                    values:
+                      - inventree
+      containers:
+        - name: inventree-server
+          image: inventree/inventree:stable
+          command: ["/bin/bash", "/etc/inventree-init/init-shinbee.sh"]
+          args:
+            - "gunicorn"
+            - "-c"
+            - "./gunicorn.conf.py"
+            - "InvenTree.wsgi"
+            - "-b"
+            - "0.0.0.0:8000"
+            - "--workers=4"
+          ports:
+            - containerPort: 8000
+              name: http
+          env:
+            - name: INVENTREE_DB_ENGINE
+              value: mysql
+            - name: INVENTREE_DB_NAME
+              value: inventree
+            - name: INVENTREE_DB_USER
+              value: inventree
+            - name: INVENTREE_DB_HOST
+              value: inventree-db
+            - name: INVENTREE_DB_PORT
+              value: "3306"
+            - name: INVENTREE_SITE_URL
+              value: https://api.your-domain.com
+            - name: INVENTREE_DEBUG
+              value: "False"
+            - name: INVENTREE_PLUGINS_ENABLED
+              value: "true"
+            - name: INVENTREE_PLUGIN_DIR
+              value: /home/inventree/plugins
+            - name: INVENTREE_REMOTE_LOGIN
+              value: "True"
+            - name: INVENTREE_REMOTE_LOGIN_HEADER
+              value: HTTP_X_AUTHENTIK_USERNAME
+            - name: INVENTREE_EMAIL_BACKEND
+              value: django.core.mail.backends.console.EmailBackend
+            - name: INVENTREE_COOKIE_DOMAIN
+              value: .your-domain.com
+            - name: INVENTREE_LANGUAGE
+              value: ja
+            - name: INVENTREE_TIMEZONE
+              value: Asia/Tokyo
+            - name: INVENTREE_ADMIN_EMAIL
+              value: admin@your-domain.com
+            - name: INVENTREE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inventree-db-secret
+                  key: mysql-password
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 1536Mi
+              cpu: "2"
+          volumeMounts:
+            - name: inventree-data
+              mountPath: /home/inventree/data
+            - name: inventree-plugins
+              mountPath: /home/inventree/plugins
+            - name: inventree-secrets
+              mountPath: /etc/inventree-secrets
+              readOnly: true
+            - name: inventree-init
+              mountPath: /etc/inventree-init
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /api/
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: api.your-domain.com
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: api.your-domain.com
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /api/
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: api.your-domain.com
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 180
+      volumes:
+        - name: inventree-data
+          persistentVolumeClaim:
+            claimName: inventree-data
+        - name: inventree-plugins
+          persistentVolumeClaim:
+            claimName: inventree-plugins
+        - name: inventree-secrets
+          projected:
+            sources:
+              - secret:
+                  name: inventree-db-secret
+                  items:
+                    - key: mysql-password
+                      path: mysql-password
+              # OIDC secrets removed — using Authentik forward auth + REMOTE_LOGIN
+        - name: inventree-init
+          configMap:
+            name: inventree-init-config
+            defaultMode: 0755

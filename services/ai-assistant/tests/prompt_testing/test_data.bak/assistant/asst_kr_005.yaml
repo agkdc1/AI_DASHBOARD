@@ -1,0 +1,13 @@
+id: asst_kr_005
+name: 'KR assistant #5'
+language: ko-KR
+question: InvenTree에서 재고 이동은 어떻게 하나요?
+expected:
+  language: ko
+  must_contain_any:
+  - 재고
+  - 이동
+  - 위치
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

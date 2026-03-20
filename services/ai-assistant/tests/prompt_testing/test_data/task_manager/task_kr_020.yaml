@@ -1,0 +1,9 @@
+id: task_kr_020
+name: 'KR task #20'
+language: ko-KR
+input: '태스크 #555를 취소해 주세요'
+expected:
+  action: delete
+text: '수고하십니다! KR task #20 이거 확인해보니 완료된 건이라 삭재 좀 부탁해요~
+
+  아 키워드는 [] 그냥 비워두시면 됄거같아요'

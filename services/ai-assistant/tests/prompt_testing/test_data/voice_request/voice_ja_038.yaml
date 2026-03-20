@@ -1,0 +1,19 @@
+id: voice_ja_038
+name: 'JA voice orders #38'
+language: ja-JP
+text: あ、お疲れ様です。えーと、ちょっといいですかね。[雑音] あのー、さっき入ったAmazonの注文の件なんですけど、えー、お客様のお名前が[REDACTED_NAME]様で、ご住所、あ、違う、えーと、ご住所は[REDACTED_ADDRESS]で合ってます。それで、あのー…なんだっけ…[一時停止]
+  ああ、そうだ。まぁ、支払い確認は取れてるんで、えー、出荷準備の方をお願いしたいです。なんか、注文数が2つ…いや、3つだったかな。そのー、詳細は見てもらえれば。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - Amazon
+  - 注文
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

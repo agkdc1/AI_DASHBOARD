@@ -1,0 +1,14 @@
+id: asst_ja_030
+name: 'JA assistant #30'
+language: ja-JP
+question: InvenTreeで部品を検索するにはどうすればいいですか。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - 検索
+  - 部品
+  - フィルター
+  must_not_contain:
+  - 実行しました
+  - 削除しました
+  min_length: 50

@@ -1,0 +1,21 @@
+id: voice_kr_032
+name: 'KR voice it #32'
+language: ko-KR
+text: 아, [REDACTED_NAME]님, 어... 안녕하세요. 저기, 뭐 바쁘신데 죄송합니다. [잡음] 다름이 아니라 어젯밤에 진행했던 그
+  정기 **백업** 있잖아요, 아니, 오늘 새벽이었나? 암튼 그게 일부... 음... 파일이 좀 깨진 것 같아서요. 그래서, 그... 시스템 로그
+  **확인** 좀 부탁드리고... [일시정지] 아, 잠깐, 확인하고 나서 원인 파악되면요, 그러니까... 오늘 중으로 재실행까지... 가능할까요?
+  어... 그럼 회신 기다리겠습니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 백업
+  - 확인
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flutter-build
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: flutter-builder
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: flutter-builder
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - node-a5dd21
+      containers:
+        - name: flutter-builder
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/flutter-builder:latest
+          env:
+            - name: GIT_REPO
+              value: ""          # set by flutter-build.sh
+            - name: GIT_BRANCH
+              value: "main"      # set by flutter-build.sh
+            - name: BUILD_TARGETS
+              value: "web"       # set by flutter-build.sh
+            - name: GCS_BUCKET
+              value: "your-project-flutter-artifacts"
+            - name: GCS_PREFIX
+              value: "flutter-builds"
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1"
+            limits:
+              memory: "3Gi"
+              cpu: "3"
+          volumeMounts:
+            - name: gcs-key
+              mountPath: /etc/gcs
+              readOnly: true
+            - name: build-cache
+              mountPath: /cache
+      volumes:
+        - name: gcs-key
+          secret:
+            secretName: backup-gcs-secret
+        - name: build-cache
+          persistentVolumeClaim:
+            claimName: flutter-build-cache
+      restartPolicy: Never

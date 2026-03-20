@@ -1,0 +1,20 @@
+id: voice_ja_042
+name: 'JA voice orders #42'
+language: ja-JP
+text: お疲れ様です。あのー、ちょっとお願いがあるんですけど、えーっと…Qoo10の注文の件でして。お客さんから、あのー、キャンセルの連絡があってですね…[咳]
+  あ、違う、えーと、キャンセルしたいっていう、うん、連絡がありました。で、そのー、理由が、まぁ、お客様都合でのキャンセルなので、えー、在庫を…あ、いや、そうじゃなくて、そのー、管理画面からのキャンセル処理を、[一時停止]
+  えー、お願いできますでしょうか。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - Qoo10
+  - キャンセル
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

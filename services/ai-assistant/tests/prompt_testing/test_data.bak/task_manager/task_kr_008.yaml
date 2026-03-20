@@ -1,0 +1,12 @@
+id: task_kr_008
+name: 'KR task #8'
+language: ko-KR
+input: 품질 관리 체크리스트 업데이트 태스크를 만들어 주세요
+expected:
+  action: create
+  task_title_contains:
+  - 품질 관리
+  - 체크리스트
+  priority_range:
+  - 2
+  - 3

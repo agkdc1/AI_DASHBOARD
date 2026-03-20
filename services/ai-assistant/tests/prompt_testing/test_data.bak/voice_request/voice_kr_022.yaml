@@ -1,0 +1,19 @@
+id: voice_kr_022
+name: 'KR voice orders #22'
+language: ko-KR
+text: 아, [REDACTED_NAME] 씨. 지금 라쿠텐에서 새로 들어온 주문이 한 5건 정도 있거든요. 어... 그거 오늘 중으로 확인하고
+  바로 처리 시작해 주실 수 있을까요? 급한 건이라서요. 잘 부탁해요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 라쿠텐
+  - 주문
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

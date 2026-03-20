@@ -1,0 +1,13 @@
+[Unit]
+Description=Xvfb virtual display for selenium daemon
+Before=selenium-daemon.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/Xvfb :99 -screen 0 1920x1080x24 -nolisten tcp
+Environment=DISPLAY=:99
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

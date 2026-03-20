@@ -1,0 +1,6 @@
+id: task_ja_027
+name: 'JA task #27'
+language: ja-JP
+input: タスク#444を削除してください
+expected:
+  action: delete

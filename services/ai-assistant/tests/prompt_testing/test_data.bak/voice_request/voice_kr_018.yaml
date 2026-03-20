@@ -1,0 +1,19 @@
+id: voice_kr_018
+name: 'KR voice inventory #18'
+language: ko-KR
+text: 아, 수고하십니다. 다름이 아니라, 그 SKU-Y200 제품 있잖아요. 로트번호 L20260215에서 지금 불량이 발견됐다고 해서요. 음...
+  일단 출하부터 바로 중지해야 할 것 같습니다. 확인 좀 부탁드릴게요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-Y200
+  - 불량
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

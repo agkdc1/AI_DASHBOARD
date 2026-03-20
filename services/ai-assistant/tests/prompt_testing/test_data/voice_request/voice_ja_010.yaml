@@ -1,0 +1,19 @@
+id: voice_ja_010
+name: 'JA voice shipping #10'
+language: ja-JP
+text: あ、お疲れ様です。えーと、あのー、ちょっとお願いなんですけど、[一時停止] さっきの、えー、返品の件で。管理番号がアールエムエーの…あ、違う、RMA-001の商品、あれなんですけど。そのー、中身を検品してもらって…それで、あの…なんだっけ…[雑音]
+  あ、そうそう。問題なければ、まぁ、在庫に戻しておいて、あ、ごめん、在庫じゃなくて保留棚の方でお願いします。はい、よろしくです。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - RMA-001
+  - 返品
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

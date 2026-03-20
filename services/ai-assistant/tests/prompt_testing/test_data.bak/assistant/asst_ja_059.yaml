@@ -1,0 +1,13 @@
+id: asst_ja_059
+name: 'JA assistant #59'
+language: ja-JP
+question: タスクに期限を設定する方法を教えてください。初心者向けに簡単に説明してください。
+expected:
+  language: ja
+  must_contain_any:
+  - 期限
+  - 設定
+  - タスク
+  must_not_contain:
+  - 実行しました
+  min_length: 50

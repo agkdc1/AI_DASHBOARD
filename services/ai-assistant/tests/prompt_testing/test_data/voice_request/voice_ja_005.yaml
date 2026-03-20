@@ -1,0 +1,19 @@
+id: voice_ja_005
+name: 'JA voice shipping #5'
+language: ja-JP
+text: あ、お疲れ様です。えーと、ちょっとお願いしたいんですけど、あのー、そのー、エスオーの…あ、違う、SO-2024-5678の出荷準備ができたんで、[一時停止]
+  えー、送り状の印刷をお願いできますかね？ [咳] うーん、今日の、えーっと、15時…あ、ごめん、15時に集荷が来ちゃうんで、まぁ、それまでに終わらせてくれると助かります。はい、じゃあ、よろしくお願いします。[雑音]
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-5678
+  - 送り状
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

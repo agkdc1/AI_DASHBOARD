@@ -1,0 +1,18 @@
+id: voice_ja_006
+name: 'JA voice shipping #6'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、あのー、今ちょっといいですかね？ [雑音] えっとですね、例のエスオー、SO-2025-0001の出荷の件なんですけど、あの、準備ができたので、そのー、送り状の、あ、違う、送り状の印刷と、えー、貼り付けをお願いしたくて。それで、あの…なんだっけ…ああそうそう、集荷が今日の16時…いや、15時だったかな、あ、ごめん、やっぱり16時です。それまでに、まぁ、なんとかお願いできますでしょうか？よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2025-0001
+  - 送り状
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

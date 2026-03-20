@@ -1,0 +1,20 @@
+id: voice_kr_012
+name: 'KR voice shipping #12'
+language: ko-KR
+text: '[잡음] 아, [REDACTED_NAME]님. 어, 안녕하세요. 저기, 음, 뭐 하나만 좀 부탁드릴 게 있어서요. 그 주문 번호 에스오(SO)-이공이사-오육칠팔
+  있잖아요. 아, 그거 내일... 아니, 그게 아니라 오늘 바로 발송해야 하는 건이라서요. [기침] 그러니까 고객 쪽에서 좀 급하다고 해서...
+  아, 주소는... 아니, 주소는 됐고, 일단 오늘 중으로 꼭 발송 처리 좀 부탁드립니다.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-5678
+  - 발송
+  due_date_present: true
+  priority_range:
+  - 4
+  - 4

@@ -1,0 +1,20 @@
+id: voice_ja_037
+name: 'JA voice orders #37'
+language: ja-JP
+text: あ、お疲れ様です。えーと、あのー、JAボイスオーダーの、えーっと、37番、あ、いや、37番で合ってますね、はい。その件なんですけど。あのー、Amazonからのご注文のやつで、[雑音]
+  そのー、さっき支払い確認が取れたんで…あ、ごめん、それで出荷準備の方を、えー、お願いしたいんですけど。お届け先がですね、[REDACTED_NAME]様、ご住所が[REDACTED_ADDRESS]、で、電話番号は[REDACTED_PHONE]ですね。[一時停止]
+  まぁ、そんな感じで、はい、よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - Amazon
+  - 注文
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

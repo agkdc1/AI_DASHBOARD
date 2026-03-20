@@ -1,0 +1,12 @@
+id: task_kr_006
+name: 'KR task #6'
+language: ko-KR
+input: 백업 시스템 확인 태스크를 만들어 주세요. 긴급입니다.
+expected:
+  action: create
+  task_title_contains:
+  - 백업
+  - 확인
+  priority_range:
+  - 3
+  - 4

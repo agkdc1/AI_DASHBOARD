@@ -1,0 +1,18 @@
+id: voice_ja_017
+name: 'JA voice shipping #17'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。すみません、ちょっと急ぎでお願いしたいことがありまして。えーと、注文番号がSO-2024-5678の件なんですけど、お客様からまだ届いていないとお問い合わせがありまして…。大変申し訳ないんですが、本日中に発送手続きをお願いできますでしょうか。送り先は[REDACTED_ADDRESS]の[REDACTED_NAME]様宛です。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-5678
+  - 発送
+  due_date_present: true
+  priority_range:
+  - 4
+  - 4

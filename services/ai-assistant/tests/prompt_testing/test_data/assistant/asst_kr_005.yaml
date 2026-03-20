@@ -1,0 +1,14 @@
+id: asst_kr_005
+name: 'KR assistant #5'
+language: ko-KR
+question: InvenTree에서 재고 이동은 어떻게 하나요?
+expected:
+  language: ko
+  must_contain_any:
+  - 재고
+  - 이동
+  - 위치
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 저기요, 재고 이동 건으로 물어볼게 있는데요. 시스템에서 재고ㅗ를 다른 위치로 이동시키는 거 절차가 어떻게 됐었죠?

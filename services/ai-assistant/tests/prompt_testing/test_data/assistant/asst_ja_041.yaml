@@ -1,0 +1,16 @@
+id: asst_ja_041
+name: 'JA assistant #41'
+language: ja-JP
+question: 部品カテゴリーの追加方法を教えてください。初心者向けに簡単に説明してください。
+expected:
+  language: ja
+  must_contain_any:
+  - カテゴリー
+  - 追加
+  - 設定
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれー。ちょっと質問！
+
+  JA assistant #41の件なんだけど、新しいカテゴリーを追加したい時の設定の手受ってどうやるんだっけ？忘れちゃったから教えてくれる？'

@@ -1,0 +1,55 @@
+/*
+ * Portal Override CSS
+ * Shows ONLY Google SSO login on portal.your-domain.com.
+ * Injected by nginx sub_filter before </head>.
+ *
+ * Targets InvenTree 1.x React/Mantine SPA.
+ * The AuthenticationForm renders: <Group> SSO buttons </Group>
+ * <Divider /> <form> classic login </form>.
+ * We hide the form + divider, keeping only the SSO Group.
+ *
+ * Feature restriction is enforced server-side via Django permissions.
+ */
+
+/* --- Hide the classic login form (contains username/password/submit) --- */
+/* The form has no method="post" in the React SPA; target via :has() */
+form:has([aria-label="login-username"]) {
+    display: none !important;
+}
+
+/* --- Fallback: hide individual login elements for older browsers --- */
+[aria-label="login-username"],
+[aria-label="login-password"] {
+    display: none !important;
+}
+
+/* --- Hide Mantine Divider between SSO and classic login --- */
+/* Mantine Divider uses class containing "Divider" */
+[class*="Divider-root"] {
+    display: none !important;
+}
+
+/* --- Hide registration form elements --- */
+[aria-label="register-username"],
+[aria-label="register-email"],
+[aria-label="register-password"],
+[aria-label="register-password-repeat"] {
+    display: none !important;
+}
+
+form:has([aria-label="register-username"]) {
+    display: none !important;
+}
+
+/* --- Hide server selector if shown on login page --- */
+[data-mantine-color-scheme] [class*="InstanceOptions"] {
+    display: none !important;
+}
+
+/* --- Hide non-Dashboard nav tabs from the header --- */
+/* Tabs render as <button role="tab"> containing <a href="/web/{name}"> */
+[role="tab"]:has(a[href*="/part"]) { display: none !important; }
+[role="tab"]:has(a[href*="/stock"]) { display: none !important; }
+[role="tab"]:has(a[href*="/manufacturing"]) { display: none !important; }
+[role="tab"]:has(a[href*="/purchasing"]) { display: none !important; }
+[role="tab"]:has(a[href*="/sales"]) { display: none !important; }

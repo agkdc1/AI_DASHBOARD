@@ -1,0 +1,9 @@
+id: task_ja_029
+name: 'JA task #29'
+language: ja-JP
+input: タスク#666をキャンセルして
+expected:
+  action: delete
+text: 'お疲れ様ですー
+
+  JA task #29なんですけどこれもう終わった件なので削除おねがいしましす！'

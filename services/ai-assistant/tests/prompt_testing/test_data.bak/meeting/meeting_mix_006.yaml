@@ -1,0 +1,51 @@
+id: meeting_mix_006
+name: Customer complaint analysis
+language: mixed
+transcript: '[REDACTED_NAME_A]：では、月次の顧客クレーム分析会議を始めます。[REDACTED_NAME_B]さん、今月の状況から報告をお願いします。
+
+
+  [REDACTED_NAME_B]：네, 알겠습니다. 이번 달 클레임은 총 7건이었습니다. 그중 5건이 배송 관련 문제였고, 나머지 2건은 상품 자체에
+  대한 문의였습니다. 특히 [REDACTED_ADDRESS]로 배송된 상품의 박스가 파손되었다는 심각한 건이 있었습니다.
+
+
+  [REDACTED_NAME_A]：なるほど、配送関連が5件ですか。先月より増えていますね。[REDACTED_NAME_C]さん、現場で何か心当たりはありますか？
+
+
+  [REDACTED_NAME_C]：そうですね…月末にかけて注文が集中して、梱包作業が少し雑になってしまった可能性は否めません。特に新人スタッフのチェックが甘かったかもしれません。
+
+
+  [REDACTED_NAME_B]：제 생각에는, 출하 전에 확인해야 할 항목들을 정리한 체크리스트를 도입하는 것이 좋을 것 같습니다. 예를 들어,
+  ''포장 상태'', ''주소 라벨 확인'' 같은 것들요.
+
+
+  [REDACTED_NAME_A]：いい提案ですね。では、決定事項としましょう。**増加している배송（配送）関連のクレームを削減するため、梱包と宛先確認を含む出荷前チェックリストを新たに導入します。**
+  これでミスを減らせるはずです。
+
+
+  [REDACTED_NAME_C]：賛成です。リストがあれば、誰が作業しても品質を保てますね。
+
+
+  [REDACTED_NAME_A]：では、アクションアイテムです。[REDACTED_NAME_B]さん、来週の水曜日までに、その**チェックリスト**の草案を作成してもらえますか？[REDACTED_NAME_C]さんと相談しながら進めてください。
+
+
+  [REDACTED_NAME_B]：네, 알겠습니다. 초안 만들어서 공유드리겠습니다.
+
+
+  [REDACTED_NAME_A]：お願いします。それから、この変更に伴い、既存の「クレーム対応手順書」も更新が必要ですね。[REDACTED_NAME_C]さん、チェックリストの運用が固まったら、手順書への反映をお願いします。
+
+
+  [REDACTED_NAME_C]：はい、承知いたしました。
+
+
+  [REDACTED_NAME_A]：よし、では今日の会議は以上です。ありがとうございました。'
+expected:
+  action_items:
+    min_count: 1
+  decisions:
+    min_count: 1
+    contains_keywords:
+    - クレーム
+    - 배송
+    - チェックリスト
+  doc_updates:
+    min_count: 1

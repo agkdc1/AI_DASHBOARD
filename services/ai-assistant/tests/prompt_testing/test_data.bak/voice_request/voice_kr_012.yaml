@@ -1,0 +1,19 @@
+id: voice_kr_012
+name: 'KR voice shipping #12'
+language: ko-KR
+text: 아, [REDACTED_NAME]님 안녕하세요. 저기, 급한 용무가 생겨서 연락드렸는데요. 그 주문 번호 SO-2024-5678 있잖아요,
+  이거 고객 클레임 건이라서요. 오늘 중으로 바로 발송 처리 좀 부탁드려도 될까요? 바쁘신데 죄송합니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-5678
+  - 발송
+  due_date_present: true
+  priority_range:
+  - 4
+  - 4

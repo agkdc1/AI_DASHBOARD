@@ -1,0 +1,15 @@
+id: asst_kr_018
+name: 'KR assistant #18'
+language: ko-KR
+question: SOP 매뉴얼 업데이트 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - SOP
+  - 매뉴얼
+  - 업데이트
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 'KR assistant #18님~ SOP 업뎃 관련해서 물어볼게 있는데, 새로운 매뉴얼 나왔잖아. 그거 SOP에 업대이트 해야하는데 방법이
+  생각 안나서;; 다시 알려줄 수 있어?'

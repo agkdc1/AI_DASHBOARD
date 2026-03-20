@@ -1,0 +1,42 @@
+id: call_kr_033
+name: 'KR call #33'
+language: ko-KR
+text: '여보세요, [REDACTED_NAME]입니다.
+
+
+  아, 네, [REDACTED_NAME] 대리님. 저 [REDACTED_NAME]인데요, 수고 많으십니다. 어... 저기, 다름이 아니라 신상품
+  관련해서요... [잡음]
+
+
+  아, 잠시만요. 잘 안 들리는데... 여보세요?
+
+
+  아, 제 말 들리세요? 그, 신제품 **NP-2028** 말인데요. 어... 그거 **재고 등록**을 좀 부탁드리려고요. 초도 물량 30개...
+  아, 아니, 50개요. 50개 등록 가능할까요?
+
+
+  아, 네, 네. 이제 잘 들립니다. 음... **NP-2028** 50개 **재고 등록** 말씀이시죠? 아니, 그게 아니라... 아, 잠깐, 품목
+  코드가 NP-2028이 맞나요? 알겠습니다. 지금 바로 처리하도록 하겠습니다.
+
+
+  네, 감사합니다. 그럼 부탁드립니다.
+
+
+  알겠습니다. 그럼 들어가세요.
+
+
+  네, 수고하세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - NP-2028
+  - 재고 등록
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

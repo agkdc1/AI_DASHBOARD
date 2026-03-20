@@ -1,0 +1,11 @@
+# WiFi networks for K3s node provisioning
+# Copy to wifi.yaml and fill in real credentials:
+#   cp wifi.yaml.example wifi.yaml
+#
+# wifi.yaml is gitignored — credentials stay local.
+
+networks:
+  - ssid: "MyNetwork-5G"
+    psk: "change-me"
+  - ssid: "MyNetwork-2.4G"
+    psk: "change-me"

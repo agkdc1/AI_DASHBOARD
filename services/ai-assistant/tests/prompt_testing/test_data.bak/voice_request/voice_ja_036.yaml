@@ -1,0 +1,18 @@
+id: voice_ja_036
+name: 'JA voice orders #36'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、今朝なんですけど、楽天のほうで新しい注文が8件ほど入っているのを確認しました。それで、お手数ですが、内容をチェックして出荷処理を進めておいてもらえますか？あの、明日の集荷に間に合わせたいので、本日中によろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 楽天
+  - 注文
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

@@ -1,0 +1,18 @@
+id: voice_ja_003
+name: 'JA voice shipping #3'
+language: ja-JP
+text: あ、お疲れ様です。えーと、ちょっとお願いしたいんですけど、注文番号がSO-2025-0001の商品の発送手続きをお願いできますか。急で申し訳ないんだけど、本日中にヤマト運輸の着払いで発送していただけると助かります。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2025-0001
+  - 発送
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

@@ -1,0 +1,13 @@
+id: asst_kr_011
+name: 'KR assistant #11'
+language: ko-KR
+question: 운송장 인쇄에서 오류가 납니다. 어떻게 하면 되나요?
+expected:
+  language: ko
+  must_contain_any:
+  - 운송장
+  - 인쇄
+  - 오류
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

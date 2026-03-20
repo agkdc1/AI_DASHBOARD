@@ -1,0 +1,16 @@
+id: asst_ja_016
+name: 'JA assistant #16'
+language: ja-JP
+question: Vikunjaでラベルを使ってタスクを分類する方法は？
+expected:
+  language: ja
+  must_contain_any:
+  - ラベル
+  - 分類
+  - タスク
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれー！ちょっと教えてほしいんだけど、新しいプロジェクトのタスク分類の件でさ。
+
+  新しく追加されたタスクにラベルを付けて整理したいんだけど、あの機能の詳しい手受ってどうやるんだっけ？JA assistant #16の機能だったと思うんだけど…よろしく！'

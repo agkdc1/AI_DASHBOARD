@@ -1,0 +1,14 @@
+id: asst_ja_021
+name: 'JA assistant #21'
+language: ja-JP
+question: 楽天のAPIキーの更新手順は？
+expected:
+  language: ja
+  must_contain_any:
+  - 楽天
+  - API
+  - キー
+  - 更新
+  must_not_contain:
+  - 実行しました
+  min_length: 50

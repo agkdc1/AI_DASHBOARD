@@ -1,0 +1,188 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asterisk
+  namespace: fax-system
+  labels:
+    app.kubernetes.io/name: asterisk
+    app.kubernetes.io/part-of: shinbee-fax
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: asterisk
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: asterisk
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      terminationGracePeriodSeconds: 30
+      containers:
+        # --- Asterisk (headless) ---
+        - name: asterisk
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/asterisk-headless:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PBX_DB_PATH
+              value: "/var/lib/asterisk/pbx.db"
+            - name: ASTERISK_VIP
+              value: "10.0.0.254"
+            - name: TZ
+              value: "Asia/Tokyo"
+          ports:
+            - containerPort: 5060
+              protocol: UDP
+            - containerPort: 4569
+              protocol: UDP
+          securityContext:
+            capabilities:
+              add: [NET_ADMIN]
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+          volumeMounts:
+            - name: asterisk-etc
+              mountPath: /etc/asterisk
+            - name: asterisk-lib
+              mountPath: /var/lib/asterisk
+            - name: asterisk-spool
+              mountPath: /var/spool/asterisk
+            - name: asterisk-log
+              mountPath: /var/log/asterisk
+            - name: hylafax-spool
+              mountPath: /var/spool/hylafax
+            - name: confgen
+              mountPath: /opt/confgen.py
+              subPath: confgen.py
+            - name: asterisk-data
+              mountPath: /etc/asterisk-init/extensions_custom.conf
+              subPath: extensions_custom.conf
+            - name: asterisk-data
+              mountPath: /etc/asterisk-init/pjsip_custom.conf
+              subPath: pjsip_custom.conf
+            - name: hylafax-config
+              mountPath: /etc/hylafax-init/config
+              subPath: config
+            - name: hylafax-config
+              mountPath: /etc/hylafax-init/config.ttyIAX0
+              subPath: config.ttyIAX0
+            - name: hylafax-config
+              mountPath: /etc/hylafax-init/setup.cache
+              subPath: setup.cache
+            - name: hylafax-config
+              mountPath: /etc/hylafax-init/setup.modem
+              subPath: setup.modem
+            - name: iaxmodem-config
+              mountPath: /etc/iaxmodem/ttyIAX0
+              subPath: ttyIAX0
+
+        # --- Faxapi sidecar ---
+        - name: faxapi
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/faxapi:latest
+          imagePullPolicy: Always
+          env:
+            - name: AMI_HOST
+              value: "127.0.0.1"
+            - name: AMI_PORT
+              value: "5038"
+            - name: AMI_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: fax-ami-secret
+                  key: ami-username
+            - name: AMI_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: fax-ami-secret
+                  key: ami-secret
+            - name: FAX_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: fax-api-key-secret
+                  key: api-key
+            - name: PBX_DB_PATH
+              value: "/var/lib/asterisk/pbx.db"
+            - name: FAX_API_PORT
+              value: "8010"
+            - name: NTT_ALLOWED_SOURCES
+              value: "10.0.0.0/8,127.0.0.0/8"
+            - name: NTT_MODE
+              value: "og810xi"
+            - name: OG810XI_GW_IP
+              value: "192.168.1.1"
+            - name: OG810XI_SIP_USER
+              value: "10"
+            - name: OG810XI_SIP_USER_FAX
+              value: "11"
+            - name: OG810XI_BIND_IP
+              value: "192.168.1.102"
+            - name: OG810XI_FAX_BIND_IP
+              value: "192.168.1.103"
+            - name: OG810XI_URL
+              value: "http://192.168.1.1"
+            - name: OG810XI_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: og810xi-secret
+                  key: username
+            - name: OG810XI_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: og810xi-secret
+                  key: password
+            - name: TZ
+              value: "Asia/Tokyo"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: asterisk-etc
+              mountPath: /etc/asterisk
+            - name: asterisk-spool
+              mountPath: /var/spool/asterisk
+            - name: asterisk-lib
+              mountPath: /var/lib/asterisk
+            - name: confgen
+              mountPath: /app/confgen.py
+              subPath: confgen.py
+
+      volumes:
+        - name: asterisk-etc
+          persistentVolumeClaim:
+            claimName: asterisk-etc
+        - name: asterisk-lib
+          persistentVolumeClaim:
+            claimName: asterisk-lib
+        - name: asterisk-spool
+          persistentVolumeClaim:
+            claimName: asterisk-spool
+        - name: asterisk-log
+          persistentVolumeClaim:
+            claimName: asterisk-log
+        - name: hylafax-spool
+          persistentVolumeClaim:
+            claimName: hylafax-spool
+        - name: asterisk-data
+          configMap:
+            name: asterisk-data
+        - name: confgen
+          configMap:
+            name: confgen
+        - name: hylafax-config
+          configMap:
+            name: hylafax-config
+        - name: iaxmodem-config
+          configMap:
+            name: iaxmodem-config

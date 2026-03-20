@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-assistant-ingress
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: ai-assistant-ingress
+    app.kubernetes.io/part-of: shinbee
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://test-portal.your-domain.com,https://portal.your-domain.com,https://app.your-domain.com,https://test-app.your-domain.com"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,X-User-Email,X-User-Name"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - ai.your-domain.com
+      secretName: ai-assistant-tls
+  rules:
+    - host: ai.your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ai-assistant
+                port:
+                  number: 8030

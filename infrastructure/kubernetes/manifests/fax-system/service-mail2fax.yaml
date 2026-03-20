@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mail2fax
+  namespace: fax-system
+  labels:
+    app.kubernetes.io/name: mail2fax
+    app.kubernetes.io/part-of: shinbee-fax
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: "10.0.0.253"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app.kubernetes.io/name: mail2fax
+  ports:
+    - name: smtp
+      port: 587
+      targetPort: 587
+      protocol: TCP

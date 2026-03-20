@@ -1,0 +1,36 @@
+id: call_ja_052
+name: 'JA call #52'
+language: ja-JP
+text: 'もしもし、[REDACTED_NAME]です。
+
+  お疲れ様です、[REDACTED_NAME]です。今、少しよろしいでしょうか？
+
+  はい、お疲れ様です。大丈夫ですよ。
+
+  ありがとうございます。急で申し訳ないのですが、先ほど出荷された商品、SKU-W400の一部に不良品が混入している可能性が発覚しまして…。
+
+  えっ、本当ですか！？それはまずいですね。
+
+  はい、すぐに関連部署の出荷をすべて停止してください。合わせて、納品先のお客様への連絡と、代替品の在庫確認もお願いできますでしょうか。
+
+  承知しました。はい、すぐに出荷停止の手配をします。代替品の件も確認して折り返します。
+
+  助かります。では、また連絡お待ちしております。
+
+  承知いたしました。失礼します。
+
+  失礼します。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - SKU-W400
+  - 不良品
+  priority_range:
+  - 4
+  - 4
+  has_decisions: true

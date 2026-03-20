@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: asterisk-data
+  namespace: fax-system
+  labels:
+    app.kubernetes.io/name: asterisk
+    app.kubernetes.io/part-of: shinbee-fax
+data:
+  pjsip_custom.conf: |
+    #include pjsip_ntt_dynamic.conf
+  extensions_custom.conf: |
+
+    ; NTT puts the DID in the To header, not the Request-URI.
+    ; Parse To header to extract DID, then route into FreePBX from-pstn.
+    ; Fax DID (0312345679) is intercepted and routed to IAXmodem/HylaFax.
+    [from-ntt]
+    exten => _X!,1,NoOp(NTT inbound — extracting DID from To header)
+     same => n,Set(__NTTDID=${PJSIP_HEADER(read,To)})
+     same => n,NoOp(Raw To: ${NTTDID})
+     same => n,Set(__NTTDID=${CUT(NTTDID,@,1)})
+     same => n,Set(__NTTDID=${CUT(NTTDID,:,2)})
+     same => n,NoOp(Parsed DID: ${NTTDID})
+     same => n,GotoIf($["${NTTDID}" = "0312345679"]?fax-iax,s,1)
+     same => n,Goto(from-pstn,${NTTDID},1)
+
+    exten => s,1,NoOp(NTT inbound (no exten) — extracting DID from To header)
+     same => n,Set(__NTTDID=${PJSIP_HEADER(read,To)})
+     same => n,NoOp(Raw To: ${NTTDID})
+     same => n,Set(__NTTDID=${CUT(NTTDID,@,1)})
+     same => n,Set(__NTTDID=${CUT(NTTDID,:,2)})
+     same => n,NoOp(Parsed DID: ${NTTDID})
+     same => n,GotoIf($["${NTTDID}" = "0312345679"]?fax-iax,s,1)
+     same => n,Goto(from-pstn,${NTTDID},1)
+
+    ; --- Fax DID → IAXmodem/HylaFax ---
+    [fax-iax]
+    exten => s,1,NoOp(Fax DID 0312345679 — routing to IAXmodem/HylaFax)
+     same => n,Answer()
+     same => n,Wait(2)
+     same => n,Dial(IAX2/800,,D(fax))
+     same => n,Hangup()
+
+    ; --- NTT outbound SIP header fix (b() pre-bridge handler) ---
+    ; NTT NGN strict SIP elements reject INVITEs with non-OG810Xi headers.
+    ; This handler runs on the outbound PJSIP channel before INVITE is sent,
+    ; replacing Asterisk's default Supported/Allow headers with OG810Xi-compatible ones.
+    ; Activated via AstDB: TRUNK/3/dialopts = Tb(ntt-headers^s^1)
+    [ntt-headers]
+    exten => s,1,NoOp(Fixing outbound SIP headers for NTT OG810Xi mimicry)
+     same => n,Set(PJSIP_HEADER(remove,Supported)=)
+     same => n,Set(PJSIP_HEADER(add,Supported)=path, 100rel, timer)
+     same => n,Set(PJSIP_HEADER(remove,Allow)=)
+     same => n,Set(PJSIP_HEADER(add,Allow)=INVITE, ACK, BYE, CANCEL, PRACK, UPDATE, MESSAGE)
+     same => n,Return()
+
+    ; --- Outbound fax context (used by FastAPI fax service via AMI Originate) ---
+    [fax-outbound]
+    exten => s,1,NoOp(Outbound fax — file: ${FAXFILE})
+     same => n,Wait(2)
+     same => n,SendFAX(${FAXFILE},d)
+     same => n,Hangup()

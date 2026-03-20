@@ -1,0 +1,28 @@
+services:
+  agent:
+    build: .
+    volumes:
+      # Config
+      - ../config.yaml:/app/config.yaml:ro
+      # WIF credentials for GCS + Firestore
+      - ../Vault/pki/wif-credential-config.json:/app/Vault/pki/wif-credential-config.json:ro
+      - ../Vault/pki/client.crt:/app/Vault/pki/client.crt:ro
+      - ../Vault/pki/client.key:/app/Vault/pki/client.key:ro
+      - ../Vault/pki/ca.crt:/app/Vault/pki/ca.crt:ro
+      # Vault AppRole credentials (read-only from host)
+      - /root/vault-approle-rakuten-role-id:/run/secrets/role-id:ro
+      - /root/vault-approle-rakuten-secret-id:/run/secrets/secret-id:ro
+      # Persistent data
+      - ./logs:/app/services/rakuten-renewal/logs
+      - ./screenshots:/app/services/rakuten-renewal/screenshots
+      - ./state.json:/app/services/rakuten-renewal/state.json
+      # Prompts (so meta-optimizer writes are persistent)
+      - ./agent/prompts:/app/agent/prompts
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - VAULT_ADDR=http://host.docker.internal:8200
+      - VAULT_APPROLE_ROLE_ID_PATH=/run/secrets/role-id
+      - VAULT_APPROLE_SECRET_ID_PATH=/run/secrets/secret-id
+    network_mode: host
+    shm_size: 256m

@@ -1,0 +1,51 @@
+id: meeting_mix_006
+name: Customer complaint analysis
+language: mixed
+transcript: '[REDACTED_NAME_A]：じゃあ、始めましょうか。えーと、顧客クレームの分析会議ですね。[REDACTED_NAME_B]さん、今月の状況からお願いします。
+
+
+  [REDACTED_NAME_B]：네. 이번 달 클레임은 총 5건... 아, 아니, 7건이었습니다. 음, 그 중 5건이 배송 관련 문제였습니다.
+  그러니까、特に[REDACTED_ADDRESS]への配送で、箱が潰れていたっていうのが一件。
+
+
+  [REDACTED_NAME_A]：あー、また配送か。先月より増えてますね。 [咳] [REDACTED_NAME_C]さん、そのー、現場サイドでなんか心当たりとかあります？
+
+
+  [REDACTED_NAME_C]：うーん、そうですね…月末の、いや、先週の金曜あたりから注文が集中して、ちょっと梱包が雑になった可能性は…まぁ、ありますね。それで、あの…なんだっけ…ああそうそう、新しいバイトの子が入ったタイミングと重なります。
+
+
+  [REDACTED_NAME_B]：저기, 제 생각에는요, 출하 전에 뭐, 체크리스트 같은 걸 만드는 게 어떨까요? ‘포장 상태’とか, ‘주소 라벨
+  이중 확인’ 같은 거요.
+
+
+  [REDACTED_NAME_A]：チェックリスト、いいですね。よし、じゃあ決定事項にしましょう。**増加している배송（配送）関連のクレームを減らすために、梱包と宛先確認を含む出荷前チェックリストを導入します。**
+  これでミスも減るはず。
+
+
+  [REDACTED_NAME_C]：賛成です。リストがあれば、誰がやっても品質保てますし。
+
+
+  [REDACTED_NAME_A]：じゃ、アクションアイテムです。[REDACTED_NAME_B]さん、来週の水曜までに、その**チェックリスト**のドラフト、ピーディーエフでいいので作ってもらえますか？[REDACTED_NAME_C]さんと相談しながら。
+
+
+  [REDACTED_NAME_B]：네, 알겠습니다. 초안 만들어서 공유 드릴게요。 [電話の音] 아, 죄송합니다.
+
+
+  [REDACTED_NAME_A]：大丈夫ですよ。あと、この変更で、既存の「クレーム対応手順書」も更新しないとですね。[REDACTED_NAME_C]さん、チェックリストの運用が固まったら、手順書の更新をお願いします。
+
+
+  [REDACTED_NAME_C]：はい、承知しました。
+
+
+  [REDACTED_NAME_A]：よし、じゃあ今日は以上で。お疲れ様でした。'
+expected:
+  action_items:
+    min_count: 1
+  decisions:
+    min_count: 1
+    contains_keywords:
+    - クレーム
+    - 배송
+    - チェックリスト
+  doc_updates:
+    min_count: 1

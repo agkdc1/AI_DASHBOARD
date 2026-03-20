@@ -1,0 +1,41 @@
+id: call_kr_038
+name: 'KR call #38'
+language: ko-KR
+text: '[REDACTED_NAME] (발신자): 여보세요, [REDACTED_NAME]입니다. 아, 수고 많으십니다.
+
+
+  [REDACTED_NAME] (수신자): 네, 네, [REDACTED_NAME]입니다. 수고하십니다.
+
+
+  [REDACTED_NAME] (발신자): 어, 지금 좀 괜찮으세요? 저기, 긴급 건으로 연락드렸는데요. 그... 오늘 오전에 출하된 **SKU-Z300**,
+  그러니까 에스케유-제트삼백 제품에, 아, 아니, **불량품**이 포함됐을 가능성이 높다는 보고가 방금 들어와서요. [잡음]
+
+
+  [REDACTED_NAME] (수신자): 네? 아... 잠시만요, **불량품**이요? 알겠습니다. 그럼 어떻게 조치할까요?
+
+
+  [REDACTED_NAME] (발신자): 네, 그래서 일단 즉시 관련 라인 출하 중지하고, 어... 이미 나간 물량은 고객사에 바로 연락해서 상황
+  설명하는 걸로 결정했습니다. [일시정지] 이게 가장 시급한 것 같아요.
+
+
+  [REDACTED_NAME] (수신자): 네, 알겠습니다. 그럼 제가 바로 출하팀에 전달하고 고객사에도 연락 취하겠습니다.
+
+
+  [REDACTED_NAME] (발신자): 네, 부탁드립니다. 그럼 자세한 내용은 메일로 다시 보내겠습니다.
+
+
+  [REDACTED_NAME] (수신자): 네, 확인하겠습니다. 그럼 실례하겠습니다.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - SKU-Z300
+  - 불량품
+  priority_range:
+  - 4
+  - 4
+  has_decisions: true

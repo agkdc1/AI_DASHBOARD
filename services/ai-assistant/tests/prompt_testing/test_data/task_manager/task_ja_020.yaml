@@ -1,0 +1,7 @@
+id: task_ja_020
+name: 'JA task #20'
+language: ja-JP
+input: 今月末が期限のタスクを探して
+expected:
+  action: query
+text: 'おつです JA task #20の件でqueryなんだけど 担当者[]さんの新着どんな感じ？あと資料の在こ確認もお願いー'

@@ -1,0 +1,18 @@
+id: voice_ja_019
+name: 'JA voice inventory #19'
+language: ja-JP
+text: あ、お疲れ様です。えーと、あのー、ちょっとお願いが… [一時停止] 部品の件なんですけど。えー、型番が、あの、P-A1234の在庫をさっき見たら、なんか、もう、えーっと、2、3個？あ、ごめん、とにかく全然なくて。それで、そのー、追加で発注をお願いしたいんですけど。数は…あ、いや、いつも通りの数で大丈夫です。まぁ、えー、よろしくお願いします。[雑音]
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - P-A1234
+  - 在庫
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

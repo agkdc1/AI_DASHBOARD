@@ -1,0 +1,12 @@
+id: task_ja_007
+name: 'JA task #7'
+language: ja-JP
+input: バックアップシステムの確認タスクを作って。急ぎで。
+expected:
+  action: create
+  task_title_contains:
+  - バックアップ
+  - 確認
+  priority_range:
+  - 3
+  - 4

@@ -1,0 +1,9 @@
+id: task_ja_030
+name: 'JA task #30'
+language: ja-JP
+input: タスク#777を消して
+expected:
+  action: delete
+text: 'お疲れ様です！
+
+  すいあせん、JA task #30のタスクですが、もう発装済みなので削除お願いできますかー？'

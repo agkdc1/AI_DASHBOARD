@@ -1,0 +1,14 @@
+id: task_ja_004
+name: 'JA task #4'
+language: ja-JP
+input: 新商品NP-2026の商品登録タスクを作成して。来月15日が期限です。
+expected:
+  action: create
+  task_title_contains:
+  - NP-2026
+  - 商品登録
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3
+text: 'おつかれー JA task #4でタスクきってほしいんだけど NP-2026の商品登録お願い！新しい在こデータも一緒に反映させといてくれると助かる。あ、急ぎじゃないですー'

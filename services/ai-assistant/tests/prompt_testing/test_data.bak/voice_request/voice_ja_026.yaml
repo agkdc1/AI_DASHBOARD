@@ -1,0 +1,18 @@
+id: voice_ja_026
+name: 'JA voice inventory #26'
+language: ja-JP
+text: あ、お疲れ様です。ちょっと急ぎでお願いしたいことがあるんですけど、えーと、例のSKU-Y200なんですが、一部のロットで不良が見つかったという報告がありまして。それで、大変申し訳ないんですが、該当する製品の出荷をいったんすべて止めていただけますでしょうか。詳細はまた後ほど共有しますので、まずはご対応お願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-Y200
+  - 不良
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

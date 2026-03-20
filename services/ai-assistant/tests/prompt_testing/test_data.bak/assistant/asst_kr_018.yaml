@@ -1,0 +1,13 @@
+id: asst_kr_018
+name: 'KR assistant #18'
+language: ko-KR
+question: SOP 매뉴얼 업데이트 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - SOP
+  - 매뉴얼
+  - 업데이트
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

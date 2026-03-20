@@ -1,0 +1,13 @@
+id: asst_ja_025
+name: 'JA assistant #25'
+language: ja-JP
+question: 共有フォルダへのアクセス方法は？
+expected:
+  language: ja
+  must_contain_any:
+  - 共有
+  - フォルダ
+  - アクセス
+  must_not_contain:
+  - 実行しました
+  min_length: 50

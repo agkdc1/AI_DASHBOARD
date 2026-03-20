@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mail2fax-tls
+  namespace: fax-system
+  labels:
+    app.kubernetes.io/name: mail2fax
+    app.kubernetes.io/part-of: shinbee-fax
+spec:
+  secretName: mail2fax-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  dnsNames:
+    - fax.your-domain.com

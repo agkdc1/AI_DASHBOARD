@@ -1,0 +1,19 @@
+id: voice_kr_026
+name: 'KR voice general #26'
+language: ko-KR
+text: 저기, 다음 주 회의 때 필요한 자료 좀 부탁드릴게요. 음... 특히 지난 분기 매출 관련 자료를 중심으로 정리해 주시면 좋을 것 같아요.
+  내일 오전까지 가능하실까요?
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 자료
+  - 매출
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

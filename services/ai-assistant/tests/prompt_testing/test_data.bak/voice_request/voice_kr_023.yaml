@@ -1,0 +1,19 @@
+id: voice_kr_023
+name: 'KR voice orders #23'
+language: ko-KR
+text: 아, 수고 많으십니다. 저기, 아마존 주문 건 결제가 방금 확인되었는데요. 음... 해당 건 바로 출하 준비 시작해 주시면 감사하겠습니다.
+  네, 부탁드릴게요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 아마존
+  - 출하
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

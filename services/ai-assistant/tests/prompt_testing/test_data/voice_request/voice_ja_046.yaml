@@ -1,0 +1,19 @@
+id: voice_ja_046
+name: 'JA voice general #46'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、あの、例の資料の件なんだけど、[雑音] ちょっとお願いがあって。えー、先月の売上実績、あ、違う、先月までの累計だったかな、うーん、ごめん、やっぱ先月単月の売上実績をまとめたものを、そのー、木曜の午前中までに欲しいんだけど、いけるかな？…あ、それで、もし…[一時停止]
+  いや、大丈夫か。とりあえずそれでお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 資料
+  - 売上
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

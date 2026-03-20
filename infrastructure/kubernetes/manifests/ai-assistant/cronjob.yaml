@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ai-evolution-weekly
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: ai-assistant
+    app.kubernetes.io/component: evolution
+spec:
+  # Every Saturday at 09:00 JST (00:00 UTC)
+  schedule: "0 0 * * 6"
+  timeZone: "Asia/Tokyo"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 4
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          containers:
+            - name: evolution
+              image: curlimages/curl:latest
+              command: ["sh", "-c"]
+              args:
+                - |
+                  curl -sf -X POST http://ai-assistant.shinbee.svc.cluster.local:8030/evolution/trigger \
+                    -H "Content-Type: application/json" \
+                    -o /dev/null -w "HTTP %{http_code}\n"
+              resources:
+                requests:
+                  memory: "32Mi"
+                  cpu: "10m"
+                limits:
+                  memory: "64Mi"
+                  cpu: "100m"
+          restartPolicy: OnFailure

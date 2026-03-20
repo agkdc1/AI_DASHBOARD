@@ -1,0 +1,18 @@
+id: voice_ja_041
+name: 'JA voice orders #41'
+language: ja-JP
+text: あ、お疲れ様です。えーと、Qoo10の注文の件でお願いです。注文番号がSO-2024-5678なんですけど、これ、お客様都合でのキャンセル処理をお願いできますでしょうか。はい、よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - Qoo10
+  - キャンセル
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

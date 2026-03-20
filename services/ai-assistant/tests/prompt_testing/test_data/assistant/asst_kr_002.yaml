@@ -1,0 +1,14 @@
+id: asst_kr_002
+name: 'KR assistant #2'
+language: ko-KR
+question: InvenTree에서 새로운 부품을 등록하는 절차를 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 등록
+  - 부품
+  - 카테고리
+  must_not_contain:
+  - 실행했습니다
+  min_length: 80
+text: 저기요~ 새로운 부품 등ㄹ록하는 거 말인데요, 그거 카테고리 설정은 어떻게 하는거였죠?

@@ -1,0 +1,13 @@
+id: task_ja_009
+name: 'JA task #9'
+language: ja-JP
+input: 返品処理プラグインの開発タスク。今月末まで。
+expected:
+  action: create
+  task_title_contains:
+  - 返品
+  - プラグイン
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3

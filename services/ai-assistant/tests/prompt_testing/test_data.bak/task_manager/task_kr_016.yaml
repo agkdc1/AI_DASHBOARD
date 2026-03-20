@@ -1,0 +1,6 @@
+id: task_kr_016
+name: 'KR task #16'
+language: ko-KR
+input: '태스크 #789를 완료로 처리해 주세요'
+expected:
+  action: update

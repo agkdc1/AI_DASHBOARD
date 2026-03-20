@@ -1,0 +1,7 @@
+# All defaults are set in variables.tf — no required variables.
+# Override here if needed:
+
+# project_id   = "your-gcp-project-id"
+# region       = "asia-northeast1"
+# zone         = "asia-northeast1-b"
+# machine_type = "e2-micro"

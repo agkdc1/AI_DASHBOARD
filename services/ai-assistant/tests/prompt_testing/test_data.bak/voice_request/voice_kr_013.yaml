@@ -1,0 +1,19 @@
+id: voice_kr_013
+name: 'KR voice inventory #13'
+language: ko-KR
+text: 아, [REDACTED_NAME]님. 저기, 방금 확인해 봤는데, P-A1234 부품 재고가 거의 다 떨어졌어요. 음... 지금 한 5개
+  정도 남은 것 같은데, 혹시 오늘 중으로 발주 좀 부탁드려도 될까요? 늦어도 내일 오전까지는 꼭 부탁드립니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - P-A1234
+  - 재고
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

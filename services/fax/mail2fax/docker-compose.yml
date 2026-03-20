@@ -1,0 +1,22 @@
+services:
+  postfix-gateway:
+    build: .
+    restart: always
+    ports:
+      - "587:587"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ../.aws:/root/.aws:ro
+      - letsencrypt:/etc/letsencrypt
+      - mail-queue:/var/spool/postfix
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      - TZ=Asia/Tokyo
+
+volumes:
+  letsencrypt:
+  mail-queue:

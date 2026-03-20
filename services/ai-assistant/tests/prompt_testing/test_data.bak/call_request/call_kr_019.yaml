@@ -1,0 +1,38 @@
+id: call_kr_019
+name: 'KR call #19'
+language: ko-KR
+text: 'A: 여보세요?
+
+  B: 네, [REDACTED_NAME]입니다.
+
+  A: 아, [REDACTED_NAME] 대리님, 안녕하세요. 영업팀 [REDACTED_NAME]입니다.
+
+  B: 네, [REDACTED_NAME] 님, 수고하십니다. 무슨 일이신가요?
+
+  A: 다름이 아니라, 얼마 전에 들어온 **반품** 건 때문에 연락드렸습니다. 관리번호 **RMA-001** 상품 말입니다.
+
+  B: 아, RMA-001이요. 네, 무슨 문제라도 있었나요?
+
+  A: 네, 방금 실물 확인했는데 제품 외장에 약간의 손상이 있더라고요. 고객에게는 바로 환불 처리하는 걸로 진행해도 괜찮을까요?
+
+  B: 아, 그렇군요. 네, 알겠습니다. 그렇게 처리해 주세요.
+
+  A: 네, 알겠습니다. 그럼 바로 환불 처리하도록 하겠습니다. 확인 감사합니다.
+
+  B: 네, 수고하세요.
+
+  A: 네, 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - RMA-001
+  - 반품
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

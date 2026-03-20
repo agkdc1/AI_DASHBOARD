@@ -1,0 +1,18 @@
+id: asst_kr_039
+name: 'KR assistant #39'
+language: ko-KR
+question: InvenTree에서 라벨 인쇄 설정 방법은. 초보자도 알기 쉽게 설명해 주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 라벨
+  - 인쇄
+  - 설정
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 'KR 어시스턴트! 재고 라벨 인쇄 말인데,
+
+  새 프린터로 하려니까 사이즈가 계속 이상하게 나오네;;
+
+  이거 인쇄 설절 어떻게 다시 잡았더라??'

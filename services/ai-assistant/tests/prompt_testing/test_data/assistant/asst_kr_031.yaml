@@ -1,0 +1,13 @@
+id: asst_kr_031
+name: 'KR assistant #31'
+language: ko-KR
+question: InvenTree에서 재고 실사를 하는 방법을 알려주세요.. 초보자도 알기 쉽게 설명해 주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 재고 실사
+  - 카운트
+  must_not_contain:
+  - 실행했습니다
+  min_length: 80
+text: 저기 이번 재고 실사 건인데, 시스템에서 카운트 입력하는 절자 어떻게 하는거였지? 작년에 했었는대 가물가물하네;;

@@ -1,0 +1,20 @@
+id: voice_kr_030
+name: 'KR voice it #30'
+language: ko-KR
+text: 아, 저기... 안녕하세요. 음, 저희 사무실 그 프린터 있잖아요. 그게 어... 계속 용지가, 아니, 용지가 아니라 아예 인쇄가 안 돼서요.
+  [기침] 아, 죄송합니다. 뭐, 에러가 한 두... 아니 세 번 정도 뜬 것 같은데, 그래서 오늘 오후까지 혹시 정비 좀 와주실 수 있을까요?
+  [일시정지] 아, 위치는 [REDACTED_ADDRESS]이고요, 담당자는 저, [REDACTED_NAME] 입니다. 그럼 빠른 처리 좀 부탁드릴게요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 프린터
+  - 정비
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

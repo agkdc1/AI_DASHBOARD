@@ -1,0 +1,6 @@
+id: task_kr_014
+name: 'KR task #14'
+language: ko-KR
+input: '태스크 #123의 우선순위를 높음으로 변경해 주세요'
+expected:
+  action: update

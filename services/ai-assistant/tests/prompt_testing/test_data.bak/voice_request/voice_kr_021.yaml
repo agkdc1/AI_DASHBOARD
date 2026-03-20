@@ -1,0 +1,19 @@
+id: voice_kr_021
+name: 'KR voice orders #21'
+language: ko-KR
+text: 아, 잠시만요. 그... 라쿠텐에 신규 주문 들어온 거 확인 좀 부탁드릴게요. 세 건 정도 되는 것 같은데, 음... 오늘 중으로 배송
+  처리까지 완료해야 하거든요. 바로 확인하고 진행해 주세요. 고맙습니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 라쿠텐
+  - 주문
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

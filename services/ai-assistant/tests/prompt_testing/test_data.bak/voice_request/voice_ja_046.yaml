@@ -1,0 +1,18 @@
+id: voice_ja_046
+name: 'JA voice general #46'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、急で申し訳ないんだけど、来週の月曜の会議で使う資料の件でお願いがあって。先月分の売上実績をまとめたものを準備してもらえますか？金曜日の午前中までには欲しいんだけど、大丈夫そうかな？よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 資料
+  - 売上
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

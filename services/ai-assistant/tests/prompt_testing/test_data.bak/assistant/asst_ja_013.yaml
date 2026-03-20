@@ -1,0 +1,13 @@
+id: asst_ja_013
+name: 'JA assistant #13'
+language: ja-JP
+question: Vikunjaでタスクを作成する方法を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - Vikunja
+  - タスク
+  - 作成
+  must_not_contain:
+  - 実行しました
+  min_length: 50

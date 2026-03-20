@@ -1,0 +1,14 @@
+id: asst_ja_009
+name: 'JA assistant #9'
+language: ja-JP
+question: ヤマト運輸の送り状を作成する方法を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - ヤマト
+  - 送り状
+  - 作成
+  must_not_contain:
+  - 実行しました
+  min_length: 60
+text: おつかれー。ヤマトの送り状の件なんだけど、作成の手受ってもう一回教えてくれる？

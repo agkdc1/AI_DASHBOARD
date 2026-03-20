@@ -1,0 +1,14 @@
+id: task_kr_007
+name: 'KR task #7'
+language: ko-KR
+input: 신입사원 계정 설정 태스크를 등록해 주세요. 이번주 내 완료.
+expected:
+  action: create
+  task_title_contains:
+  - 계정
+  - 설정
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3
+text: '수고하십니다~ 테스크 생성 하나만 부탁해요 KR task #7 신규 사용자 개정 만들고 기본 설절하는 걸로요 아 기한은 내일까지만 부탁'

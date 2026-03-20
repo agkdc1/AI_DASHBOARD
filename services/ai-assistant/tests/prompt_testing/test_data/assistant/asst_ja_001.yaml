@@ -1,0 +1,15 @@
+id: asst_ja_001
+name: 'JA assistant #1'
+language: ja-JP
+question: InvenTreeで部品を検索するにはどうすればいいですか？
+expected:
+  language: ja
+  must_contain_any:
+  - 検索
+  - 部品
+  - フィルター
+  must_not_contain:
+  - 実行しました
+  - 削除しました
+  min_length: 50
+text: 部品検索の件なんだけど、特定の部品の在こを調べたいとき、メーカーでフィルターかけるのってどうやるんだっけ？

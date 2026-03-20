@@ -1,0 +1,19 @@
+id: voice_ja_025
+name: 'JA voice inventory #25'
+language: ja-JP
+text: あ、お疲れ様です、[REDACTED_NAME]です。えーと、あのー、ちょっとお願いしたいことがありまして。あの、製品の、えーっと、エスケーユーのX100、あ、そうそう、X100なんですけど、なんか、えー、不良の報告が、えーと、数件かな、上がってきてて。[雑音]
+  それで、そのー、大変申し訳ないんだけど、あ、違う、えーと、出荷を、あの…一旦すべて止めてもらえますか。まぁ、詳細はまた追って連絡しますんで、とりあえず、はい。よろしくお願いします。[咳]
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-X100
+  - 不良
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

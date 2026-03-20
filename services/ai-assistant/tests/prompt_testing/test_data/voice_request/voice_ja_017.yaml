@@ -1,0 +1,19 @@
+id: voice_ja_017
+name: 'JA voice shipping #17'
+language: ja-JP
+text: あ、あのー、[REDACTED_NAME]さん、お疲れ様です。えーと、ちょっと今いいですかね。あの、注文番号のエスオーの…2024-5678、あ、そうです、5678の件なんですが、[一時停止]
+  なんか至急でお願いしたくて。えーっと、お客様への発送が、あ、ごめん、発送が漏れてたみたいで…。[咳] 大変申し訳ないんですが、そのー、本日中に発送手続き、お願いできますでしょうか。宛先は、えー、[REDACTED_ADDRESS]の[REDACTED_NAME]様です。はい、よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-5678
+  - 発送
+  due_date_present: true
+  priority_range:
+  - 4
+  - 4

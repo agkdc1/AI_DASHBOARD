@@ -1,0 +1,18 @@
+id: voice_ja_050
+name: 'JA voice general #50'
+language: ja-JP
+text: あ、お疲れ様です。えーと、あのー、新入社員の[REDACTED_NAME]さんの件でちょっとお願いがありまして。[雑音] あの、PCのアカウントの、あ、違う、アカウントの設定ですね、そのー、お願いしたいんですけど。メールと、あと…なんだっけ…ああそうそう、InvenTreeへのアクセス権限も、えー、合わせて付与してもらえますか？明日から早速使いたいそうなので、うーん、できれば今日の、いや、ごめん、今日の4時、いや、3時ぐらいまでにお願いできると助かります。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - アカウント
+  - 設定
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

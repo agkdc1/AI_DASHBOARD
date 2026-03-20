@@ -1,0 +1,11 @@
+nodriver>=0.38
+google-cloud-firestore>=2.16
+google-cloud-storage>=2.16
+google-auth>=2.29
+google-generativeai>=0.5
+hvac>=2.1
+Pillow>=10.3
+numpy>=1.26
+aiohttp>=3.9
+sendgrid>=6.11
+pyyaml>=6.0

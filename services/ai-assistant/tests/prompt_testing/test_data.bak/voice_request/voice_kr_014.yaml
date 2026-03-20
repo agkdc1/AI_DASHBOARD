@@ -1,0 +1,19 @@
+id: voice_kr_014
+name: 'KR voice inventory #14'
+language: ko-KR
+text: 아, 수고하십니다. 저기, 부품 P-B5678 재고 말인데요. 제가 방금 확인해 보니까 이제 10개밖에 안 남았더라고요. 혹시 괜찮으시면
+  오늘 중으로 발주 좀 부탁드릴 수 있을까요? 곧 떨어질 것 같아서요. 잘 부탁드립니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - P-B5678
+  - 재고
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

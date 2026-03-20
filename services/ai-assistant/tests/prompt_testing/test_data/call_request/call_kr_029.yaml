@@ -1,0 +1,37 @@
+id: call_kr_029
+name: 'KR call #29'
+language: ko-KR
+text: 'A: 여보세요, [REDACTED_NAME]입니다.
+
+  B: 아, 네, [REDACTED_NAME] 대리님. 수고 많으십니다. [잡음]
+
+  A: 네, 수고하십니다. 어... 다름이 아니라 오늘 오전에 나간 거 말인데요, 음, 그 운송장 출력한 것 중에...
+
+  B: 아, 네네, 운송장이요? 무슨 문제 있었나요?
+
+  A: 네, 저기... 배송 주소 정보에 오류가 좀 발견돼서요. 아, 아니, 두 건이 아니라 세 건이었나... [일시정지] 아무튼 제가 방금 메일로
+  상세 내용을 보내드렸거든요.
+
+  B: 아, 잠시만요, 잘 안 들려서... 메일로 보내주셨다고요?
+
+  A: 네, 네. 그러니까 그 오류 내역 정리해서 보냈으니 확인하시고 수정 좀 부탁드립니다.
+
+  B: 아, 네, 알겠습니다. 지금 바로 확인하고 처리하겠습니다.
+
+  A: 네, 감사합니다. 그럼 부탁드립니다.
+
+  B: 네, 수고하세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - 운송장
+  - 오류
+  priority_range:
+  - 3
+  - 4
+  has_decisions: true

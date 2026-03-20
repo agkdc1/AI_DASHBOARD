@@ -1,0 +1,13 @@
+id: task_ja_008
+name: 'JA task #8'
+language: ja-JP
+input: 新入社員のアカウント設定タスクを登録して。今週中に完了。
+expected:
+  action: create
+  task_title_contains:
+  - アカウント
+  - 設定
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3

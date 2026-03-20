@@ -1,0 +1,42 @@
+id: call_ja_006
+name: 'JA call #6'
+language: ja-JP
+text: 'お疲れ様です。[REDACTED_NAME]です。
+
+
+  お疲れ様です。[REDACTED_NAME]です。今、お時間よろしいでしょうか？
+
+
+  はい、大丈夫ですよ。
+
+
+  ありがとうございます。早速ですが、注文番号SO-2026-0789の件でご連絡しました。こちら、お客様からご要望がありまして、本日中の出荷は可能でしょうか？
+
+
+  SO-2026-0789ですね。確認しますね…はい、大丈夫です。今日の最終便に間に合わせられますよ。
+
+
+  本当ですか、助かります！では、その便で出荷をお願いします。送り先は資料にある通り、[REDACTED_ADDRESS]で変更ありません。
+
+
+  承知いたしました。では、手配を進めておきます。
+
+
+  ありがとうございます。よろしくお願いいたします。では、失礼します。
+
+
+  失礼します。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - SO-2026-0789
+  - 出荷
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

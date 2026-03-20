@@ -1,0 +1,18 @@
+id: voice_ja_010
+name: 'JA voice shipping #10'
+language: ja-JP
+text: あ、お疲れ様です。えーと、ちょっとお願いなんですけど、さっき届いた返品の件で、管理番号がRMA-001の商品ですね。そちらを、あのー、中身を検品してもらって、特に問題がなければ在庫に戻しておいてもらえますか？よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - RMA-001
+  - 返品
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

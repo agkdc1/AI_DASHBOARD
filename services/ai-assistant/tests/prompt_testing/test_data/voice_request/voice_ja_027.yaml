@@ -1,0 +1,19 @@
+id: voice_ja_027
+name: 'JA voice inventory #27'
+language: ja-JP
+text: あ、お疲れ様です。あのー、ちょっと急ぎで共有したい件がありまして。えー、[電話の音] あ、ごめん。えーと、製品の、あの、エスケーユーゼットさんびゃく、あ、違う、SKU-Z300なんですけど、なんか、そのー、一部で不良が見つかったって連絡がさっき入ってまして。つきましては、該当製品の、いや、もう全部かな、えーっと、出荷をですね…[一時停止]
+  いったん停止してもらえますでしょうか。まぁ、取り急ぎよろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-Z300
+  - 不良
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

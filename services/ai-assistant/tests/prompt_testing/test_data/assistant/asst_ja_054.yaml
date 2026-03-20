@@ -1,0 +1,16 @@
+id: asst_ja_054
+name: 'JA assistant #54'
+language: ja-JP
+question: Vikunjaでタスクを作成する方法を教えてください。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - Vikunja
+  - タスク
+  - 作成
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつですー。
+
+  ちょっと聞きたいんだけど、Vikunjaで新しいタスクを作成する手受ってどうやるんだっけ？基本的なやり方教えてくれると助かります！'

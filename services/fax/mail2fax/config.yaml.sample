@@ -1,0 +1,16 @@
+domain: "fax.your-domain.com"
+aws:
+  hosted_zone_id: "ZXXXXXXXXXXXXX"
+fax_api:
+  endpoint: "http://host.docker.internal:8010/send_fax"
+  api_key: "your-api-key"
+smtp_relay:
+  host: "smtp.gmail.com"
+  port: 587
+  username: ""
+  password: ""
+smtp_auth:
+  username: "faxprinter"
+  password: "change-me"
+certbot:
+  email: "admin@your-domain.com"

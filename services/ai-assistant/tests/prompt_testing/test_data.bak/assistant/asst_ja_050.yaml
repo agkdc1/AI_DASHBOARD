@@ -1,0 +1,13 @@
+id: asst_ja_050
+name: 'JA assistant #50'
+language: ja-JP
+question: 送り状の印刷でエラーが出ます。どうすればいいですか。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - 送り状
+  - 印刷
+  - エラー
+  must_not_contain:
+  - 実行しました
+  min_length: 50

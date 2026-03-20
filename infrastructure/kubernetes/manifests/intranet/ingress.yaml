@@ -1,0 +1,85 @@
+# Vikunja + Outline — protected by Authentik forward auth
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: intranet-ingress
+  namespace: intranet
+  labels:
+    app.kubernetes.io/part-of: shinbee-intranet
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/hsts: "true"
+    nginx.ingress.kubernetes.io/hsts-max-age: "31536000"
+    nginx.ingress.kubernetes.io/hsts-include-subdomains: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://app.your-domain.com,https://test-app.your-domain.com"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Content-Type, Authorization"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # Authentik forward auth (domain-level)
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.your-domain.com/outpost.goauthentik.io/auth/nginx"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.your-domain.com/outpost.goauthentik.io/start?rd=$scheme://$host$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid"
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_set_header X-Forwarded-Host $http_host;
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - tasks.your-domain.com
+        - wiki.your-domain.com
+      secretName: intranet-tls
+  rules:
+    - host: tasks.your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: intranet-vikunja
+                port:
+                  name: http
+    - host: wiki.your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: intranet-outline
+                port:
+                  name: http
+---
+# Authentik itself — NO forward auth (it IS the auth provider)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authentik-ingress
+  namespace: intranet
+  labels:
+    app.kubernetes.io/part-of: shinbee-intranet
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - auth.your-domain.com
+      secretName: authentik-tls
+  rules:
+    - host: auth.your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: authentik-server
+                port:
+                  name: http

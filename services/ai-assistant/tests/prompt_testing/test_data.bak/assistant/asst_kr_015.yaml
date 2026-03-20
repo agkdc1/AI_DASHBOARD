@@ -1,0 +1,12 @@
+id: asst_kr_015
+name: 'KR assistant #15'
+language: ko-KR
+question: 작업에 마감일을 설정하는 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 마감일
+  - 설정
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

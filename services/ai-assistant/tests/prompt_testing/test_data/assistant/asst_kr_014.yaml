@@ -1,0 +1,14 @@
+id: asst_kr_014
+name: 'KR assistant #14'
+language: ko-KR
+question: Vikunja에서 프로젝트 진행 상황을 확인하는 방법은?
+expected:
+  language: ko
+  must_contain_any:
+  - Vikunja
+  - 프로젝트
+  - 진행
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 'KR assistant #14, Vikunja에서 지금 진핸 중인 프로젝트 있잖아요. 그거 어떻게 확인하더라?'

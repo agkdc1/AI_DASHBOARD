@@ -1,0 +1,19 @@
+id: asst_ja_021
+name: 'JA assistant #21'
+language: ja-JP
+question: 楽天のAPIキーの更新手順は？
+expected:
+  language: ja
+  must_contain_any:
+  - 楽天
+  - API
+  - キー
+  - 更新
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれー。
+
+  ちょっと聞きたいんだけど、楽天の件でさ、APIキーの更新ってどうやるんだっけ？
+
+  定期的な更新の手受を忘れちゃったから教えてほしい。よろしく！'

@@ -1,0 +1,107 @@
+dn: ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: organizationalUnit
+ou: users
+
+dn: uid=005,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 005
+cn: Staff 005
+sn: Staff 005
+telephoneNumber: 005
+userPassword: change-me
+
+dn: uid=007,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 007
+cn: Staff 007
+sn: Staff 007
+telephoneNumber: 007
+userPassword: change-me
+
+dn: uid=004,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 004
+cn: Staff 004
+sn: Staff 004
+telephoneNumber: 004
+userPassword: change-me
+
+dn: uid=001,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 001
+cn: Staff 001
+sn: Staff 001
+telephoneNumber: 001
+userPassword: change-me
+
+dn: uid=002,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 002
+cn: Staff 002
+sn: Staff 002
+telephoneNumber: 002
+userPassword: change-me
+
+dn: uid=701,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 701
+cn: Lobby
+sn: Lobby
+telephoneNumber: 701
+userPassword: change-me
+
+dn: uid=003,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 003
+cn: Staff 003
+sn: Staff 003
+telephoneNumber: 003
+userPassword: change-me
+
+dn: uid=006,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 006
+cn: Staff 006
+sn: Staff 006
+telephoneNumber: 006
+userPassword: change-me
+
+dn: uid=008,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 008
+cn: Staff 008
+sn: Staff 008
+telephoneNumber: 008
+userPassword: change-me
+
+dn: uid=009,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 009
+cn: Staff 009
+sn: Staff 009
+telephoneNumber: 009
+userPassword: change-me
+
+dn: uid=010,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 010
+cn: Staff 010
+sn: Staff 010
+telephoneNumber: 010
+userPassword: change-me
+
+dn: uid=011,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 011
+cn: Staff 011
+sn: Staff 011
+telephoneNumber: 011
+userPassword: change-me
+
+dn: uid=012,ou=users,CN=Users,DC=shinbee,DC=local
+objectClass: inetOrgPerson
+uid: 012
+cn: Staff 012
+sn: Staff 012
+telephoneNumber: 012
+userPassword: change-me

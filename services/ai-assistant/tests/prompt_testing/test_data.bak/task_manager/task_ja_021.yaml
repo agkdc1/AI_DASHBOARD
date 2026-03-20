@@ -1,0 +1,6 @@
+id: task_ja_021
+name: 'JA task #21'
+language: ja-JP
+input: タスク#123の優先度を高に変更して
+expected:
+  action: update

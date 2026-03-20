@@ -1,0 +1,11 @@
+id: task_ja_019
+name: 'JA task #19'
+language: ja-JP
+input: '[REDACTED_NAME]さんに割り当てられたタスクを見せて'
+expected:
+  action: query
+text: 'お疲れ様ですー
+
+  JA task #19の件、[]進捗どうなってますか？
+
+  あと関連資料の在こが見当たらなくてもし分かれば場所教えてほしいです！'

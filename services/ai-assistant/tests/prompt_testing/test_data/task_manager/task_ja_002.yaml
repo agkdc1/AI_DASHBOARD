@@ -1,0 +1,20 @@
+id: task_ja_002
+name: 'JA task #2'
+language: ja-JP
+input: 今日中にSO-2024-1234の出荷作業を完了するタスクを作って
+expected:
+  action: create
+  task_title_contains:
+  - SO-2024-1234
+  - 出荷
+  has_due_date: true
+  priority_range:
+  - 3
+  - 4
+text: 'おつですー
+
+  JA task #2でタスク作成お願い！
+
+  SO-2024-1234の出荷準備で、至急在こ化員を頼むー
+
+  あ、ごめん明日までで！'

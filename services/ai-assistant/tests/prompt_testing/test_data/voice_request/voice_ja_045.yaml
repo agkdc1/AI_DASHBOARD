@@ -1,0 +1,18 @@
+id: voice_ja_045
+name: 'JA voice orders #45'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、えーと、ちょっといいかな？あのー、お願いしたいことがあるんだけど、[雑音] えーっと、今、そのー、Yahooの注文で、なんか発送が遅れてるやつ…あ、いや、遅れてる注文がないか、えー、確認してもらえますか？もし遅れてるのが、うーん、2、3件…いや何件かあったら、そのリストを今日の15時…あ、ごめん、16時までにまとめて教えてくれると、まぁ、助かります。よろしくね。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - Yahoo
+  - 注文
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

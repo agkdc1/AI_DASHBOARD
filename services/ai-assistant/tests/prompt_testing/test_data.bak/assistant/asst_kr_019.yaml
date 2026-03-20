@@ -1,0 +1,13 @@
+id: asst_kr_019
+name: 'KR assistant #19'
+language: ko-KR
+question: 라쿠텐 수주 처리 흐름을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 라쿠텐
+  - 수주
+  - 처리
+  must_not_contain:
+  - 실행했습니다
+  min_length: 60

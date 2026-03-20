@@ -1,0 +1,14 @@
+id: task_kr_004
+name: 'KR task #4'
+language: ko-KR
+input: 신상품 NP-2026 등록 태스크를 만들어 주세요. 다음달 15일이 마감입니다.
+expected:
+  action: create
+  task_title_contains:
+  - NP-2026
+  - 등록
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3
+text: 'KR task #4 건으로 NP-2026 등록 테스크 생성 좀 부탁해여 아 그리고 기한은 내일까지로 잡아주세요'

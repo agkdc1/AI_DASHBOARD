@@ -1,0 +1,43 @@
+id: call_kr_016
+name: 'KR call #16'
+language: ko-KR
+text: '(통화 시작)
+
+
+  **수신자:** 여보세요, [REDACTED_NAME]입니다.
+
+
+  **발신자:** 네, 과장님, 수고 많으십니다. 저 [REDACTED_NAME]입니다. 다름이 아니라, 반품 건으로 연락드렸습니다.
+
+
+  **수신자:** 아, 네. [REDACTED_NAME]씨. 어떤 건이죠?
+
+
+  **발신자:** 관리번호 RMA-001 상품인데요. 방금 입고되어 확인해 보니 제품 외장에 약간의 손상이 있습니다. 이대로 환불 처리 진행해도
+  괜찮을지 여쭤보려고요.
+
+
+  **수신자:** 그래요? 알겠습니다. 확인 고마워요. 네, 고객 과실은 아니니 그대로 환불 처리 진행해 주세요.
+
+
+  **발신자:** 네, 알겠습니다. 그럼 그렇게 처리하겠습니다. 감사합니다.
+
+
+  **수신자:** 네, 수고하세요.
+
+
+  (통화 종료)'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - RMA-001
+  - 반품
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

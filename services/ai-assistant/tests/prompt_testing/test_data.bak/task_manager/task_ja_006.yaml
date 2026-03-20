@@ -1,0 +1,13 @@
+id: task_ja_006
+name: 'JA task #6'
+language: ja-JP
+input: サプライヤーB社への改善要求書を来週金曜日までに作成するタスク
+expected:
+  action: create
+  task_title_contains:
+  - サプライヤー
+  - 改善
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3

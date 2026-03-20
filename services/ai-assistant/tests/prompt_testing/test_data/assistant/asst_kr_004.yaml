@@ -1,0 +1,17 @@
+id: asst_kr_004
+name: 'KR assistant #4'
+language: ko-KR
+question: InvenTree에서 발주서를 작성하는 방법은?
+expected:
+  language: ko
+  must_contain_any:
+  - 발주
+  - 주문
+  must_not_contain:
+  - 실행했습니다
+  min_length: 60
+text: 'KR assistant #4님,
+
+  갑자기 미안. 저번에 얘기했던 신규 업체 발주 건 있잖아?
+
+  제고 확인하고 주문 넣는 수순이 어떻게 됐더라? 매뉴얼 찾아봐도 잘 안나와서.. 좀 알려줄 수 있어?'

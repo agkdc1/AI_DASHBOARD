@@ -1,0 +1,18 @@
+id: voice_ja_031
+name: 'JA voice inventory #31'
+language: ja-JP
+text: あ、お疲れ様です。すみません、ちょっとお願いしたいことがありまして。あのー、A棟にある商品の在庫移動をお願いしたいんですけど、えーと、品番がP-A1234の商品です。これを5個、B棟のほうに移動しておいてもらえますでしょうか。お手数ですが、よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 在庫移動
+  - P-A1234
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

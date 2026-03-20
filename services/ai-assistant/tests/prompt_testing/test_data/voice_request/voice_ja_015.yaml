@@ -1,0 +1,19 @@
+id: voice_ja_015
+name: 'JA voice shipping #15'
+language: ja-JP
+text: 'あ、[REDACTED_NAME]さん、お疲れ様です。あのー、ちょっといいですか？[雑音] えーと、JA voice shipping #15、じゅうご…の件でお願いなんですけど、そのー、今日の出荷リストで、あの、なんだっけ…ああ、そうそう、まだ未出荷の注文、あ、違う、出荷漏れがないか確認してもらえますか？特に、えーっと、[一時停止]
+  住所が[REDACTED_ADDRESS]で電話番号が[REDACTED_PHONE]の分、あ、ごめん、その注文が気になってて。[咳] まぁ、今日の夕方までにご報告お願いできますでしょうか。よろしくお願いします。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 出荷
+  - 未出荷
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

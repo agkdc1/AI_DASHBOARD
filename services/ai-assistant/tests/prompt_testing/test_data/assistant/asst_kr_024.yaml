@@ -1,0 +1,13 @@
+id: asst_kr_024
+name: 'KR assistant #24'
+language: ko-KR
+question: 전화 내선번호 설정 방법은?
+expected:
+  language: ko
+  must_contain_any:
+  - 전화
+  - 내선
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 어시님~ 아 혹시 그.. 외부에서 온 전화 있잖아요 그거 다른 사람 내선으로 돌리는 밤법 다시 알려줄 수 있어요? 자꾸 까먹네 ㅋㅋ

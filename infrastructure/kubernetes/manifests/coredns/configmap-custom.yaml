@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-custom
+  namespace: kube-system
+data:
+  # Split-brain DNS: resolve *.your-domain.com to MetalLB VIPs inside the cluster.
+  # Without this, pods resolve to the WAN IP via public DNS and can't connect (no hairpin NAT).
+  your-domain.server: |
+    your-domain.com:53 {
+      errors
+      cache 30
+      hosts {
+        10.0.0.251 portal.your-domain.com api.your-domain.com
+        10.0.0.251 tasks.your-domain.com wiki.your-domain.com
+        10.0.0.251 auth.your-domain.com ai.your-domain.com
+        10.0.0.251 fax.your-domain.com
+        10.0.0.251 test-api.your-domain.com test-portal.your-domain.com
+        10.0.0.250 ad.your-domain.com
+        fallthrough
+      }
+      forward . /etc/resolv.conf
+    }

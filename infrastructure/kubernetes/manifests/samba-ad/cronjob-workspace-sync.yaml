@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: google-workspace-sync
+  namespace: shinbee
+spec:
+  schedule: "0 */6 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          restartPolicy: OnFailure
+          containers:
+            - name: workspace-sync
+              image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/google-workspace-sync:latest
+              env:
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: "/etc/gcs/key.json"
+                - name: SAMBA_AD_LDAP_URL
+                  value: "ldap://samba-ad-internal.shinbee.svc.cluster.local:389"
+                - name: SAMBA_ADMIN_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: samba-ad-secret
+                      key: admin-password
+                - name: GOOGLE_WORKSPACE_DOMAIN
+                  value: "your-domain.com"
+                - name: GOOGLE_ADMIN_EMAIL
+                  value: "admin@your-domain.com"
+              resources:
+                requests:
+                  memory: "128Mi"
+                  cpu: "100m"
+                limits:
+                  memory: "256Mi"
+                  cpu: "500m"
+              volumeMounts:
+                - name: gcs-key
+                  mountPath: /etc/gcs
+                  readOnly: true
+          volumes:
+            - name: gcs-key
+              secret:
+                secretName: google-admin-sdk-secret

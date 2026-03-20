@@ -1,0 +1,13 @@
+id: task_ja_005
+name: 'JA task #5'
+language: ja-JP
+input: 倉庫Aの棚卸し準備タスクを作ってください
+expected:
+  action: create
+  task_title_contains:
+  - 棚卸し
+  - 倉庫
+  priority_range:
+  - 2
+  - 3
+text: 'おつですー JA task #5でタスクcreateお願い！倉庫の棚卸しの件で、化員全員に周知ってやつ。あ、あと期限は今週末までで頼むー'

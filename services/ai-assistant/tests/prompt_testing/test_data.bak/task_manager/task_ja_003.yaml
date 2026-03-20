@@ -1,0 +1,13 @@
+id: task_ja_003
+name: 'JA task #3'
+language: ja-JP
+input: 楽天の注文処理フロー改善タスクを登録して。優先度は高で。
+expected:
+  action: create
+  task_title_contains:
+  - 楽天
+  - 注文
+  - 改善
+  priority_range:
+  - 3
+  - 3

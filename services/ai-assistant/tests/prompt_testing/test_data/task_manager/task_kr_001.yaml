@@ -1,0 +1,15 @@
+id: task_kr_001
+name: 'KR task #1'
+language: ko-KR
+input: 다음주 월요일까지 재고 보고서를 작성하는 작업을 만들어 주세요
+expected:
+  action: create
+  task_title_contains:
+  - 재고
+  - 보고서
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3
+text: '/create KR task #1 재고 보거서 작성 좀 부탁해요. 주간 재고 정리해서 간단하게 올리는 거에요. 아 맞다 기한은 내일까지!
+  급하게 요청해서 미안해요 ㅠ'

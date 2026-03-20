@@ -1,0 +1,13 @@
+id: asst_kr_010
+name: 'KR assistant #10'
+language: ko-KR
+question: 사가와 택배 집하 의뢰 절차는?
+expected:
+  language: ko
+  must_contain_any:
+  - 사가와
+  - 집하
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 저기, 사가와 집하 건인데 한국에서 집하 요청하는 절자 어떻게 됐었지?? 갑자기 생각이 안나네ㅠ

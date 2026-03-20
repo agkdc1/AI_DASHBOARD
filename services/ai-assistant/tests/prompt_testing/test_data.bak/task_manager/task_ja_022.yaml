@@ -1,0 +1,6 @@
+id: task_ja_022
+name: 'JA task #22'
+language: ja-JP
+input: タスク#456の期限を来週金曜日に延長して
+expected:
+  action: update

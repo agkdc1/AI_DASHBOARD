@@ -1,0 +1,20 @@
+id: voice_kr_007
+name: 'KR voice shipping #7'
+language: ko-KR
+text: 아, 저기... 수고 많으십니다. 그... 방금 RMA-001 건 있잖아요. 어... 그 반품 들어온 거요. [일시정지] 제가 시스템에서
+  확인을... 아니, 방금 확인했는데, 도착했다고 떠서요. 그러니까 음... 그거 내용물 확인 좀 먼저 해주시구요, 뭐... [기침] 이상 없으면
+  바로 그... 재고 반영... 아, 재고로 다시 잡아주시면 될 것 같아요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - RMA-001
+  - 반품
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

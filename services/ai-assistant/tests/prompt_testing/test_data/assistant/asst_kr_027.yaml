@@ -1,0 +1,15 @@
+id: asst_kr_027
+name: 'KR assistant #27'
+language: ko-KR
+question: InvenTree에서 부품을 검색하려면 어떻게 하나요. 초보자도 알기 쉽게 설명해 주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 검색
+  - 부품
+  - 필터
+  must_not_contain:
+  - 실행했습니다
+  - 삭제했습니다
+  min_length: 50
+text: 'KR assistant #27, 부품 제고 검색하는 거 말인데.. 필터 써서 검색하려는데 잘 안되네. 그거 어케 하는거였지?? ㅠㅠ'

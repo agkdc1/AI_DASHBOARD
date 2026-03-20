@@ -1,0 +1,18 @@
+id: voice_ja_024
+name: 'JA voice inventory #24'
+language: ja-JP
+text: '[咳] あ、お疲れ様です。えーと、あのー、ちょっとお願いしたい作業がありまして…そのー、倉庫の、えーっと、棚卸しの件なんだけど、それで、あの…来週の火曜…あ、違う、えーと、月曜日までに終わらせてほしいんです。[一時停止]
+  もし、まぁ、人手が足りないとか、あ、いや、そうじゃなくて、何か困ったことがあれば、すぐ教えてください。じゃ、よろしくお願いします。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 棚卸し
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

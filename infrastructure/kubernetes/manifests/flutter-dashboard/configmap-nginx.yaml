@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flutter-dashboard-nginx
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: flutter-dashboard
+data:
+  default.conf: |
+    server {
+        listen 80;
+        root /usr/share/nginx/html;
+        index index.html;
+
+        # SPA routing: all paths -> index.html
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        # Cache static assets
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2?)$ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+
+        # Don't cache index.html (always get latest version pointer)
+        location = /index.html {
+            expires -1;
+            add_header Cache-Control "no-store, no-cache, must-revalidate";
+        }
+    }

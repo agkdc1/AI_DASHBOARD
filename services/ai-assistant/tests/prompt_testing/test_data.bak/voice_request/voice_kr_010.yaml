@@ -1,0 +1,20 @@
+id: voice_kr_010
+name: 'KR voice shipping #10'
+language: ko-KR
+text: '아, [REDACTED_NAME]님. 저기, 오늘 KR voice shipping #10 관련해서 출하 건 좀 확인 부탁드릴게요. 음...
+  오늘 나가야 할 물량 중에 아직 미출하 상태인 게 있는지 리스트 보고 체크해 주시겠어요? 만약 미출하 건이 있으면, 오늘 중으로 저한테 알려주세요.
+  감사합니다.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 출하
+  - 미출하
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

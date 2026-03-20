@@ -1,0 +1,18 @@
+id: voice_ja_032
+name: 'JA voice inventory #32'
+language: ja-JP
+text: あ、お疲れ様です。[REDACTED_NAME]さん。えーと、あのー、ちょっとお願いしたいことがありまして…[一時停止]えー、なんだっけな、あ、そうそう。在庫移動なんですけど、そのー、品番がP-B5678、あ、ごめん、ピービーのごーろくななはち、ですね。これを、えーっと、5個…いや、7個だったかな。うん、7個ですね、[咳]それをA棟の棚からB棟の方に、まぁ、移動をお願いできますでしょうか。はい、よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 在庫移動
+  - P-B5678
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

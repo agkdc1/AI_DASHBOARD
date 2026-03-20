@@ -1,0 +1,18 @@
+id: voice_ja_009
+name: 'JA voice shipping #9'
+language: ja-JP
+text: 'お疲れ様です。すみません、今ちょっといいですか。えーと、JA voice shipping #9の件なんですけど、[REDACTED_NAME]様宛の荷物の発送をお願いしたいんです。送り先は[REDACTED_ADDRESS]で、電話番号は[REDACTED_PHONE]ですね。あ、配送はいつもの佐川でお願いします。お手数ですが、よろしくお願いします。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 発送
+  - 佐川
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

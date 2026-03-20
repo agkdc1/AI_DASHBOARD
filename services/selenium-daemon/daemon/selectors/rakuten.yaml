@@ -1,0 +1,39 @@
+# Rakuten RMS selectors
+# NOTE: These selectors are based on known page structure.
+# If they break, Gemini XPath repair will auto-fix them.
+
+login:
+  username_input: "#loginInner_u"
+  password_input: "#loginInner_p"
+  login_button: "input[type='submit'][name='submit']"
+
+captcha:
+  captcha_image: "img.captcha-image"
+  captcha_input: "input[name='captcha']"
+
+two_factor:
+  code_input: "input[name='verificationCode']"
+  submit_button: "input[type='submit']"
+
+dashboard:
+  main_menu: "#mainMenu"
+  order_link: "a[href*='order']"
+  shop_settings_link: "a[href*='shop']"
+
+api_key:
+  key_table: "table.apiKeyTable"
+  renew_button: "a[href*='renew'], button[onclick*='renew']"
+  confirm_button: "input[type='submit'][value*='OK'], button[onclick*='confirm']"
+  service_secret_field: "td.serviceSecret, span.serviceSecret"
+  license_key_field: "td.licenseKey, span.licenseKey"
+
+# Metadata for Gemini repair context
+_descriptions:
+  login.username_input: "The login username/ID text input field"
+  login.password_input: "The password text input field"
+  login.login_button: "The login form submit button"
+  captcha.captcha_image: "The CAPTCHA challenge image"
+  captcha.captcha_input: "Text input for CAPTCHA answer"
+  api_key.renew_button: "Button or link to renew API keys"
+  api_key.service_secret_field: "Cell or span displaying the service secret value"
+  api_key.license_key_field: "Cell or span displaying the license key value"

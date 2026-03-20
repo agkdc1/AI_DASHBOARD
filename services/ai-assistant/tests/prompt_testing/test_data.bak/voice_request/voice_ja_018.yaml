@@ -1,0 +1,18 @@
+id: voice_ja_018
+name: 'JA voice shipping #18'
+language: ja-JP
+text: お疲れ様です。あのー、ちょっとお願いしたいことがあるんですけど。えーと、注文番号 SO-2025-0001 の件、至急で発送をお願いできますでしょうか。お客様の[REDACTED_NAME]様からお急ぎの連絡がありまして…。送り先は、住所が[REDACTED_ADDRESS]、電話番号は[REDACTED_PHONE]です。大変申し訳ないのですが、本日中にお願いしたいです。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2025-0001
+  - 発送
+  due_date_present: true
+  priority_range:
+  - 4
+  - 4

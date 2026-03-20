@@ -1,0 +1,17 @@
+id: voice_ja_023
+name: 'JA voice inventory #23'
+language: ja-JP
+text: お疲れ様です、[REDACTED_NAME]さん。えーと、ちょっとお願いしたいことがあるんですが、倉庫Aの棚卸し、急で申し訳ないんですけど来週の月曜日までにお願いできますでしょうか。ちょっと在庫の最終確認を急いでまして。何か不明点あれば、また声かけてください。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 棚卸し
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

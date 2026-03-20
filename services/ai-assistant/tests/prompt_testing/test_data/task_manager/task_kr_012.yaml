@@ -1,0 +1,11 @@
+id: task_kr_012
+name: 'KR task #12'
+language: ko-KR
+input: 마감일이 지난 태스크가 있나요?
+expected:
+  action: query
+text: '[KR task #12] query
+
+  ㅇㅇ님 혹시 지금 재고 화긴 좀 가능할까요?
+
+  아 그리고 기한은 내일까진데 급한거라 최대한 빨리 부타해요'

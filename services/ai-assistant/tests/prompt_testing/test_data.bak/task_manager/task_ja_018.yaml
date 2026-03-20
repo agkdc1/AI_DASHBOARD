@@ -1,0 +1,6 @@
+id: task_ja_018
+name: 'JA task #18'
+language: ja-JP
+input: 在庫管理のタスクを検索して
+expected:
+  action: query

@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: samba-fileserver
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: samba-fileserver
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: samba-fileserver
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: samba-fileserver
+    spec:
+      nodeSelector:
+        shinbee/role: samba
+        kubernetes.io/arch: amd64
+      containers:
+        - name: samba-fileserver
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/samba-fileserver:latest
+          env:
+            - name: SAMBA_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: samba-ad-secret
+                  key: admin-password
+            - name: AD_DC_IP
+              value: "10.0.0.250"
+            - name: SAMBA_REALM
+              value: "SHINBEE.LOCAL"
+            - name: SAMBA_DOMAIN
+              value: "SHINBEE"
+            - name: TZ
+              value: "Asia/Tokyo"
+          ports:
+            - name: smb
+              containerPort: 445
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 445
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+                - wbinfo
+                - -t
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          volumeMounts:
+            - name: profiles
+              mountPath: /srv/samba/profiles
+            - name: shared
+              mountPath: /srv/samba/shared
+      volumes:
+        - name: profiles
+          persistentVolumeClaim:
+            claimName: samba-profiles
+        - name: shared
+          persistentVolumeClaim:
+            claimName: samba-shared

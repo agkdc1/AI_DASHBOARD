@@ -1,0 +1,26 @@
+# Laptop node configuration for K3s cluster over Tailscale
+# tailscale_name filled interactively by bootable.sh
+
+control_plane:
+  hostname: shinbee-pi
+  tailscale_name: shinbee-pi
+  arch: arm64
+  role: server
+  taints:
+    - "node-role.kubernetes.io/control-plane:NoSchedule"
+    - "node-role.kubernetes.io/control-plane:NoExecute"
+
+nodes:
+  - hostname: laptop-1             # 6-core modern laptop
+    tailscale_name: ""
+    arch: amd64
+    role: worker
+    labels:
+      kubernetes.io/arch: amd64
+
+  - hostname: laptop-2             # i3 2-core 12GB
+    tailscale_name: ""
+    arch: amd64
+    role: worker
+    labels:
+      kubernetes.io/arch: amd64

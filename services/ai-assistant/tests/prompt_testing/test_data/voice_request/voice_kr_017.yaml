@@ -1,0 +1,20 @@
+id: voice_kr_017
+name: 'KR voice inventory #17'
+language: ko-KR
+text: 아, 저기요, 그... [잡음] 어, 지금 그 에스케이유-엑스 백 있잖아요. 음, 거기서 불량이 한, 한 두 개? 아, 아니, 세 개 정도
+  나왔는데, 뭐... [기침] 그러니까 일단 출하부터, 아, 잠깐만, 출고부터 막아야... 아니, 출하부터 좀 중지해야 할 것 같아서요. 네, 그거
+  먼저 좀… 부탁드릴게요.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SKU-X100
+  - 불량
+  due_date_present: false
+  priority_range:
+  - 4
+  - 4

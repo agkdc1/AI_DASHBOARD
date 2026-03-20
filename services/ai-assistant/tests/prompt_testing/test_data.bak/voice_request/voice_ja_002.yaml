@@ -1,0 +1,18 @@
+id: voice_ja_002
+name: 'JA voice shipping #2'
+language: ja-JP
+text: お疲れ様です。えーと、ちょっとお願いしたいことがあるんですけど、注文番号SO-2024-5678の商品の発送をお願いできますでしょうか。送り先は、[REDACTED_NAME]様、住所が[REDACTED_ADDRESS]です。本日中に、ヤマト運輸の着払いでお願いします。あ、電話番号は[REDACTED_PHONE]ですね。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-5678
+  - 発送
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

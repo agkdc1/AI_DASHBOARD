@@ -1,0 +1,21 @@
+CountryCode:		81
+AreaCode:		03
+FAXNumber:		+81.3.6424.5304
+LongDistancePrefix:	0
+InternationalPrefix:	001
+DialStringRules:	etc/dialrules
+ServerTracing:		1
+SessionTracing:		11
+RecvFileMode:		0600
+LogFileMode:		0600
+DeviceMode:		0600
+RingsBeforeAnswer:	1
+SpeakerVolume:		off
+GettyArgs:		"-h %l dx_%s"
+LocalIdentifier:	"Fax Server"
+TagLineFont:		etc/lutRS18.pcf
+TagLineFormat:		"From %%l|%c|Page %%P of %%T"
+MaxRecvPages:		25
+ModemType:		Class1
+ModemResetCmds:		"ATZ"
+ModemReadyStateCmds:	AT+VTS=7

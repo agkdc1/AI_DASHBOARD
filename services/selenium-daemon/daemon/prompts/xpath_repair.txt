@@ -1,0 +1,25 @@
+You are a web scraping expert. A CSS selector has stopped working due to a
+website redesign.
+
+Element description: {{description}}
+Previous selector: {{old_selector}}
+Page URL: {{url}}
+
+Analyze the HTML structure below and return the correct CSS selector.
+
+Rules:
+- Prefer ID selectors (#id) when available
+- Use data attributes (data-testid, data-action) when present
+- Avoid fragile positional selectors (:nth-child)
+- Test uniqueness: the selector should match exactly ONE element
+
+Respond with ONLY a JSON object:
+{
+  "new_selector": "<CSS selector>",
+  "confidence": <0.0-1.0>,
+  "reasoning": "<one sentence>",
+  "fallback_selector": "<alternative CSS selector>"
+}
+
+HTML:
+{{html}}

@@ -1,0 +1,38 @@
+id: call_kr_026
+name: 'KR call #26'
+language: ko-KR
+text: 'A: 여보세요?
+
+  B: 네, 영업지원팀 [REDACTED_NAME]입니다.
+
+  A: 아, [REDACTED_NAME] 대리님, 수고 많으십니다. 물류팀 [REDACTED_NAME]입니다. 다름이 아니라, 오전에 출고된 건의
+  운송장 관련해서 연락드렸습니다.
+
+  B: 아, 네. 무슨 문제 있었나요?
+
+  A: 네, 오늘 발송분에서 2건의 주소 오류가 발견되었습니다. 고객 주소가 [REDACTED_ADDRESS]까지만 입력되어 있어서 시스템에서 오류가
+  나네요.
+
+  B: 그렇군요. 죄송합니다. 제가 바로 확인하고 수정하겠습니다.
+
+  A: 네, 주문번호 1105번이랑 1108번입니다. 확인 후 재처리 부탁드립니다.
+
+  B: 알겠습니다. 즉시 수정해서 다시 시스템에 연동해 놓겠습니다.
+
+  A: 네, 그럼 부탁드립니다. 감사합니다.
+
+  B: 네, 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - 운송장
+  - 오류
+  priority_range:
+  - 3
+  - 4
+  has_decisions: true

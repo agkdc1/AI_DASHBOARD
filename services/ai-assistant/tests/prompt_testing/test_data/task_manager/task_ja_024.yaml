@@ -1,0 +1,11 @@
+id: task_ja_024
+name: 'JA task #24'
+language: ja-JP
+input: タスク#101の説明を「出荷停止対応」に更新して
+expected:
+  action: update
+text: 'お疲れ様ですー
+
+  JA task #24のupdateお願い！
+
+  今の進捗を化員して反映しといてー よろしく！'

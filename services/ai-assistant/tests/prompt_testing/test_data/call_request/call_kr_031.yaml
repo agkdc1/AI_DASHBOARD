@@ -1,0 +1,42 @@
+id: call_kr_031
+name: 'KR call #31'
+language: ko-KR
+text: '[REDACTED_NAME]A: 여보세요? [잡음]
+
+  [REDACTED_NAME]B: 여보세요? 네, 재고관리팀 [REDACTED_NAME]인데요. 아, 여보세요? 저기, 좀 끊기는 것 같은데...
+
+  [REDACTED_NAME]A: 아, [REDACTED_NAME] 대리님! 영업부 [REDACTED_NAME]입니다. 수고 많으십니다. 어, 지금
+  통화 괜찮으세요?
+
+  [REDACTED_NAME]B: 아, 네네, [REDACTED_NAME] 씨. 괜찮습니다. 음, 무슨 일이시죠?
+
+  [REDACTED_NAME]A: 다름이 아니라, 어, 그 신상품 **NP-2026** 있잖아요, 그거 **재고 등록** 건으로 전화드렸습니다.
+  [기침]
+
+  [REDACTED_NAME]B: 아, **NP-2026** 말씀이시군요. 네, 네. 어떻게...
+
+  [REDACTED_NAME]A: 네, 저희 시스템에... 아니, 그게 아니라, 어, 초회 입고분을 **재고 등록** 해주시면 되는데요. 수량이
+  한 30개... 아, 아니요, 50개였습니다. 죄송합니다.
+
+  [REDACTED_NAME]B: 아, 50개요. 알겠습니다. **NP-2026** 초회분 50개로 신규 **재고 등록**, 맞으시죠? 확인하고
+  바로 처리하겠습니다.
+
+  [REDACTED_NAME]A: 네, 맞습니다! 그럼 잘 부탁드리겠습니다.
+
+  [REDACTED_NAME]B: 알겠습니다. 그럼 들어가세요.
+
+  [REDACTED_NAME]A: 네, 수고하세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - NP-2026
+  - 재고 등록
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

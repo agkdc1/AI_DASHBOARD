@@ -1,0 +1,6 @@
+id: task_kr_013
+name: 'KR task #13'
+language: ko-KR
+input: 라쿠텐 관련 태스크 목록을 보여 주세요
+expected:
+  action: query

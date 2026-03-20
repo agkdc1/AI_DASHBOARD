@@ -1,0 +1,36 @@
+name: shinbee_dashboard
+description: Shinbee Japan unified dashboard — InvenTree, Vikunja, Outline
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^2.6.1
+  go_router: ^14.8.1
+  dio: ^5.7.0
+  crypto: ^3.0.6
+  adaptive_theme: ^3.6.0
+  flutter_tabler_icons: ^1.43.0
+  cached_network_image: ^3.4.1
+  flutter_secure_storage: ^9.2.4
+  intl: any
+  table_calendar: ^3.1.3
+  flutter_markdown: ^0.7.6+2
+  shared_preferences: ^2.3.4
+  image_picker: ^1.1.2
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true

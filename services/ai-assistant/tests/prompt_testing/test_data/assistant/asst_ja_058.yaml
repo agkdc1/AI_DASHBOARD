@@ -1,0 +1,14 @@
+id: asst_ja_058
+name: 'JA assistant #58'
+language: ja-JP
+question: タスクに期限を設定する方法を教えてください。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - 期限
+  - 設定
+  - タスク
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: おつかれー。例のタスクの件で質問なんだけど、期限の設定方法ってどこからやるんだっけ？詳しい手受を教えてほしい！

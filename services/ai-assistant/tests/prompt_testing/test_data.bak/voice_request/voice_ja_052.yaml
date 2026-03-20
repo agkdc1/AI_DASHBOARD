@@ -1,0 +1,18 @@
+id: voice_ja_052
+name: 'JA voice general #52'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、来月に予定している出張の件で、ちょっとスケジュールの調整をお願いしたいんだけど。訪問先は、あの、[REDACTED_ADDRESS]にある取引先です。申し訳ないんだけど、来週の水曜日あたりまでで、一旦たたき台をもらえると助かります。よろしく！
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 出張
+  - スケジュール
+  due_date_present: false
+  priority_range:
+  - 1
+  - 3

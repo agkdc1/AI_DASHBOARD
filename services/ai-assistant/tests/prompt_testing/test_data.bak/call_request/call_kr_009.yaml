@@ -1,0 +1,36 @@
+id: call_kr_009
+name: 'KR call #9'
+language: ko-KR
+text: '여보세요, [REDACTED_NAME]입니다.
+
+  아, 네. [REDACTED_NAME] 대리님, 수고 많으십니다.
+
+  네, 수고하십니다. 다름이 아니라 재고 건으로 연락드렸는데요. 부품 P-D3456 재고가 거의 다 소진되었습니다.
+
+  아, 그래요? 지금 몇 개 정도 남아있죠?
+
+  네, 확인해 보니 10개밖에 남지 않았습니다. 다음 주 생산 일정에 차질이 생길 것 같아서요.
+
+  알겠습니다. 그럼 제가 바로 확인해서 추가 발주 진행하도록 하겠습니다.
+
+  네, 감사합니다. 그럼 다음 주 초까지는 입고 가능할까요?
+
+  네, 문제없을 겁니다. 처리하고 다시 연락드리겠습니다.
+
+  네, 알겠습니다. 그럼 수고하세요.
+
+  네, 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - P-D3456
+  - 재고
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

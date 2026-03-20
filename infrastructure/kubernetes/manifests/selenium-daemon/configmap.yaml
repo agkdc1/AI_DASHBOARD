@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: selenium-config
+  namespace: shinbee
+data:
+  # config.yaml is mounted from the central config; this ConfigMap holds
+  # K8s-specific overrides and selector/prompt files as needed.
+  # The main config.yaml is copied into the image or mounted separately.
+  VAULT_ADDR: "http://10.0.2.10:8200"
+  DISPLAY: ":99"

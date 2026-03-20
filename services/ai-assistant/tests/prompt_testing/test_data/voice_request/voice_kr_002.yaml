@@ -1,0 +1,20 @@
+id: voice_kr_002
+name: 'KR voice shipping #2'
+language: ko-KR
+text: 아, 저기... 수고 많으십니다. 음, 그 주문 번호 에스오-이공이사-오육칠팔, 아니, 다시. SO-2024-5678 건 말인데요. 어...
+  그거 가급적 오늘 중으로 발송 처리 좀 부탁드릴 수 있을까요? [기침] 아, 그게 좀 급한 거라서... 그러니까 오늘 꼭 좀... 네, 발송 부탁드립니다.
+  [일시정지] 뭐, 다른 특이사항은 없구요. 그럼 잘 부탁드립니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-5678
+  - 발송
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

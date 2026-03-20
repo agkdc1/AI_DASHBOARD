@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flutter-dashboard
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: flutter-dashboard
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  selector:
+    app.kubernetes.io/name: flutter-dashboard

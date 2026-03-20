@@ -1,0 +1,16 @@
+id: asst_ja_005
+name: 'JA assistant #5'
+language: ja-JP
+question: InvenTreeの在庫移動はどうやりますか？
+expected:
+  language: ja
+  must_contain_any:
+  - 在庫
+  - 移動
+  - ロケーション
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれー。ちょっと聞きたいんだけど、あの在庫移動の件。
+
+  あるロケーションから別のロケーションに在庫を移すときの手受ってどうやるんだっけ？'

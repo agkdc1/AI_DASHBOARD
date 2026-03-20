@@ -1,0 +1,17 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+paddleocr==2.9.1
+paddlepaddle==3.0.0b1
+Pillow==11.1.0
+google-cloud-aiplatform==1.76.0
+google-cloud-speech==2.28.1
+google-cloud-storage==2.19.0
+httpx==0.28.1
+python-multipart==0.0.20
+numpy>=1.26.0,<2.0
+setuptools
+python-ldap==3.4.4
+aiosqlite==0.20.0
+google-api-python-client==2.163.0

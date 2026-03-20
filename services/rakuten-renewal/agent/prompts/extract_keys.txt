@@ -1,0 +1,33 @@
+You are reading an API key management page from Rakuten RMS. The screenshot shows API credentials.
+
+Extract ALL visible API keys, secrets, and tokens from the page.
+
+You MUST respond with ONLY a JSON object:
+
+{
+  "keys_found": true | false,
+  "credentials": {
+    "service_secret": "<value or null>",
+    "license_key": "<value or null>"
+  },
+  "metadata": {
+    "shop_id": "<shop ID if visible, or null>",
+    "expiry_date": "<expiry date in YYYY-MM-DD if visible, or null>",
+    "renewed_at": "<renewal timestamp if visible, or null>"
+  },
+  "raw_text_fields": [
+    {
+      "label": "<field label in English>",
+      "value": "<field value exactly as displayed>",
+      "bbox": { "x": <int>, "y": <int>, "w": <int>, "h": <int> }
+    }
+  ],
+  "confidence": <float 0.0 to 1.0>,
+  "note": "<any warnings — e.g., partially obscured values>"
+}
+
+Rules:
+- Copy key values EXACTLY as displayed — do not guess or autocomplete.
+- If a value is partially masked (e.g., "sk_****xyz"), include it as-is and set confidence low.
+- raw_text_fields should capture every labeled value on the page, even if you're unsure what it maps to.
+- Translate Japanese labels to English.

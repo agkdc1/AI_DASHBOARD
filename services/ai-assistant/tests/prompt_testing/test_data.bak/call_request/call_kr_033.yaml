@@ -1,0 +1,35 @@
+id: call_kr_033
+name: 'KR call #33'
+language: ko-KR
+text: '여보세요, [REDACTED_NAME]입니다.
+
+  네, [REDACTED_NAME] 대리님, 수고하십니다.
+
+  네, 수고 많으십니다. 다름이 아니라 신상품 관련해서 전화드렸습니다.
+
+  네, 말씀하세요.
+
+  이번에 새로 입고된 **NP-2028**의 **재고 등록**을 좀 부탁드리려고요. InvenTree 시스템에 새 카테고리 만들어서 초회 물량 50개
+  먼저 등록해주실 수 있을까요?
+
+  아, 네. **NP-2028** 말씀이시죠? 알겠습니다. 지금 바로 처리하도록 하겠습니다.
+
+  네, 감사합니다. 혹시 문제 있으면 바로 알려주세요.
+
+  알겠습니다. 그럼 이만 끊겠습니다.
+
+  네, 수고하세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - NP-2028
+  - 재고 등록
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

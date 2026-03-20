@@ -1,0 +1,6 @@
+id: task_ja_030
+name: 'JA task #30'
+language: ja-JP
+input: タスク#777を消して
+expected:
+  action: delete

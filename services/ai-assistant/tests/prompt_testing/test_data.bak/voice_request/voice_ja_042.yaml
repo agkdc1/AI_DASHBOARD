@@ -1,0 +1,18 @@
+id: voice_ja_042
+name: 'JA voice orders #42'
+language: ja-JP
+text: お疲れ様です。あのー、ちょっと依頼なんですけど、Qoo10の注文の件でして。えーと、注文番号がSO-2025-0001のお客様からキャンセルのご連絡がありました。お客様都合でのキャンセルとのことですので、お手数ですが、こちらのキャンセル処理をお願いできますでしょうか。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - Qoo10
+  - キャンセル
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

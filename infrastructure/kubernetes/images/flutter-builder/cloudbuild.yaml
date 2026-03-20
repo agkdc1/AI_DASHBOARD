@@ -1,0 +1,21 @@
+steps:
+  - id: flutter-builder
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --platform=linux/amd64
+      - -t
+      - ${_REGISTRY}/flutter-builder:${_TAG}
+      - .
+
+images:
+  - ${_REGISTRY}/flutter-builder:${_TAG}
+
+substitutions:
+  _REGISTRY: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee
+  _TAG: latest
+
+timeout: 1800s
+
+options:
+  machineType: E2_HIGHCPU_8

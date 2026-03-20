@@ -1,0 +1,14 @@
+id: asst_ja_014
+name: 'JA assistant #14'
+language: ja-JP
+question: Vikunjaでプロジェクトの進捗を確認する方法は？
+expected:
+  language: ja
+  must_contain_any:
+  - Vikunja
+  - プロジェクト
+  - 進捗
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: おつかれー。ちょっと教えてほしいんだけど、Vikunjaで新しいプロジェクトの進捗を管理したい場合、基本的な手受ってどうやるんだっけ？

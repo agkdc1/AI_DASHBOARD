@@ -1,0 +1,18 @@
+id: asst_kr_021
+name: 'KR assistant #21'
+language: ko-KR
+question: 신입사원 계정 설정 절차를 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 계정
+  - 설정
+  - 절차
+  must_not_contain:
+  - 실행했습니다
+  min_length: 60
+text: 'KR assistant #21,
+
+  아 그거 있잖아요, 새로운 시스템 건.
+
+  신규 게정 설정하는 절차 좀 다시 알려줘요. 메뉴얼 봤는데 헷갈려서;;'

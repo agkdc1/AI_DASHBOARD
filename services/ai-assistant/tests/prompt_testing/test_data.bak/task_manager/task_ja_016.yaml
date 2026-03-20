@@ -1,0 +1,6 @@
+id: task_ja_016
+name: 'JA task #16'
+language: ja-JP
+input: 期限切れのタスクはある？
+expected:
+  action: query

@@ -1,0 +1,6 @@
+id: task_ja_020
+name: 'JA task #20'
+language: ja-JP
+input: 今月末が期限のタスクを探して
+expected:
+  action: query

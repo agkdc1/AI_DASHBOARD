@@ -1,0 +1,13 @@
+id: asst_ja_035
+name: 'JA assistant #35'
+language: ja-JP
+question: 在庫の棚卸し作業をInvenTreeで行う方法を教えてください。初心者向けに簡単に説明してください。
+expected:
+  language: ja
+  must_contain_any:
+  - 棚卸し
+  - 在庫
+  - カウント
+  must_not_contain:
+  - 実行しました
+  min_length: 80

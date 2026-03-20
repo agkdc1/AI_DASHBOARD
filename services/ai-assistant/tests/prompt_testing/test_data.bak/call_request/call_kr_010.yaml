@@ -1,0 +1,48 @@
+id: call_kr_010
+name: 'KR call #10'
+language: ko-KR
+text: '(따르르릉... 따르르릉...)
+
+
+  **수신자:** 네, [REDACTED_NAME]입니다.
+
+
+  **발신자:** 여보세요, [REDACTED_NAME] 과장님. 수고 많으십니다. 저 [REDACTED_NAME]입니다.
+
+
+  **수신자:** 아, 네, [REDACTED_NAME] 대리님. 수고하십니다. 무슨 일이세요?
+
+
+  **발신자:** 다름이 아니라, 부품 **P-E7890** **재고** 건으로 연락드렸습니다. 현재 **재고**가 거의 다 소진된 것 같아서요.
+
+
+  **수신자:** 아, **P-E7890** 말씀이시죠? 확인해 보니 20개밖에 남지 않았네요.
+
+
+  **발신자:** 네, 그래서 다음 주까지 추가 발주를 좀 부탁드립니다.
+
+
+  **수신자:** 알겠습니다. 확인했고, 바로 발주 처리하도록 하겠습니다.
+
+
+  **발신자:** 감사합니다. 그럼 잘 부탁드립니다.
+
+
+  **수신자:** 네, 수고하세요.
+
+
+  **발신자:** 네, 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - P-E7890
+  - 재고
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

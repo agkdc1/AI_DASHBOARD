@@ -1,0 +1,175 @@
+services:
+  # ---------------------------------------------------------------------------
+  # MySQL 8.0 — database backend
+  # ---------------------------------------------------------------------------
+  inventree-db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${INVENTREE_DB_NAME:-inventree}
+      MYSQL_USER: ${INVENTREE_DB_USER:-inventree}
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_password
+    secrets:
+      - mysql_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - mysql-socket:/var/run/mysqld
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--socket=/var/run/mysqld/mysqld.sock"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # ---------------------------------------------------------------------------
+  # Certbot — DNS-01 certificate + Route53 dynamic DNS
+  # ---------------------------------------------------------------------------
+  inventree-certbot:
+    build:
+      context: .
+      dockerfile: Dockerfile.certbot
+    restart: unless-stopped
+    environment:
+      INVENTREE_DOMAIN: ${INVENTREE_DOMAIN:-api.your-domain.com}
+      PORTAL_DOMAIN: ${PORTAL_DOMAIN:-portal.your-domain.com}
+      CERTBOT_EMAIL: ${CERTBOT_EMAIL:-}
+      DNS_MODE: ${DNS_MODE:-production}
+      ROUTE53_ZONE_ID: ${ROUTE53_ZONE_ID:-}
+    volumes:
+      - certbot-data:/etc/letsencrypt
+      - ../.aws:/root/.aws:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    healthcheck:
+      test: ["CMD", "test", "-f", "/etc/letsencrypt/.ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 60
+      start_period: 10s
+
+  # ---------------------------------------------------------------------------
+  # InvenTree server — uWSGI serving the Django application
+  # ---------------------------------------------------------------------------
+  inventree-server:
+    build:
+      context: .
+      args:
+        INVENTREE_TAG: ${INVENTREE_TAG:-stable}
+    restart: unless-stopped
+    depends_on:
+      inventree-db:
+        condition: service_healthy
+    environment:
+      INVENTREE_DB_ENGINE: ${INVENTREE_DB_ENGINE:-mysql}
+      INVENTREE_DB_NAME: ${INVENTREE_DB_NAME:-inventree}
+      INVENTREE_DB_USER: ${INVENTREE_DB_USER:-inventree}
+      # INVENTREE_DB_HOST is intentionally absent — empty HOST lets
+      # config.yaml's OPTIONS.unix_socket take effect.
+      INVENTREE_SITE_URL: ${INVENTREE_SITE_URL:-https://api.your-domain.com}
+      INVENTREE_DEBUG: ${INVENTREE_DEBUG:-False}
+      INVENTREE_PLUGINS_ENABLED: ${INVENTREE_PLUGINS_ENABLED:-true}
+      INVENTREE_PLUGIN_DIR: ${INVENTREE_PLUGIN_DIR:-/home/inventree/plugins}
+      INVENTREE_SOCIAL_BACKENDS: ${INVENTREE_SOCIAL_BACKENDS:-google}
+      # Console email backend — satisfies is_email_configured() for SSO
+      # registration without requiring an SMTP server
+      INVENTREE_EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
+      # Share session/CSRF cookies across api. and portal. subdomains
+      INVENTREE_COOKIE_DOMAIN: .your-domain.com
+      # Japanese localization
+      INVENTREE_LANGUAGE: ja
+      INVENTREE_TIMEZONE: Asia/Tokyo
+      # SSO-only superuser auto-creation
+      INVENTREE_ADMIN_EMAIL: ${INVENTREE_ADMIN_EMAIL:-admin@your-domain.com}
+    secrets:
+      - mysql_password
+      - google_client_id
+      - google_client_secret
+    volumes:
+      - mysql-socket:/var/run/mysqld
+      - uwsgi-socket:/var/run/uwsgi
+      - inventree-data:/home/inventree/data
+      - ../plugins:/home/inventree/plugins
+
+  # ---------------------------------------------------------------------------
+  # InvenTree background worker (django-q2)
+  # ---------------------------------------------------------------------------
+  inventree-worker:
+    build:
+      context: .
+      args:
+        INVENTREE_TAG: ${INVENTREE_TAG:-stable}
+    restart: unless-stopped
+    command: invoke worker
+    depends_on:
+      inventree-server:
+        condition: service_started
+    environment:
+      INVENTREE_DB_ENGINE: ${INVENTREE_DB_ENGINE:-mysql}
+      INVENTREE_DB_NAME: ${INVENTREE_DB_NAME:-inventree}
+      INVENTREE_DB_USER: ${INVENTREE_DB_USER:-inventree}
+      INVENTREE_SITE_URL: ${INVENTREE_SITE_URL:-https://api.your-domain.com}
+      INVENTREE_DEBUG: ${INVENTREE_DEBUG:-False}
+      INVENTREE_BACKGROUND_WORKERS: ${INVENTREE_BACKGROUND_WORKERS:-4}
+      INVENTREE_PLUGINS_ENABLED: ${INVENTREE_PLUGINS_ENABLED:-true}
+      INVENTREE_PLUGIN_DIR: ${INVENTREE_PLUGIN_DIR:-/home/inventree/plugins}
+      INVENTREE_SOCIAL_BACKENDS: ${INVENTREE_SOCIAL_BACKENDS:-google}
+      INVENTREE_EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
+      INVENTREE_COOKIE_DOMAIN: .your-domain.com
+      # Japanese localization
+      INVENTREE_LANGUAGE: ja
+      INVENTREE_TIMEZONE: Asia/Tokyo
+      # SSO-only superuser auto-creation
+      INVENTREE_ADMIN_EMAIL: ${INVENTREE_ADMIN_EMAIL:-admin@your-domain.com}
+    secrets:
+      - mysql_password
+      - google_client_id
+      - google_client_secret
+    volumes:
+      - mysql-socket:/var/run/mysqld
+      - inventree-data:/home/inventree/data
+      - ../plugins:/home/inventree/plugins
+
+  # ---------------------------------------------------------------------------
+  # Nginx reverse proxy — HTTPS termination
+  # ---------------------------------------------------------------------------
+  inventree-proxy:
+    image: nginx:1.25-alpine
+    restart: unless-stopped
+    depends_on:
+      inventree-server:
+        condition: service_started
+      inventree-certbot:
+        condition: service_healthy
+    ports:
+      - "${INVENTREE_WEB_PORT:-80}:80"
+      - "${INVENTREE_HTTPS_PORT:-443}:443"
+    environment:
+      INVENTREE_DOMAIN: ${INVENTREE_DOMAIN:-api.your-domain.com}
+      PORTAL_DOMAIN: ${PORTAL_DOMAIN:-portal.your-domain.com}
+    volumes:
+      - uwsgi-socket:/var/run/uwsgi
+      - inventree-data:/home/inventree/data:ro
+      - certbot-data:/etc/letsencrypt:ro
+      - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ../portal:/srv/portal:ro
+
+# =============================================================================
+# Named volumes
+# =============================================================================
+volumes:
+  mysql-data:        # Persistent MySQL data
+  mysql-socket:      # /var/run/mysqld/ shared between mysql + inventree
+  uwsgi-socket:      # /var/run/uwsgi/ shared between inventree + nginx
+  inventree-data:    # /home/inventree/data (static, media, config, backups)
+  certbot-data:      # /etc/letsencrypt/ shared between certbot + nginx
+
+# =============================================================================
+# Docker secrets
+# =============================================================================
+secrets:
+  mysql_password:
+    file: ./secrets/mysql_password
+  google_client_id:
+    file: ./secrets/google_client_id
+  google_client_secret:
+    file: ./secrets/google_client_secret

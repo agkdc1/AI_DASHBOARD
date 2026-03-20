@@ -1,0 +1,20 @@
+id: asst_ja_011
+name: 'JA assistant #11'
+language: ja-JP
+question: 送り状の印刷でエラーが出ます。どうすればいいですか？
+expected:
+  language: ja
+  must_contain_any:
+  - 送り状
+  - 印刷
+  - エラー
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれー。ちょっと教えて。
+
+  送り状の印刷なんだけど、なんか変なエラーが出て進めないんだよね。
+
+  このエラーの解除ってどうやるんだっけ？
+
+  正しい印刷の手受も、念のためもう一回教えてくれると助かる！'

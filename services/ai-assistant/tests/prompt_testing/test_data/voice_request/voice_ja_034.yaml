@@ -1,0 +1,19 @@
+id: voice_ja_034
+name: 'JA voice orders #34'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、あのー、ちょっとお願いしたいことがあって。[一時停止] なんか、さっき楽天のほうで、えー、新しい注文が…えーっと、3...いや4件だったかな、入ってたみたいで。そのー、それを確認して、あ、いや、確認っていうか、まぁ、いつもの発送準備まで進めてもらえますか？[雑音]
+  それで、あの…そう、急ぎなんだけど、今日の夕方、あ、ごめん、16時ぐらいまでには対応しておいてくれると、そのー、助かります。じゃあ、よろしくねー。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 楽天
+  - 注文
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

@@ -1,0 +1,12 @@
+id: asst_kr_037
+name: 'KR assistant #37'
+language: ko-KR
+question: 부품 카테고리 추가 방법을 알려주세요.. 초보자도 알기 쉽게 설명해 주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 카테고리
+  - 추가
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

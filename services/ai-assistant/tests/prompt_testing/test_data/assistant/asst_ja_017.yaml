@@ -1,0 +1,20 @@
+id: asst_ja_017
+name: 'JA assistant #17'
+language: ja-JP
+question: Outlineでドキュメントを検索する方法は？
+expected:
+  language: ja
+  must_contain_any:
+  - Outline
+  - ドキュメント
+  - 検索
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれー。
+
+  ちょっと教えてほしいんだけど、新しい企画書のOutlineを考え中でさ。
+
+  過去の似たようなドキュメントを検索して参考にしたいんだけど、うまく見つからなくて…。
+
+  なんか効率いい検索の手受ってあったりする？'

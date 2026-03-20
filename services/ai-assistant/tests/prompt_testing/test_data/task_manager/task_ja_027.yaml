@@ -1,0 +1,11 @@
+id: task_ja_027
+name: 'JA task #27'
+language: ja-JP
+input: タスク#444を削除してください
+expected:
+  action: delete
+text: 'お疲れ様ですー
+
+  すみません JA task #27の[データ集計]の件ですがもう対お済みなのでタスクからdeleteしといてもらえますか？
+
+  あ、リストにあるとややこしくなるんで お願いしますー'

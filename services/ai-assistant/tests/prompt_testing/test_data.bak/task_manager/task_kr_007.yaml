@@ -1,0 +1,13 @@
+id: task_kr_007
+name: 'KR task #7'
+language: ko-KR
+input: 신입사원 계정 설정 태스크를 등록해 주세요. 이번주 내 완료.
+expected:
+  action: create
+  task_title_contains:
+  - 계정
+  - 설정
+  has_due_date: true
+  priority_range:
+  - 2
+  - 3

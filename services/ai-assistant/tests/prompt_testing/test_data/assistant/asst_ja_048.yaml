@@ -1,0 +1,18 @@
+id: asst_ja_048
+name: 'JA assistant #48'
+language: ja-JP
+question: 佐川急便の集荷依頼の手順は。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - 佐川
+  - 集荷
+  - 依頼
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'お疲れ様ですー。
+
+  佐川の件でちょっと聞きたいんだけど、集荷の依頼ってどうやるんだっけ？
+
+  詳しい手受を教えてほしいです。'

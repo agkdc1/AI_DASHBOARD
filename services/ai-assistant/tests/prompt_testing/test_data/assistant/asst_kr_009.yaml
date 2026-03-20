@@ -1,0 +1,13 @@
+id: asst_kr_009
+name: 'KR assistant #9'
+language: ko-KR
+question: 야마토 운수 운송장을 만드는 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 야마토
+  - 운송장
+  must_not_contain:
+  - 실행했습니다
+  min_length: 60
+text: 아 맞다 그 야마토 운송장 건 말인데, 시스템에서 어떻게 조해하는 거였지?? 방법 까먹음ㅠㅠ 다시 알려줘

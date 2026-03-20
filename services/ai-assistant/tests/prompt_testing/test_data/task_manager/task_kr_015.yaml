@@ -1,0 +1,7 @@
+id: task_kr_015
+name: 'KR task #15'
+language: ko-KR
+input: '태스크 #456의 마감일을 다음주 금요일로 연장해 주세요'
+expected:
+  action: update
+text: 'KR task #15 건 [키워드] 관련헤서 업뎃 좀 부탁해요 아 그리고 기한은 내일까지'

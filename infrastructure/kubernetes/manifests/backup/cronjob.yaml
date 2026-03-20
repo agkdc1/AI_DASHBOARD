@@ -1,0 +1,79 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: backup
+    app.kubernetes.io/component: database
+spec:
+  schedule: "0 18 * * *"   # 03:00 JST = 18:00 UTC
+  timeZone: "Asia/Tokyo"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: backup
+        spec:
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          containers:
+            - name: backup
+              image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/backup:latest
+              env:
+                # --- MySQL (InvenTree) ---
+                - name: DB_HOST
+                  value: inventree-db
+                - name: DB_PORT
+                  value: "3306"
+                - name: DB_USER
+                  value: inventree
+                - name: DB_NAME
+                  value: inventree
+                - name: BACKUP_PREFIX
+                  value: k8s-inventree
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: inventree-db-secret
+                      key: mysql-password
+                # --- PostgreSQL (intranet: Vikunja + Outline) ---
+                - name: PG_HOST
+                  value: intranet-db.intranet.svc.cluster.local
+                - name: PG_PORT
+                  value: "5432"
+                - name: PG_USER
+                  value: postgres
+                - name: PG_DATABASES
+                  value: "vikunja,outline"
+                - name: PG_BACKUP_PREFIX
+                  value: k8s-intranet
+                - name: PG_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-pg-secret
+                      key: pg-password
+                # --- Shared ---
+                - name: GCS_BUCKET
+                  value: your-project-vault-backup
+                - name: RETENTION_COUNT
+                  value: "30"
+                - name: ENCRYPTION_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-encryption-secret
+                      key: encryption-password
+              volumeMounts:
+                - name: gcs-key
+                  mountPath: /etc/gcs
+                  readOnly: true
+          volumes:
+            - name: gcs-key
+              secret:
+                secretName: backup-gcs-secret
+          restartPolicy: Never

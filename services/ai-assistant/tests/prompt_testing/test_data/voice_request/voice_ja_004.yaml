@@ -1,0 +1,19 @@
+id: voice_ja_004
+name: 'JA voice shipping #4'
+language: ja-JP
+text: あ、お疲れ様です。えーと、ちょっと、あのー、お願いしたいことがありまして。えー、エスオーの、SO-2024-1234の件なんですけど、[咳] あの、もう梱包が終わったんで、そのー…あ、違う、送り状の準備か。えーっと、送り状の印刷をお願いできますかね？まぁ、今日の、えー、15時…いや、14時までだった。14時の集荷に間に合わせたいので、[一時停止]
+  なんとかお願いしたいです。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-1234
+  - 送り状
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flutter-test-runner
+  namespace: shinbee-test
+  labels:
+    app.kubernetes.io/name: flutter-test-runner
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: flutter-test-runner
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: flutter-test
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/flutter-builder:latest
+          command: ["sh", "-c"]
+          args:
+            - |
+              cd /workspace
+              git clone --depth=1 https://github.com/placeholder/shinbee-dashboard.git .
+              flutter pub get
+              flutter test --machine
+          env:
+            - name: MOCK_OIDC_URL
+              value: "http://mock-oidc.shinbee-test.svc.cluster.local"
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "2"
+      restartPolicy: Never

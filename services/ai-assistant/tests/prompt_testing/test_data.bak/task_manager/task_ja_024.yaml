@@ -1,0 +1,6 @@
+id: task_ja_024
+name: 'JA task #24'
+language: ja-JP
+input: タスク#101の説明を「出荷停止対応」に更新して
+expected:
+  action: update

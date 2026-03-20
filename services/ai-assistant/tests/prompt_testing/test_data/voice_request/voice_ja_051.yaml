@@ -1,0 +1,19 @@
+id: voice_ja_051
+name: 'JA voice general #51'
+language: ja-JP
+text: あ、お疲れ様です。えーと、あのー、新しく入った[REDACTED_NAME]さんの件で、ちょっとお願いがありまして。えー、業務で使うアカウントの、あ、違う、アカウントの新規設定をですね、そのー、お願いしたいんです。えーっと、まずはメールと、[雑音]
+  あと勤怠管理の…あ、ごめん、勤怠じゃなくて経費精算システムでした。そのアカウント設定を、えー、お願いします。それで、あのー…特に権限とかは、まぁ、営業部門の標準設定で大丈夫なので。はい、よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - アカウント
+  - 設定
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

@@ -1,0 +1,18 @@
+id: voice_ja_053
+name: 'JA voice general #53'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、あのー、ちょっとお願いしたいことがあって、あ、ごめん、お願いっていうか相談かな。来月の、えー、出張の件なんだけど、そのー、スケジュールの調整を、うん、お願いしたくて。[咳]…それで、訪問先が、えーっと、[REDACTED_ADDRESS]の…あ、いや、えーっと、先方の住所は[REDACTED_ADDRESS]で合ってるんだけど、あ、そうそう、その取引先への訪問スケジュールを、なんか、ざっくりでいいから…えっと、2つ…いや3つくらい候補日を出してほしいんだよね。まぁ、そんな感じで、ちょっと組んでもらえると助かります。はい、よろしくー。[雑音]
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 出張
+  - スケジュール
+  due_date_present: false
+  priority_range:
+  - 1
+  - 3

@@ -1,0 +1,13 @@
+id: asst_ja_060
+name: 'JA assistant #60'
+language: ja-JP
+question: Vikunjaでラベルを使ってタスクを分類する方法は。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - ラベル
+  - 分類
+  - タスク
+  must_not_contain:
+  - 実行しました
+  min_length: 50

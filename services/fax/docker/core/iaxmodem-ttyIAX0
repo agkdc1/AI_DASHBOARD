@@ -1,0 +1,11 @@
+device          /dev/ttyIAX0
+owner           uucp:uucp
+mode            660
+port            4570
+refresh         300
+server          127.0.0.1
+peername        800
+secret          change-me
+cidname         Fax Server
+cidnumber       0312345679
+codec           ulaw

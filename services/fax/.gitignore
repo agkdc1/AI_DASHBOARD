@@ -1,0 +1,49 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Exclude sensitive variables
+secrets.auto.tfvars
+*.auto.tfvars
+
+source.zip
+PACKET.md
+MIMIC.md
+config.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Backup files
+*~
+
+# Claude Code
+.claude/
+
+# AWS credentials
+.aws/
+
+# Windows executables
+*.exe
+
+# Docker secrets
+.env
+.smtp-credentials
+
+# Docker data volumes (migrated bare-metal data)
+data/
+
+# DB init dumps
+docker/db/init/*.sql

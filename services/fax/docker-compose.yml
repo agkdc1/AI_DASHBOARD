@@ -1,0 +1,216 @@
+# =============================================================================
+# RasPBX Docker Stack — Quarantine Mode (default)
+# All containers on internal-only network, no external access
+# =============================================================================
+
+services:
+  # --------------------------------------------------------------------------
+  # MariaDB (legacy FreePBX — kept for rollback only)
+  # --------------------------------------------------------------------------
+  db:
+    image: mariadb:10.11
+    container_name: raspbx-db
+    restart: unless-stopped
+    profiles:
+      - freepbx
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: ${TZ:-Asia/Tokyo}
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./docker/db/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+      - ./docker/db/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - pbx-internal
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    healthcheck:
+      test: ["CMD", "mariadb", "-u", "freepbxuser", "-p${MYSQL_PASSWORD}", "-e", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # --------------------------------------------------------------------------
+  # Asterisk + FreePBX (legacy — kept for rollback only)
+  # --------------------------------------------------------------------------
+  core:
+    build:
+      context: ./docker/core
+      dockerfile: Dockerfile
+      network: host
+    container_name: raspbx-core
+    restart: unless-stopped
+    profiles:
+      - freepbx
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      TZ: ${TZ:-Asia/Tokyo}
+    volumes:
+      # Asterisk config — faxapi NTT DHCP handler also writes pjsip configs here
+      - ./data/asterisk-etc:/etc/asterisk
+      - ./data/asterisk-lib:/var/lib/asterisk
+      - ./data/asterisk-spool:/var/spool/asterisk
+      - ./data/asterisk-log:/var/log/asterisk
+      # HylaFAX spool
+      - ./data/hylafax-spool:/var/spool/hylafax
+      # FreePBX web root
+      - ./data/freepbx-web:/var/www/html
+    networks:
+      - pbx-internal
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    cap_add:
+      - SYS_PTRACE
+      - NET_ADMIN
+    deploy:
+      resources:
+        limits:
+          memory: 1536M
+
+  # --------------------------------------------------------------------------
+  # Fax API (FastAPI + AMI)
+  # --------------------------------------------------------------------------
+  faxapi:
+    build:
+      context: ./docker/faxapi
+      dockerfile: Dockerfile
+      network: host
+    container_name: raspbx-faxapi
+    restart: unless-stopped
+    network_mode: host
+    depends_on:
+      - asterisk-headless
+    environment:
+      AMI_HOST: 127.0.0.1
+      AMI_PORT: "5038"
+      AMI_USERNAME: ${AMI_USERNAME}
+      AMI_SECRET: ${AMI_SECRET}
+      FAX_API_KEY: ${FAX_API_KEY}
+      PBX_DB_PATH: /var/lib/asterisk/pbx.db
+      TZ: ${TZ:-Asia/Tokyo}
+    volumes:
+      # Shared fax spool for outgoing PDFs
+      - ./data/asterisk-spool:/var/spool/asterisk
+      # Asterisk config — NTT DHCP handler writes pjsip configs here
+      - ./data/asterisk-etc:/etc/asterisk
+      # PBX database
+      - ./data/pbx.db:/var/lib/asterisk/pbx.db
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8010/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # --------------------------------------------------------------------------
+  # Headless Asterisk (replaces raspbx-core — no FreePBX/PHP/MariaDB)
+  # Config managed by SQLite + confgen.py via faxapi
+  # --------------------------------------------------------------------------
+  asterisk-headless:
+    build:
+      context: .
+      dockerfile: docker/asterisk-headless/Dockerfile
+      network: host
+    container_name: asterisk-headless
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      PBX_DB_PATH: /var/lib/asterisk/pbx.db
+      TZ: ${TZ:-Asia/Tokyo}
+    volumes:
+      # Asterisk config
+      - ./data/asterisk-etc:/etc/asterisk
+      # Asterisk data
+      - ./data/asterisk-lib:/var/lib/asterisk
+      - ./data/asterisk-spool:/var/spool/asterisk
+      - ./data/asterisk-log:/var/log/asterisk
+      # PBX database
+      - ./data/pbx.db:/var/lib/asterisk/pbx.db
+      # confgen script
+      - ./docker/faxapi/confgen.py:/opt/confgen.py:ro
+      # HylaFAX spool
+      - ./data/hylafax-spool:/var/spool/hylafax
+      # HylaFAX config (for faxsetup cache)
+      - ./docker/core/hylafax:/etc/hylafax:ro
+      # IAXmodem config (fax bridge to HylaFAX)
+      - ./docker/core/iaxmodem-ttyIAX0:/etc/iaxmodem/ttyIAX0:ro
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    cap_add:
+      - NET_ADMIN
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # --------------------------------------------------------------------------
+  # mail2fax (email-to-fax gateway — already exists)
+  # --------------------------------------------------------------------------
+  mail2fax:
+    build:
+      context: ./mail2fax
+      dockerfile: Dockerfile
+    container_name: raspbx-mail2fax
+    restart: unless-stopped
+    depends_on:
+      - faxapi
+    volumes:
+      - ./mail2fax/config.yaml:/app/config.yaml:ro
+      - ./.aws:/root/.aws:ro
+      - mail2fax-letsencrypt:/etc/letsencrypt
+      - mail2fax-queue:/var/spool/postfix
+    networks:
+      - pbx-internal
+      - mail-external
+    ports:
+      - "587:587"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+
+networks:
+  pbx-internal:
+    driver: bridge
+    internal: true    # No external connectivity in quarantine mode
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  mail-external:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
+
+volumes:
+  mariadb-data:
+  mail2fax-letsencrypt:
+  mail2fax-queue:

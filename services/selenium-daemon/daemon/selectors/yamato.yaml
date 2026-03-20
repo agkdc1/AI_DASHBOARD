@@ -1,0 +1,88 @@
+# Yamato Business Members / B2 Cloud selectors
+#
+# Login:       bmypage.kuronekoyamato.co.jp  (business portal)
+# B2 Cloud:    newb2web.kuronekoyamato.co.jp (waybill system, accessed via SSO)
+
+login:
+  username_input: "#code1"
+  password_input: "#password"
+  login_button: "a.login"
+
+# B2 Cloud navigation (after bmypage login)
+b2cloud:
+  # Menu item to enter B2 Cloud from bmypage portal (javascript link)
+  b2cloud_link: "a"  # match by textContent containing 'B2' via JS
+  # Main menu page
+  main_menu: "div.topmenu_main"
+  # "1件ずつ発行" menu item (clickable div)
+  single_issue_link: "div#single_issue_reg"
+  # Logout button
+  logout: "#Logout"
+
+# Waybill form at single_issue_reg.html
+waybill_form:
+  # -- Consignee (お届け先) -- container: #todoke_info
+  consignee_phone: "#consignee_telephone"
+  consignee_phone_ext: "#consignee_telephone_ext"
+  consignee_postal: "#consignee_zip_code"
+  consignee_prefecture: "#shipment_titleconsignee_address1"
+  consignee_city: "#consignee_address02"
+  consignee_street: "#consignee_address03"
+  consignee_building: "#consignee_address04"
+  # Recipient name fields are unnamed; select by placeholder inside #todoke_info
+  consignee_name: "#todoke_info input[placeholder*='ヤマト運輸']"
+  consignee_title: "#shipment_titleconsignee_title"
+  consignee_kana: "#todoke_info input[placeholder*='ｸﾛﾈｺﾔﾏﾄ']"
+  # Postal → address auto-fill button
+  consignee_zip_lookup: "#consignee_zip_address"
+
+  # -- Shipper (ご依頼主) -- container: #irainusi_Info
+  shipper_phone: "#shipper_telephone"
+  shipper_phone_ext: "#shipper_telephone_ext"
+  shipper_postal: "#shipper_zip_code"
+  shipper_prefecture: "#shipment_titleshipper_address1"
+  shipper_city: "#shipper_address2"
+  shipper_street: "#shipper_address3"
+  shipper_name: "#irainusi_Info input[placeholder*='ヤマト運輸']"
+  shipper_kana: "#irainusi_Info input[placeholder*='ｸﾛﾈｺﾔﾏﾄ']"
+  shipper_zip_lookup: "#shipper_zip_address"
+
+  # -- Service / schedule --
+  shipment_date: "#text_shipment_date"
+  delivery_time: "#select_delivery_time"
+  cool_select: "#select_cool"
+
+  # -- Items --
+  item_name1: "#item_name1"
+  item_name2: "#item_name2"
+
+  # -- Submit --
+  confirm_button: "#confirm_issue_btn"
+  save_button: "#comp_shipment_btn"
+
+# Confirmation page (印刷内容の確認)
+waybill_confirm:
+  # These will be mapped after exploring the confirmation page
+  issue_button: "#issue_btn, a[id*='issue'], input[id*='issue']"
+  back_button: "#back_btn, a[id*='back']"
+
+# Result page (登録完了・印刷)
+waybill_result:
+  tracking_number: ".tracking_number, .trackingNo, td[id*='tracking'], span[id*='tracking']"
+  print_button: "#print_btn, a[id*='print']"
+
+# Metadata for Gemini repair context
+_descriptions:
+  login.username_input: "Customer code input (お客様コード, 9-12 digit number)"
+  login.password_input: "Password input (パスワード, 8-12 alphanumeric)"
+  login.login_button: "Login link with class 'login' (ログイン button)"
+  b2cloud.b2cloud_link: "Link to B2 Cloud waybill system from bmypage portal (送り状発行システムB2クラウド)"
+  b2cloud.single_issue_link: "Menu item to issue one waybill at a time (1件ずつ発行)"
+  waybill_form.consignee_phone: "Recipient phone number (お届け先電話番号)"
+  waybill_form.consignee_postal: "Recipient postal code (お届け先郵便番号)"
+  waybill_form.consignee_city: "Recipient city/district (お届け先 市区町村)"
+  waybill_form.consignee_street: "Recipient street address (お届け先 丁目番地号)"
+  waybill_form.consignee_name: "Recipient company/person name (お届け先名称)"
+  waybill_form.consignee_kana: "Recipient katakana reading (お届け先カナ)"
+  waybill_form.item_name1: "Item description (品名, e.g. 衣類)"
+  waybill_form.confirm_button: "Button to proceed to print confirmation (印刷内容の確認へ)"

@@ -1,0 +1,36 @@
+id: call_kr_014
+name: 'KR call #14'
+language: ko-KR
+text: '여보세요, [REDACTED_NAME]입니다. 수고 많으십니다.
+
+  아, [REDACTED_NAME] 대리님. 수고하십니다. 무슨 일이세요?
+
+  네, 지금 통화 괜찮으세요? 다름이 아니라 라쿠텐 주문 처리 건으로 상담 드릴 게 있어서요.
+
+  네, 괜찮습니다. 말씀하세요.
+
+  최근 라쿠텐 경유 주문 건에 대한 고객 클레임이 좀 늘고 있어서요. 아무래도 현재 처리 흐름을 한번 재검토해야 할 것 같아서요.
+
+  아, 그렇군요. 알겠습니다. 원인 파악을 위해서라도 논의가 필요하겠네요.
+
+  네. 그래서 말인데요, 다음 주 중에 시간 괜찮으실 때 관련해서 미팅 한번 할 수 있을까요?
+
+  네, 좋습니다. 그렇게 하시죠. 일정은 메일로 잡아주세요.
+
+  알겠습니다. 그럼 바로 메일 드리겠습니다. 감사합니다.
+
+  네, 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - 라쿠텐
+  - 주문
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

@@ -1,0 +1,4 @@
+# Samba AD uses longhorn-single (1-replica, no topology constraints).
+# Custom storage classes (longhorn-samba-3r, longhorn-samba-2r) were created
+# for desktop nodes with shinbee/role=samba label. They will be used when
+# desktop nodes are powered on for the fileserver deployment.

@@ -1,0 +1,14 @@
+id: asst_kr_013
+name: 'KR assistant #13'
+language: ko-KR
+question: Vikunja에서 작업을 만드는 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - Vikunja
+  - 작업
+  - 만들기
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 저기, 비쿤자에서 새 자겁 만들기 어떻게 하더라? 갑자기 헷갈리네.. 방법 좀 알려줘.

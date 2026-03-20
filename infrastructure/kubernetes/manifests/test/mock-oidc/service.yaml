@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mock-oidc
+  namespace: shinbee-test
+  labels:
+    app.kubernetes.io/name: mock-oidc
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  selector:
+    app.kubernetes.io/name: mock-oidc

@@ -1,0 +1,19 @@
+id: voice_kr_027
+name: 'KR voice general #27'
+language: ko-KR
+text: 아, 안녕하세요. 바쁘신데 죄송한데요, 저기 신입사원 [REDACTED_NAME]씨 계정 설정 좀 부탁드릴게요. 음... 이메일하고 InvenTree
+  접근 권한 설정해주시면 되고요, 혹시 이번 주 금요일까지 가능할까요? 잘 부탁드립니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 계정
+  - 설정
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

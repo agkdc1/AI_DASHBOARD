@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: faxapi
+  namespace: fax-system
+  labels:
+    app.kubernetes.io/name: faxapi
+    app.kubernetes.io/part-of: shinbee-fax
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: asterisk
+  ports:
+    - name: http
+      port: 8010
+      targetPort: 8010
+      protocol: TCP

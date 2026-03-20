@@ -1,0 +1,13 @@
+id: task_kr_008
+name: 'KR task #8'
+language: ko-KR
+input: 품질 관리 체크리스트 업데이트 태스크를 만들어 주세요
+expected:
+  action: create
+  task_title_contains:
+  - 품질 관리
+  - 체크리스트
+  priority_range:
+  - 2
+  - 3
+text: 'KR task #8 태스크 생성 좀 부탁해 품질 관ㄹ리 체크리스트 만드는 건인데 아 맞다 기한은 내일까지로 해주새요~'

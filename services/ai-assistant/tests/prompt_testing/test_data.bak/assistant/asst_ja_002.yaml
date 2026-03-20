@@ -1,0 +1,13 @@
+id: asst_ja_002
+name: 'JA assistant #2'
+language: ja-JP
+question: InvenTreeで新しい部品を登録する手順を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - 登録
+  - 部品
+  - カテゴリー
+  must_not_contain:
+  - 実行しました
+  min_length: 80

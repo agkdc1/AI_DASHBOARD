@@ -1,0 +1,19 @@
+id: voice_ja_014
+name: 'JA voice shipping #14'
+language: ja-JP
+text: '[REDACTED_NAME]さん、お疲れ様です。えーと、あのー、ちょっとお願いしたいことがあるんだけど、[一時停止] 今日のJA voice shipping、えっと、ナンバーじゅ…14番だったかな、その件で。で、そのー、今日の出荷リストを見てもらって、[咳]
+  まだ未出荷の注文が、なんか、もし残ってたら…あ、いや、リストアップじゃなくて、えーと、件数だけでいいや。何件あるかだけ教えてもらえる？それで、あの…なんだっけ…そうそう、その未出荷の件数を、急で悪いんだけど、今日の、うーん、16時…あ、ごめん、やっぱ15時までにお願いできる？よろしくね。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 出荷
+  - 未出荷
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

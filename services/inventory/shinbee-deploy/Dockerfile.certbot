@@ -1,0 +1,14 @@
+FROM certbot/dns-route53:latest
+
+# Install curl (for Docker API + public IP check), jq (for JSON parsing), bash
+RUN apk add --no-cache curl jq bash
+
+# Copy scripts
+COPY certbot-entrypoint.sh /usr/local/bin/certbot-entrypoint.sh
+COPY route53-update.py /usr/local/bin/route53-update.py
+COPY reload-nginx.sh /usr/local/bin/reload-nginx.sh
+RUN chmod +x /usr/local/bin/certbot-entrypoint.sh \
+             /usr/local/bin/route53-update.py \
+             /usr/local/bin/reload-nginx.sh
+
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/certbot-entrypoint.sh"]

@@ -1,0 +1,19 @@
+id: voice_ja_003
+name: 'JA voice shipping #3'
+language: ja-JP
+text: あ、お疲れ様です。[雑音] えーと、あのー、ちょっとお願いしたいことがありまして。そのー、注文番号が、えっと、エスオーの2025…あ、ごめん、SO-2025-0001、これの発送手続きを、えー、お願いできますでしょうか。急でほんと申し訳ないんですけど、できれば本日中、いや、今日の夕方までには対応してもらえると、まぁ、すごく助かります。なんか、もし分からなかったら…[咳]
+  あ、また聞いてください。よろしくお願いします。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2025-0001
+  - 発送
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

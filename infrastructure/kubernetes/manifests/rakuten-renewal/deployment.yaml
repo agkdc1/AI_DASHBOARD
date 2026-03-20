@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rakuten-renewal
+  namespace: shinbee
+  labels:
+    app.kubernetes.io/name: rakuten-renewal
+    app.kubernetes.io/component: browser-automation
+    app.kubernetes.io/part-of: shinbee
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rakuten-renewal
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rakuten-renewal
+        app.kubernetes.io/component: browser-automation
+        app.kubernetes.io/part-of: shinbee
+    spec:
+      automountServiceAccountToken: false
+      priorityClassName: shinbee-normal
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: shinbee/workload
+                    operator: In
+                    values:
+                      - browser
+      containers:
+        - name: rakuten-renewal
+          image: asia-northeast1-docker.pkg.dev/your-gcp-project-id/shinbee/rakuten-renewal:latest
+          command: ["/bin/sh", "-c"]
+          args: ["sed -i 's/\\r$//' /app/entrypoint.sh && mkdir -p /home/pi/SHINBEE && ln -sf /app /home/pi/SHINBEE/services/rakuten-renewal && exec /app/entrypoint.sh"]
+          env:
+            - name: VAULT_ADDR
+              value: "http://100.64.0.1:8200"
+            - name: VAULT_APPROLE_ROLE_ID_PATH
+              value: /run/secrets/role-id
+            - name: VAULT_APPROLE_SECRET_ID_PATH
+              value: /run/secrets/secret-id
+            # GOOGLE_APPLICATION_CREDENTIALS disabled until Gemini API key
+            # is in Vault or image rebuilt with scoped WIF config.
+            # - name: GOOGLE_APPLICATION_CREDENTIALS
+            #   value: /app/Vault/pki/wif-credential-config.json
+            - name: DISPLAY
+              value: ":99"
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 1536Mi
+              cpu: "2"
+          volumeMounts:
+            - name: dshm
+              mountPath: /dev/shm
+            - name: vault-secrets
+              mountPath: /run/secrets
+              readOnly: true
+            - name: wif-secrets
+              mountPath: /app/Vault/pki
+              readOnly: true
+            - name: logs
+              mountPath: /app/logs
+            - name: screenshots
+              mountPath: /app/screenshots
+            - name: state
+              mountPath: /app/state
+            - name: config
+              mountPath: /config.yaml
+              subPath: config.yaml
+              readOnly: true
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 256Mi
+        - name: vault-secrets
+          secret:
+            secretName: rakuten-vault-secret
+            items:
+              - key: role-id
+                path: role-id
+              - key: secret-id
+                path: secret-id
+        - name: wif-secrets
+          secret:
+            secretName: rakuten-wif-secret
+        - name: logs
+          persistentVolumeClaim:
+            claimName: rakuten-logs
+        - name: screenshots
+          persistentVolumeClaim:
+            claimName: rakuten-screenshots
+        - name: state
+          persistentVolumeClaim:
+            claimName: rakuten-state
+        - name: config
+          configMap:
+            name: shinbee-config

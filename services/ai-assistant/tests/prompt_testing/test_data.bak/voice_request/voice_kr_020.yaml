@@ -1,0 +1,19 @@
+id: voice_kr_020
+name: 'KR voice inventory #20'
+language: ko-KR
+text: 아, 저기... 부탁 하나만 드릴게요. 그 InvenTree에 새로운 부품 카테고리를 추가해야 하는데, '전자부품-커넥터'로 하나만 만들어
+  주시겠어요? 네, 잘 부탁드립니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 카테고리
+  - InvenTree
+  due_date_present: false
+  priority_range:
+  - 1
+  - 3

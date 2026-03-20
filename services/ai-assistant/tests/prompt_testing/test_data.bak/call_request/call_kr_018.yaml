@@ -1,0 +1,33 @@
+id: call_kr_018
+name: 'KR call #18'
+language: ko-KR
+text: '여보세요, CS팀 [REDACTED_NAME]입니다.
+
+  네, [REDACTED_NAME] 대리님, 안녕하세요. 영업팀 [REDACTED_NAME]입니다.
+
+  아, 네. 수고하십니다. 오전에 문의주셨던 **반품** 건 때문에 연락드렸습니다. **RMA-003** 제품을 확인했는데, 박스는 괜찮지만 제품
+  본체에 약간의 스크래치가 있네요.
+
+  아, 그렇군요. 고객에게는 바로 환불 처리를 진행해도 괜찮을까요?
+
+  **네**, 그렇게 진행해 주세요. 해당 제품은 불량 재고로 등록해 주시면 감사하겠습니다.
+
+  알겠습니다. 그럼 고객 환불 처리 후 불량 등록하도록 하겠습니다.
+
+  **네**, 감사합니다. **그럼** 부탁드립니다.
+
+  **네**, **수고하세요**. 실례합니다.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - RMA-003
+  - 반품
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

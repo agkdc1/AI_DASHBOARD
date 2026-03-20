@@ -1,0 +1,12 @@
+id: asst_kr_009
+name: 'KR assistant #9'
+language: ko-KR
+question: 야마토 운수 운송장을 만드는 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 야마토
+  - 운송장
+  must_not_contain:
+  - 실행했습니다
+  min_length: 60

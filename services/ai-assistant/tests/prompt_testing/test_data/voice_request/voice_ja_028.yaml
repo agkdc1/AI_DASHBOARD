@@ -1,0 +1,19 @@
+id: voice_ja_028
+name: 'JA voice inventory #28'
+language: ja-JP
+text: あ、[REDACTED_NAME]さん、お疲れ様です。えーと、あのー、ちょっとお願いがあるんですけど、[雑音] えー、在庫管理のInvenTree、あ、インベントリーでしたっけ。あの、そのー、システムにですね、新しい部品のカテゴリーを追加してもらえませんかね。えーっと…なんだっけな…[一時停止]
+  あ、そうだ。『電子部品』っていう…いや、ごめん、『電子部品-センサー』だ。それを、えー、作っていただきたくて。まぁ、よろしくお願いします。[咳]
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - カテゴリー
+  - InvenTree
+  due_date_present: false
+  priority_range:
+  - 1
+  - 3

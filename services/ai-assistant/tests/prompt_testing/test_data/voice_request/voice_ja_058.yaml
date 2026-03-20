@@ -1,0 +1,18 @@
+id: voice_ja_058
+name: 'JA voice it #58'
+language: ja-JP
+text: '[雑音] あ、えーと、[REDACTED_NAME]さん、お疲れ様です。あのー、ちょっとお願いしたいことがあって、[一時停止] そのー、昨夜の定期バックアップ、あ、いや今朝確認したらなんですけど、なんか失敗してるみたいなんですよね。えー、それで、あの…なんだっけ…ああ、そうそう、状況の確認を急ぎでお願いできればと。まぁ、原因が分かればでいいので、今日の午前中、あ、ごめん、お昼までには報告してもらえると助かります。よろしくお願いします。[咳]'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - バックアップ
+  - 確認
+  due_date_present: true
+  priority_range:
+  - 3
+  - 4

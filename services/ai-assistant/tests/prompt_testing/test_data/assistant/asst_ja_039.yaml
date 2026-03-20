@@ -1,0 +1,18 @@
+id: asst_ja_039
+name: 'JA assistant #39'
+language: ja-JP
+question: InvenTreeの在庫移動はどうやりますか。初心者向けに簡単に説明してください。
+expected:
+  language: ja
+  must_contain_any:
+  - 在庫
+  - 移動
+  - ロケーション
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつかれさまですー。
+
+  ちょっと質問なんだけど、在この移動の件で、特定のアイテムを別のロケーションに移すときの手順って、あれどうやるんだっけ？
+
+  教えてくれると助かります！'

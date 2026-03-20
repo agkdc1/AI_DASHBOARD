@@ -1,0 +1,49 @@
+id: call_kr_032
+name: 'KR call #32'
+language: ko-KR
+text: '**[REDACTED_NAME] B:** 여보세요, [REDACTED_NAME] B입니다.
+
+
+  **[REDACTED_NAME] A:** 아, [REDACTED_NAME] B씨. 저 [REDACTED_NAME] A인데요. 어, 수고 많으십니다.
+
+
+  **[REDACTED_NAME] B:** 네, 팀장님. 안녕하세요. [잡음] 아, 저기, 무슨 일이세요?
+
+
+  **[REDACTED_NAME] A:** 네, 다름이 아니라, 음… 그 신상품 NP-2027 있잖아요. 그거 오늘 입고된 거, 아… 재고 등록
+  좀 부탁드리려고요.
+
+
+  **[REDACTED_NAME] B:** 아, 네. NP-이공이칠… 아니, NP-2027 맞죠? 그거 재고 등록 말씀이시죠?
+
+
+  **[REDACTED_NAME] A:** 네, 네. 맞아요. 그거, 어… 그 시스템에 바로 수량 등록 좀… 아, 아니, 그 전에 카테고리부터 만들어야겠네요.
+
+
+  **[REDACTED_NAME] B:** 네, 알겠습니다. 어… 수량이 저기… 20개였나요, 30개였나요? 제가 지금 문서를… [일시정지]
+
+
+  **[REDACTED_NAME] A:** 아, 20개 맞아요. 초회 물량 20개로 재고 등록해주세요.
+
+
+  **[REDACTED_NAME] B:** 네, 알겠습니다. 그럼 NP-2027, 신규 카테고리 생성하고 수량 20개로 바로 재고 등록 처리하겠습니다.
+
+
+  **[REDACTED_NAME] A:** 네, 고마워요. 바로 부탁해요. 그럼 수고하세요.
+
+
+  **[REDACTED_NAME] B:** 네, 알겠습니다. 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - NP-2027
+  - 재고 등록
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

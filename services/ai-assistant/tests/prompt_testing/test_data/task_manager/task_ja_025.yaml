@@ -1,0 +1,11 @@
+id: task_ja_025
+name: 'JA task #25'
+language: ja-JP
+input: タスク#202にラベル「急ぎ」を追加して
+expected:
+  action: update
+text: 'お疲れ様ですー JA task #25のupdateお願い！
+
+  すてーあすを「レビュー待ち」に変更しといて。コメントに書いたんでかきにんも頼む。
+
+  あ、担当者も僕で！'

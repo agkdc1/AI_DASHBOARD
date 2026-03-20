@@ -1,0 +1,13 @@
+id: asst_ja_040
+name: 'JA assistant #40'
+language: ja-JP
+question: 部品カテゴリーの追加方法を教えてください。具体的な手順をステップで教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - カテゴリー
+  - 追加
+  - 設定
+  must_not_contain:
+  - 実行しました
+  min_length: 50

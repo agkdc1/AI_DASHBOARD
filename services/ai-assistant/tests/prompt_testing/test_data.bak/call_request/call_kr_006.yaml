@@ -1,0 +1,55 @@
+id: call_kr_006
+name: 'KR call #6'
+language: ko-KR
+text: '**[발신자: [REDACTED_NAME]]**
+
+  여보세요? [REDACTED_NAME]입니다. 수고 많으십니다.
+
+
+  **[수신자: [REDACTED_NAME]]**
+
+  네, 수고하십니다. [REDACTED_NAME]입니다.
+
+
+  **[발신자: [REDACTED_NAME]]**
+
+  다름이 아니라 재고 관련해서 문의드렸습니다. 부품 P-A1234 재고가 현재 얼마나 남아있을까요?
+
+
+  **[수신자: [REDACTED_NAME]]**
+
+  아, P-A1234 말씀이시죠? 잠시만요. 확인해 보니 지금 10개밖에 남지 않았네요.
+
+
+  **[발신자: [REDACTED_NAME]]**
+
+  그렇군요. 다음 주 생산에 바로 필요한 물량이라서요. 추가 발주 바로 진행 가능할까요?
+
+
+  **[수신자: [REDACTED_NAME]]**
+
+  네, 알겠습니다. 바로 발주 넣도록 하겠습니다.
+
+
+  **[발신자: [REDACTED_NAME]]**
+
+  감사합니다. 그럼 잘 부탁드립니다.
+
+
+  **[수신자: [REDACTED_NAME]]**
+
+  네. 그럼 들어가세요.'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - P-A1234
+  - 재고
+  priority_range:
+  - 2
+  - 4
+  has_decisions: true

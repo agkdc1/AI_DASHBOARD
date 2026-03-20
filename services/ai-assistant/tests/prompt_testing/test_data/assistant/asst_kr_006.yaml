@@ -1,0 +1,13 @@
+id: asst_kr_006
+name: 'KR assistant #6'
+language: ko-KR
+question: 부품 카테고리 추가 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 카테고리
+  - 추가
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: '저기 KR assistant #6 건인데, 새로운 카데고리 추가하는 방법 좀 다시 알려줄 수 있어? 까먹었네;;'

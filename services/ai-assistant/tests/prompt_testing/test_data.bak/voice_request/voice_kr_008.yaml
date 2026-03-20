@@ -1,0 +1,19 @@
+id: voice_kr_008
+name: 'KR voice shipping #8'
+language: ko-KR
+text: 아, 수고하십니다. 저기, RMA-002 관련해서 연락드렸는데요. 방금 고객한테서 반품 상품이 도착했거든요. 이거 검수 한번 해 주시고,
+  이상 없으면 재고에 다시 반영 좀 부탁드립니다.
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - RMA-002
+  - 반품
+  due_date_present: false
+  priority_range:
+  - 2
+  - 4

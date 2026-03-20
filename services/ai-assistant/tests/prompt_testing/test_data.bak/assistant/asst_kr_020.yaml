@@ -1,0 +1,13 @@
+id: asst_kr_020
+name: 'KR assistant #20'
+language: ko-KR
+question: 라쿠텐 API 키 갱신 절차는?
+expected:
+  language: ko
+  must_contain_any:
+  - 라쿠텐
+  - API
+  - 키
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

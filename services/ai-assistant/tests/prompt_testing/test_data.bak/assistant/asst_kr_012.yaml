@@ -1,0 +1,12 @@
+id: asst_kr_012
+name: 'KR assistant #12'
+language: ko-KR
+question: 착불 전표 작성 방법을 알려주세요.
+expected:
+  language: ko
+  must_contain_any:
+  - 착불
+  - 전표
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50

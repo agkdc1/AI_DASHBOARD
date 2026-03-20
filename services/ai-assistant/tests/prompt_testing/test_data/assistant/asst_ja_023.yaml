@@ -1,0 +1,14 @@
+id: asst_ja_023
+name: 'JA assistant #23'
+language: ja-JP
+question: 新入社員のアカウント設定手順を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - アカウント
+  - 設定
+  - 手順
+  must_not_contain:
+  - 実行しました
+  min_length: 60
+text: 'おつかれー。JA assistant #23の件でちょっと聞きたいんだけど、新しいテストアカウントの設定手受ってどうやるんだっけ？'

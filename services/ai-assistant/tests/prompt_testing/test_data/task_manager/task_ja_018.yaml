@@ -1,0 +1,11 @@
+id: task_ja_018
+name: 'JA task #18'
+language: ja-JP
+input: 在庫管理のタスクを検索して
+expected:
+  action: query
+text: 'お疲れ様ですー
+
+  JA task #18の件なんだけど今の進捗上京ってどんな感じか教えてもらえる？
+
+  あ、もし何か問題あったらそれも教えてー'

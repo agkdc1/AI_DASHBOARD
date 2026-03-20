@@ -1,0 +1,13 @@
+id: task_ja_026
+name: 'JA task #26'
+language: ja-JP
+input: タスク#333を削除して
+expected:
+  action: delete
+text: 'お疲れ様ですー
+
+  JA task #26の[クライアント定例]のやつ、これ重複してたのでdeleteお願いできますか？
+
+  他の化員が間違って更新しちゃうといけないので。
+
+  あ、急ぎじゃないですー お手すきの時で！'

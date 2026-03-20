@@ -1,0 +1,20 @@
+id: voice_ja_013
+name: 'JA voice shipping #13'
+language: ja-JP
+text: あ、お疲れ様です。えーと、あのー、今日の出荷分の件で、ちょっとお願いなんだけど。えー、リストを確認して、まだ未出荷の注文が、あ、違う、未出荷のやつが何件か、いや1、2件かな、残ってないかチェックしてほしくて。[咳]
+  そのー、特に気になってるのが、[REDACTED_NAME]さん宛の分で、住所が[REDACTED_ADDRESS]のやつ。なんか、もし今日の出荷から漏れてたら、あの…なんだっけ…ああ、電話番号[REDACTED_PHONE]に連絡も必要だから、まぁ、今日の15時、いや14時半までには状況を教えてくれると助かります。[雑音]
+  よろしくね。
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 出荷
+  - 未出荷
+  due_date_present: true
+  priority_range:
+  - 2
+  - 4

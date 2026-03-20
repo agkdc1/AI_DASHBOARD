@@ -1,0 +1,13 @@
+id: asst_ja_019
+name: 'JA assistant #19'
+language: ja-JP
+question: SOPマニュアルの更新方法を教えてください。
+expected:
+  language: ja
+  must_contain_any:
+  - SOP
+  - マニュアル
+  - 更新
+  must_not_contain:
+  - 実行しました
+  min_length: 50

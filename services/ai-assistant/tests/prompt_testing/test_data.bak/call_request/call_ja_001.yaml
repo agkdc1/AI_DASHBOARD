@@ -1,0 +1,45 @@
+id: call_ja_001
+name: 'JA call #1'
+language: ja-JP
+text: 'はい、物流部の[REDACTED_NAME]です。
+
+
+  もしもし、お疲れ様です。営業部の[REDACTED_NAME]です。今少しよろしいですか？
+
+
+  お疲れ様です。はい、大丈夫ですよ。
+
+
+  ありがとうございます。急ぎで確認なのですが、注文番号SO-2024-1234の件、本日中の出荷は可能でしょうか？
+
+
+  SO-2024-1234ですね、確認します…はい、大丈夫です。今日の最終便に間に合わせられますよ。
+
+
+  助かります！では、それでお願いします。送り先は[REDACTED_ADDRESS]で間違いないですよね？
+
+
+  はい、その住所で手配を進めます。
+
+
+  承知しました。お忙しいところありがとうございます。では、よろしくお願いします。
+
+
+  はい、承知いたしました。失礼します。
+
+
+  失礼します。'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - decisions
+  title_contains:
+  - SO-2024-1234
+  - 出荷
+  priority_range:
+  - 3
+  - 4
+  has_decisions: true

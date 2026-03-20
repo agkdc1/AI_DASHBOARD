@@ -1,0 +1,59 @@
+# Sagawa e飛伝III (e-Hiden III) selectors
+# Login is via Keycloak SSO at www.e-service.sagawa-exp.co.jp
+# e飛伝III app runs on e-hiden3.sagawa-exp.co.jp (Element UI SPA)
+
+login:
+  business_tab: "#tab02"
+  user_id_input: "#user2"
+  password_input: "#pass2"
+  login_button: "#hojin-login-button"
+
+dashboard:
+  # e飛伝III quick menu link on Smart Club dashboard
+  ehiden_quick_menu: "#svcMenuQuickMenu-0"
+  # Also available in the main menu
+  ehiden_main_menu: "#svcMenuParcel-0"
+
+ehiden_menu:
+  # Service type buttons in the popup after clicking 送り状作成
+  service_takuhai: "button.svcPopupBtn"
+
+shipment_create:
+  # ---- お届け先 (Recipient) ----
+  recipient_code: "#input-otdkSkCd"
+  recipient_phone: "#input-otdkSkTel"
+  recipient_postal: "#input-otdkSkYbn"
+  recipient_address1: "#input-otdkSkJsy1"
+  recipient_address2: "#input-otdkSkJsy2"
+  recipient_address3: "#input-otdkSkJsy3"
+  recipient_name1: "#input-otdkSkNm1"
+  recipient_name2: "#input-otdkSkNm2"
+  customer_ref_number: "#input-kyakuKnrNo"
+  # ---- 出荷 (Shipment) ----
+  shipping_date: "#picker-syuDd"
+  # ---- 荷姿・品名 (Package/Items) ----
+  package_type: "#select-nisugata"
+  item_name_1: "#input-hinNm-1"
+  item_name_2: "#input-hinNm-2"
+  # ---- Footer buttons ----
+  register_button: "button.footer-button"
+  # 反映 (reflect) button next to postal code
+  postal_reflect: "button.refrect-button"
+
+# Metadata for Gemini repair context
+_descriptions:
+  login.business_tab: "Radio button to switch to 法人 (business/corporate) login form"
+  login.user_id_input: "User ID field — スマートクラブID (phone number + 3 digits)"
+  login.password_input: "Password input field"
+  login.login_button: "Login button for business users (法人のお客さまログイン)"
+  dashboard.ehiden_quick_menu: "Quick menu link '送り状発行（e飛伝Ⅲ）' on Smart Club dashboard — opens new tab"
+  ehiden_menu.service_takuhai: "飛脚宅配便 button in service type selection popup"
+  shipment_create.recipient_phone: "Recipient phone number (半角数字14桁, with hyphens)"
+  shipment_create.recipient_postal: "Recipient postal code (999-9999 format)"
+  shipment_create.recipient_address1: "Recipient address line 1 (都道府県 + 市区町村, 全角16文字)"
+  shipment_create.recipient_address2: "Recipient address line 2 (番地, 全角16文字)"
+  shipment_create.recipient_address3: "Recipient address line 3 (building/room, 全角16文字)"
+  shipment_create.recipient_name1: "Recipient name line 1 (company or person name, 全角16文字)"
+  shipment_create.recipient_name2: "Recipient name line 2 (department/attention, 全角16文字)"
+  shipment_create.item_name_1: "Item description line 1 (品名, 16文字)"
+  shipment_create.register_button: "登録 (register) button in footer — saves the waybill"

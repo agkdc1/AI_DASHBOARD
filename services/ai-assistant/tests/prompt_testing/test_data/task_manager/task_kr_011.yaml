@@ -1,0 +1,9 @@
+id: task_kr_011
+name: 'KR task #11'
+language: ko-KR
+input: 우선순위 높은 태스크를 알려 주세요
+expected:
+  action: query
+text: 'KR task #11 관련헤서 query 좀 부탁해요~
+
+  아 맞다 키워드는 [] 이거구여'

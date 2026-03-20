@@ -1,0 +1,13 @@
+id: task_ja_012
+name: 'JA task #12'
+language: ja-JP
+input: FAQデータベースの構築タスクを登録。来週中。
+expected:
+  action: create
+  task_title_contains:
+  - FAQ
+  - データベース
+  has_due_date: true
+  priority_range:
+  - 1
+  - 2

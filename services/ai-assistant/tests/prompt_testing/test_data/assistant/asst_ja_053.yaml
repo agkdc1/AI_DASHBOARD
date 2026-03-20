@@ -1,0 +1,18 @@
+id: asst_ja_053
+name: 'JA assistant #53'
+language: ja-JP
+question: 着払い伝票の作成方法を教えてください。初心者向けに簡単に説明してください。
+expected:
+  language: ja
+  must_contain_any:
+  - 着払い
+  - 伝票
+  - 作成
+  must_not_contain:
+  - 実行しました
+  min_length: 50
+text: 'おつですー。
+
+  ちょっと聞きたいんだけど、お客さんに着払いで荷物送る件、社内システムでやる伝票の作成の手受ってどうやるんだっけ？
+
+  前にやったんだけど忘れちゃって。教えてくれると助かります！'

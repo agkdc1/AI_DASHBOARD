@@ -1,0 +1,18 @@
+id: voice_ja_054
+name: 'JA voice general #54'
+language: ja-JP
+text: '[咳] あ、[REDACTED_NAME]さん、あのー、ちょっといいかな。えーと、来月の、あ、違うな、再来週の**出張**の件で、そのー、**スケジュール**の調整を**ちょっと**お願いしたくて。えっと、訪問先の[REDACTED_ADDRESS]の取引先と、まぁ、アポを取りたいんだよね。それで、あの…[一時停止]…なんだっけ…あぁそうそう、候補日を、えーっと、３つ…いや、４つくらいかな、リストアップしてもらって、来週の月曜、いや、ごめん、火曜の朝までにお願いできるかな？'
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - 出張
+  - スケジュール
+  due_date_present: true
+  priority_range:
+  - 1
+  - 3

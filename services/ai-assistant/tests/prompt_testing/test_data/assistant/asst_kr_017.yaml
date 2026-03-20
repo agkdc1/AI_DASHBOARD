@@ -1,0 +1,15 @@
+id: asst_kr_017
+name: 'KR assistant #17'
+language: ko-KR
+question: Outline에서 새 문서를 만들려면 어떻게 하나요?
+expected:
+  language: ko
+  must_contain_any:
+  - Outline
+  - 문서
+  - 만들기
+  must_not_contain:
+  - 실행했습니다
+  min_length: 50
+text: 'KR assistant #17, 그 Outline 기능 써서 문서 만드기 어떻게 하는 거였죠? 저번에 말했던 그 건인데, 갑자기 생각이
+  안 나서요 ㅋㅋ'

@@ -1,0 +1,19 @@
+id: voice_kr_011
+name: 'KR voice shipping #11'
+language: ko-KR
+text: 아, [REDACTED_NAME]님. 저기, 지금 급한 요청이 하나 있는데요. 그 SO-2024-1234 건, 고객 클레임이 들어와서요.
+  이거 오늘 중으로 꼭 좀 발송 처리를 해야 하거든요. 주소는 [REDACTED_ADDRESS] 맞고요. 최대한 빨리 부탁드릴게요
+expected:
+  valid_json_keys:
+  - title
+  - description
+  - due_date
+  - priority
+  - missing_details
+  title_contains:
+  - SO-2024-1234
+  - 발송
+  due_date_present: true
+  priority_range:
+  - 4
+  - 4
